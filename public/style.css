@@ -1,0 +1,697 @@
+/* Color palette - http://paletton.com/#uid=6000u0ksSpBj5vWo2t5vakUDbfR */
+
+/* -------------------------------------
+CSS reset
+Is a short set of CSS rules that resets the styling of all HTML elements to a consistent baseline so the website will look the same on all browsers
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    /*The box-sizing property is used to tell the browser what the sizing properties (width and height) should include border-box.*/
+    box-sizing: border-box;
+    /*reset Chrome user agent styles*/
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-before: 0px;
+    -webkit-padding-after: 0px;
+    -webkit-padding-start: 0px;
+    -webkit-padding-end: 0px;
+    /*reset Firefox user agent styles*/
+    -moz-margin-before: 0px;
+    -moz-margin-after: 0px;
+    -moz-margin-start: 0px;
+    -moz-margin-end: 0px;
+    -moz-padding-before: 0px;
+    -moz-padding-after: 0px;
+    -moz-padding-start: 0px;
+    -moz-padding-end: 0px;
+    /*reset Internet Explorer user agent styles*/
+    -ms-margin-before: 0px;
+    -ms-margin-after: 0px;
+    -ms-margin-start: 0px;
+    -ms-margin-end: 0px;
+    -ms-padding-before: 0px;
+    -ms-padding-after: 0px;
+    -ms-padding-start: 0px;
+    -ms-padding-end: 0px;
+    /*reset Opera user agent styles*/
+    -o-margin-before: 0px;
+    -o-margin-after: 0px;
+    -o-margin-start: 0px;
+    -o-margin-end: 0px;
+    -o-padding-before: 0px;
+    -o-padding-after: 0px;
+    -o-padding-start: 0px;
+    -o-padding-end: 0px;
+}
+
+body {
+    /*    margin: 140px 6% 0 6%;*/
+    width: 100%;
+    font-size: 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #202020;
+    color: #bdbaba;
+    height: 100%;
+}
+
+.curtainMain {
+    z-index: 600;
+    width: 100%;
+    height: 105%;
+    position: fixed;
+    top: 0;
+}
+
+.curtainRight {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    z-index: 601;
+    max-width: 15%
+}
+
+.curtainLeft {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 601;
+    max-width: 15%
+}
+
+.curtainTop {
+    /* HIDE ON NARROW SCREENS? */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 602;
+}
+
+header {
+    width: 100%;
+    margin-top: 20px;
+    left: 0;
+    z-index: 2;
+}
+
+header div,
+.venueHeader div {
+    padding: 0;
+    margin: 0;
+    margin-left: -20%;
+    /* want to go full width behind curtains */
+    text-align: center;
+    border: 1px black solid;
+    background-color: white;
+    width: 140%;
+    line-height: 38px;
+}
+
+h1,
+.marqueeText,
+.hideMe {
+    font-family: 'Overpass Mono', monospace;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 300;
+    color: black;
+    margin: 4px 0 -5px 0;
+}
+
+.hideMe {
+    visibility: hidden;
+}
+
+.offScreen {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+h2 {
+    text-align: center;
+    font-size: 34px;
+    color: #E83A3A;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.searchBox,
+.resultsBox {
+    border: 7px dotted #fed9ba;
+    /* creates solid lines inside & outside of dotted border */
+    box-shadow: inset 0 -1px 0 0 #FE6767, inset 0 1px 0 0 #FE6767, 0 1px 0 0 #FE6767, 0 -1px 0 0 #FE6767, inset 1px 0 0 0 #FE6767, inset -1px 0 0 0 #FE6767, 1px 0 0 0 #FE6767, -1px 0 0 0 #FE6767;
+    margin: 70px 12%;
+    width: 76%;
+}
+
+.commentButtons {
+    margin-top: 20px;
+}
+
+.sorter {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.selectCenterer {
+    text-align: center;
+    display: block;
+    margin: 0 auto 50px auto;
+}
+
+.selectCenterer select {
+    width: 70%;
+    font-size: .8em;
+    padding: 3px;
+}
+
+.searchBox h3 {
+    text-align: center;
+    color: #FEAB67;
+    padding-bottom: 20px;
+}
+
+.searchDescriptions {
+    padding: 0 30px 30px 30px;
+    font-size: .85em;
+}
+
+.searchDescriptionTitle {
+    color: #FEAB67;
+}
+
+.searchDescriptions p {
+    padding-top: 20px;
+}
+
+.textBlock {
+    padding: 20px;
+}
+
+.venueLimiter {
+    text-align: center;
+    padding: 30px;
+    font-size: 1.2em;
+}
+
+#nameSearch {
+    width: 90%;
+    font-size: .7em;
+}
+
+.listHolder,
+.mapBox {
+    border-top: 7px dotted #fed9ba;
+    /* creates solid lines inside & outside of dotted border */
+    box-shadow: inset 0 1px 0 0 #FE6767, 0 -1px 0 0 #FE6767;
+    padding: 0;
+}
+
+.paddingAdder {
+    height: 60px;
+    background-color: #161616;
+}
+
+.paLeft {
+    border-left: 1px solid #FE6767;
+}
+
+.paRight {
+    border-right: 1px solid #FE6767;
+}
+
+.paTop {
+    border-top: 1px solid #FE6767;
+}
+
+.paBottom {
+    border-bottom: 1px solid #FE6767;
+}
+
+.paddingAdder h3 {
+    padding: 10px 30px;
+    color: #FE6767;
+    font-size: 1.2em;
+}
+
+.scrollbarExtender {
+    border-right: 16px #f1f1f1 solid;
+}
+
+.listBox {
+    /*    margin-top: 30px;*/
+    /*    margin-bottom: 30px;*/
+    height: 400px;
+    overflow-y: scroll;
+    padding: 30px 16px;
+    /*    border-top: 1px solid #FE6767;*/
+}
+
+.listBox p {
+    /*
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+*/
+    padding: 10px 20px;
+}
+
+.even {
+    background-color: #191919;
+    border-radius: 8px;
+    box-shadow: 2px 2px #333333;
+    /* #242424;*/
+}
+
+.odd {
+    margin-top: 2px;
+    background-color: #202020;
+}
+
+.address {
+    color: #FEAB67;
+}
+
+#map {
+    height: 400px;
+    width: 94%;
+    margin: 0 3%;
+}
+
+a {
+    text-decoration: none;
+    color: #5CB2C2;
+}
+
+a:hover {
+    color: #aee7f2;
+    text-shadow: 0 0 1px white;
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 20px;
+    color: white;
+    background-color: #006500;
+    font-size: .9em;
+    box-shadow: 1px 1px white;
+}
+
+
+input {
+    width: 50%;
+    box-shadow: px 2px 2px black inset;
+    /* ADJUST COLOR ONCE COLOR PALATTE FINALIZED */
+    height: 35px;
+    margin: 5px 5% 10px 5%;
+    padding-left: 10px;
+}
+
+.listBox button {
+    font-size: .8em;
+    padding: 5px 8px;
+    border-radius: 10px;
+    margin-left: 30px;
+}
+
+button:hover {
+    text-shadow: 0 0 1px white;
+    background-color: #038503;
+}
+
+#reviewButton {
+    margin-bottom: 30px;
+}
+
+.jsHide,
+.reviewBox,
+.newUser,
+.login {
+    display: none;
+}
+
+#closeVenue {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 701;
+}
+
+.star {
+    cursor: pointer;
+}
+
+.star:hover {
+    text-shadow: 0 0 1px white;
+}
+
+.venueBox,
+.reviewBox,
+.newUser,
+.login {
+    width: 100%;
+    height: 100%;
+    padding: 20px 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    background-color: black;
+}
+
+.venueBox,
+.newUser,
+.login {
+    z-index: 101;
+}
+
+.login form,
+.newUser form {
+    padding-top: 60px;
+}
+
+.newUser form div {
+    margin-bottom: 20px;
+}
+
+.loginLabel {
+    text-align: right;
+    padding-right: 20px;
+    margin-bottom: 20px;
+}
+
+.loginInput {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.login input {
+    margin-left: 20px;
+    text-align: left;
+}
+
+.login button {
+    margin: 10px;
+}
+
+.venueInfo {
+    margin-top: 50px;
+}
+
+.venueInfo img {
+    width: 80%;
+    border-radius: 20px;
+}
+
+.venueInfo iframe {
+    border-radius: 20px;
+}
+
+.venueNameHeader {
+    font-size: 2.2em;
+}
+
+.venueNameHeader a {
+    color: #CC1414;
+}
+
+hr {
+    border: #A70404 solid 1px;
+    /*    width: 90%;*/
+}
+
+.venueAddress {
+    font-size: 1.3em;
+    color: #FE6767;
+    text-align: left;
+    padding: 0 40px 0 20px;
+}
+
+.venueDescription {
+    text-align: left;
+    line-height: 2;
+    padding: 20px;
+}
+
+.userName {
+    color: #CC5297;
+    font-size: 1.3em;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.userRatings p {
+    padding: 0 20px;
+    margin: 0;
+    color: #FEAB67;
+}
+
+.userReview {
+    text-align: left;
+    padding: 25px 6%;
+}
+
+#userReviews p {
+    margin: 10px;
+}
+
+#userReviews p:first-child {
+    margin-top: 30px;
+}
+
+.reviewBox {
+    z-index: 201;
+    position: fixed;
+}
+
+.userRatings form {
+    margin-top: 20px;
+}
+
+.commentBox {
+    margin-bottom: 30px;
+}
+
+textarea {
+    width: 50%;
+    height: 150px;
+    margin-top: 30px;
+}
+
+.alertBoxContainer {
+    display: none;
+    top: 0;
+    height: 100%;
+    margin: 0%;
+    width: 100%;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 500;
+}
+
+.alertBox {
+    display: none;
+    position: fixed;
+    /* center box in page */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50%;
+    height: 50%;
+    background-color: black;
+    font-size: 1.5em;
+    text-align: center;
+    padding: 50px;
+    z-index: 501;
+    border: 7px dotted #fed9ba;
+    /* creates solid lines inside & outside of dotted border */
+    box-shadow: inset 0 -1px 0 0 #FE6767, inset 0 1px 0 0 #FE6767, 0 1px 0 0 #FE6767, 0 -1px 0 0 #FE6767, inset 1px 0 0 0 #FE6767, inset -1px 0 0 0 #FE6767, 1px 0 0 0 #FE6767, -1px 0 0 0 #FE6767;
+}
+
+.alertBox button {
+    margin: 50px;
+    font-size: .8em;
+}
+
+footer {
+    /*    position: fixed;*/
+    background-color: #100200;
+    /*    border-top: 10px inset #830e02;*/
+    padding: 10px 0;
+    width: 100%;
+    margin: 0;
+    overflow: auto;
+    margin-top: 60px;
+    z-index: 400;
+}
+
+footer a {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.left {
+    float: left;
+    padding: 5px 20px 5px 12%;
+    /* Mirror image of .right */
+    width: 49%;
+}
+
+.right {
+    float: right;
+    padding: 5px 12% 5px 20px;
+    /* Need to be sure right margin clears right curtain so icons clickable */
+    width: 49%;
+    text-align: right;
+}
+
+form {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+.makeVisible {
+    visibility: visible;
+    display: inline-block;
+    /*    z-index: 100;*/
+    text-align: center;
+}
+
+.visibleAlert {
+    visibility: visible;
+    display: block;
+}
+
+@media only screen and (max-width: 1300px) {
+    #map {
+        width: 100%;
+        margin: 0;
+    }
+    .curtainLeft,
+    .curtainRight {
+        max-width: 10%;
+    }
+    .right {
+        padding-right: 8%;
+        /* Need to be sure right margin clears right curtain so icons clickable */
+    }
+    .left {
+        padding-left: 8%;
+        /* match .right */
+    }
+}
+
+/* Goes from multi-column to single column at 1150 px */
+
+@media only screen and (max-width: 1150px) {
+    .paRight {
+        border-left: 1px solid #FE6767;
+    }
+    #map {
+        width: 92%;
+        margin: 4%;
+    }
+    .paddingAdder:not(.paLeft) {
+        background-color: #202020;
+    }
+    .venueLimiter {
+        padding-top: 0;
+    }
+    .textBlock {
+        padding-bottom: 50px;
+    }
+    .venueAddress {
+        padding: 20px 5%;
+    }
+    .venueDescription {
+        padding: 20px 5%;
+    }
+    .loginLabel {
+        text-align: center;
+        padding-right: 0;
+    }
+    .loginInput {
+        text-align: center;
+    }
+    .login input {
+        margin-right: 20px;
+        /* match margin-left */
+    }
+    .alertBox {
+        font-size: 1.4em;
+        width: 55%;
+        height: 55%;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    body {
+        font-size: 20px;
+    }
+    #closeVenue {
+        top: auto;
+        bottom: 40px;
+        right: 0;
+        left: 0;
+        margin-right: auto;
+        margin-left: auto;
+        width: 150px;
+    }
+    .alertBox {
+        width: 60%;
+        height: 60%;
+        font-size: 1.3em;
+    }
+    #reviews {
+        margin-bottom: 120px;
+        /* to make sure closeVenue button doesn't block bottom of page */
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    body {
+        line-height: 1.3;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    body {
+        font-size: 18px;
+    }
+    .alertBox {
+        width: 70%;
+        height: 70%;
+        font-size: 1.2em;
+    }
+}
+
+
+@media (max-width: 500px) {
+    body {
+        font-size: 16px;
+    }
+    .curtainLeft,
+    .curtainRight {
+        display: none;
+    }
+}
