@@ -12,6 +12,8 @@ const BasicStrategy = require('passport-http').BasicStrategy;
 const express = require('express');
 const app = express();
 const Unsplash = require('unsplash-js').default;
+require('es6-promise').polyfill();  // added to get unsplash to work properly - https://github.com/unsplash/unsplash-js/issues/35
+require('isomorphic-fetch'); // added to get unsplash to work properly
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public'));
@@ -68,9 +70,11 @@ const unsplash = new Unsplash({
 
 
 app.get('/unsplash/:searchTerm', function (req, res) {
+    console.log(req.params.searchTerm);
     unsplash.search.photos(req.params.searchTerm, 1)
-        .then(toJson)
+//        .then(toJson)
         .then(results => {
+                console.log(results);
                 res.json({
                     results
                 });

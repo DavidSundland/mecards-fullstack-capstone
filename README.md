@@ -28,7 +28,7 @@ As a user, I want an overview about each venue that interests me so that I can d
 * Users can delete or edit reviews after they have been submitted.
 
 ## Working Prototye
-A live example of the project can be found at: https://venue-evaluator.herokuapp.com/.
+A live example of the project can be found at: https://mecards-fullstack-capstone.herokuapp.com.
 
 
 Screenshot of landing page:
