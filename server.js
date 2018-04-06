@@ -70,7 +70,7 @@ const unsplash = new Unsplash({
 
 
 app.get('/unsplash/:searchTerm', function (req, res) {
-    console.log(req.params.searchTerm);
+    console.log("Search term: ", req.params.searchTerm);
     unsplash.search.photos(req.params.searchTerm, 1)
 //        .then(toJson)
         .then(results => {
