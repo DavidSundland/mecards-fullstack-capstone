@@ -214,6 +214,106 @@ function borderSize() {
 }
 
 
+// Code to create new user:
+
+$('#newUser').on('submit', function (event) {
+    event.preventDefault();
+    const uname = $('input[name="userName"]').val();
+    const pw = $('input[name="password"]').val();
+    const confirmPw = $('input[name="passwordConfirm"]').val();
+    if (pw !== confirmPw) {
+        myAlert('Passwords must match!', 'ok');
+    } else if (uname.length === 0) {
+        myAlert('You must enter a username!', 'ok');
+    } else if (pw.length < 6) {
+        myAlert('Your password must have at least 6 characters!', 'oops');
+    } else if (/\s/.test(uname) || /\s/.test(pw)) {
+        myAlert("Sorry, usernames & passwords cannot contain spaces!", "oops");
+    } else {
+        const newUserObject = {
+            username: uname,
+            password: pw
+        };
+        // will assign a value to variable 'user' in signin step below
+        // AJAX call to send form data up to server/DB and create new user
+        $.ajax({
+                type: 'POST',
+                url: '/users/create',
+                dataType: 'json',
+                data: JSON.stringify(newUserObject),
+                contentType: 'application/json'
+            })
+            .done(function (result) {
+                myAlert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
+                console.log(result);
+                $('input[name="userName"]').val(""); // clear the input fields
+                $('input[name="password"]').val("");
+                $('input[name="passwordConfirm"]').val("");
+                $('.newUser').removeClass('makeVisible');
+                $('.login').addClass('makeVisible');
+            })
+            .fail(function (jqXHR, error, errorThrown) {
+                alert("Uh-oh, something went wrong! Try a different username.");
+                $('input[name="userName"]').val(""); // clear the input fields
+                $('input[name="password"]').val("");
+                $('input[name="passwordConfirm"]').val("");
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+            });
+    };
+});
+
+// Code to log user in:
+
+$('#login').on('click', '#loginClicked', function (event) {
+    event.preventDefault();
+    // AJAX call to validate login info and sign user in
+    const inputUname = $('input[name="signinUserName"]').val();
+    const inputPw = $('input[name="signinPassword"]').val();
+    // check for spaces, empty, undefined
+    if ((!inputUname) || (inputUname.length < 1) || (inputUname.indexOf(' ') > 0)) {
+        myAlert('You entered an invalid username', 'oops');
+    } else if ((!inputPw) || (inputPw.length < 1) || (inputPw.indexOf(' ') > 0)) {
+        myAlert('You entered an invalid password', 'oops');
+    } else {
+        const unamePwObject = {
+            username: inputUname,
+            password: inputPw
+        };
+        user = inputUname;
+        $.ajax({
+                type: "POST",
+                url: "/signin",
+                dataType: 'json',
+                data: JSON.stringify(unamePwObject),
+                contentType: 'application/json'
+            })
+            .done(function (result) {
+                LOGGEDIN = true;
+                USERNAME = user;
+                myAlert(`Welcome, ${user}!  You're now logged in!`, "ok");
+                $('input[name="signinUserName"]').val("");
+                $('input[name="signinPassword"]').val("");
+                //                $('#closeVenue').addClass('makeVisible'); // Show close venue button
+                $('.login').removeClass('makeVisible');
+                //                $('#leaveReview').addClass('makeVisible');
+                let venueName = $('#reviewMarquee').attr("title");
+                showReview(venueName);
+            })
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+                myAlert('You entered an invalid username and password combination. Pleae check your username and password and try again.', 'oops');
+            });
+    };
+});
+
+
+
+
+
 $(headerFont);
 $(bodyFont);
 $(footerFont);
@@ -250,7 +350,7 @@ $(borderSize);
 //    $('.changeMe').css("font-size", $(this).val() + "px");
 //});
 
-
+// ===========================================================================================================================================
 // STUFF BELOW IS FROM VENUE E-VALUATOR ******************************************************88
 // narrows list of venues based upon typed name
 //function searchNames() {
