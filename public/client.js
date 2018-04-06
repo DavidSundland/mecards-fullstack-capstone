@@ -310,7 +310,26 @@ $('#login').on('click', '#loginClicked', function (event) {
     };
 });
 
-
+function myAlert(sayThis, choice) {
+    let okChoices = ["Uhh, sure... OK", "Happy to oblige", "Did I have any other choice?", "It seemed the right thing to do", "I was bored", "My cat's breath smells like cat food", "I didn't realize I had a choice", "Hooray?", "Snazzy.", "Well, I'll be!", "Well, ain't that grand!"];
+    let oopsChoices = ["My mouse finger slipped", "I was young, I needed the money", "I was trying to play a cat video", "I did no such thing!", "My cat ran across my keyboard", "The peer pressure got to me", "Somebody else must have done that", "I must have been drunk", "I hit the wrong key", "Don't blame me for that!", "It was an accident", "Don't hold it against me!"];
+    let reasons;
+    if (choice === "oops") {
+        reasons = oopsChoices;
+    } else {
+        reasons = okChoices;
+    }
+    let thisReason = reasons[Math.floor(Math.random() * reasons.length)];
+    $(".alertBoxContainer").addClass("visibleAlert");
+    $(".alertBox").addClass("visibleAlert");
+    $(".alertBox").html(sayThis + `<br><button id='yes'>${thisReason}</button>`);
+    $(".alertBox").on('click', '#yes', function () {
+        event.preventDefault();
+        $(".alertBoxContainer").removeClass("visibleAlert");
+        $(".alertBox").removeClass("visibleAlert");
+        $(".alertBox").html("");
+    });
+}
 
 
 
