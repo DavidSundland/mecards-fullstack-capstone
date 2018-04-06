@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <title>mE-Cards</title>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Kanit|Montserrat|Open+Sans:600|Quicksand|Raleway|Roboto:700" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Anton|Crimson+Text|East+Sea+Dokdo|Hi+Melody|Indie+Flower|Jua|Lobster|Open+Sans+Condensed:300|Poor+Story|Roboto:700|Stylish|Yeon+Sung" rel="stylesheet">
+
+<!-- The following two font packages are from Venue e-Valuator and ultimately can be removed -->
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Montserrat|Open+Sans:600|Quicksand|Raleway|Roboto:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Anton|Arimo|Dhurjati|Fira+Mono|Nova+Mono|Overpass+Mono:300,400|PT+Sans" rel="stylesheet">
 
     <link rel="icon" href="http://www.districtconcerts.com/wp-content/uploads/2015/09/Favicon_1.png" type="image/png">
@@ -44,14 +47,21 @@
             Heading: <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/><br>
             Card Body: <textarea maxlength="400" name="bodytext" id="bodytext" onkeyup="changeBody()" placeholder="My love for you is deeper than the potholes that destroyed your car's transmission.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips..."></textarea><br>
             Footer: <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Your Pookie Possum, Dick Cheney" /><br>
-            Search term for background image: <input type="text" name="imagequery" placholder="kittens" /><br>
+            Search term for background image: <input type="text" name="imagequery" placeholder="kittens" /><br>
         </form>
+        <button id="titleFontButton">Change Header Font</button>
+        <button id="bodyFontButton">Change Body Font</button>
+        <button id="footerFontButton">Change Footer Font</button>
+        <br>
+        <button id="titleColorButton">Change Header Color</button>
+        <button id="bodyColorButton">Change Body Color</button>
+        <button id="footerColorButton">Change Footer Color</button>
         <h2>Your Card:</h2>
         <div class="outerBox">
             <div class="cardBox">
                 <p id="cardHeader">To da wuv uv my life</p>
                 <img src="https://www.pets4homes.co.uk/images/articles/3448/large/six-health-essentials-that-you-should-monitor-in-your-kittens-first-few-weeks-of-life-56a6114cb4003.jpg">
-                <p id="cardText">My love for you is deeper than the potholes that destroyed your car's transmission.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips...</p>
+                <p id="cardBody">My love for you is deeper than the potholes that destroyed your car's transmission.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips...</p>
                 <p id="cardFooter">Your Pookie Possum, Dick Cheney</p>
             </div>
         </div>

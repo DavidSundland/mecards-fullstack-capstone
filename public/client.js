@@ -1,6 +1,8 @@
 let LOGGEDIN = false;
 let USERNAME = "";
 
+const FONTS = ['Roboto', 'Hi Melody', 'Poor Story', 'Jua', 'Yeon Sung', 'Stylish', 'Open Sans Condensed', 'East Sea Dokdo', 'Indie Flower', 'Crimson Text', 'Anton', 'Lobster'];
+const COLORS = ['red', 'blue', 'black', 'white', 'pink', 'purple', 'yellow', 'aqua', 'brown']
 
 function changeHeader() {
     let input = $("#titleText").val();
@@ -16,6 +18,122 @@ function changeFooter() {
     let input = $("#footertext").val();
     $("#cardFooter").text(input);
 }
+
+/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
+function headerFont() {
+    let fontNumber = 0;
+    $("#cardHeader").css("font-family", FONTS[fontNumber]); // Set initial font
+    $("#titleFontButton").click(
+        function() {
+            fontNumber++;
+            if (fontNumber >= FONTS.length) {
+                fontNumber = 0;
+            }
+            $("#cardHeader").css("font-family", FONTS[fontNumber]);
+        }
+    )
+}
+
+function bodyFont() {
+    let fontNumber = 0;
+    $("#cardBody").css("font-family", FONTS[fontNumber]);  // Set initial font
+    $("#bodyFontButton").click(
+        function() {
+            fontNumber++;
+            if (fontNumber >= FONTS.length) {
+                fontNumber = 0;
+            }
+            $("#cardBody").css("font-family", FONTS[fontNumber]);
+        }
+    )
+}
+
+function footerFont() {
+    let fontNumber = 0;
+    $("#cardFooter").css("font-family", FONTS[fontNumber]); // Set initial font
+    $("#footerFontButton").click(
+        function() {
+            fontNumber++;
+            if (fontNumber >= FONTS.length) {
+                fontNumber = 0;
+            }
+            $("#cardFooter").css("font-family", FONTS[fontNumber]);
+        }
+    )
+}
+
+/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
+function headerColor() {
+    let colorNumber = 0;
+    $("#cardHeader").css("color", COLORS[colorNumber]); // Set initial color
+    $("#titleColorButton").click(
+        function() {
+            colorNumber++;
+            if (colorNumber >= COLORS.length) {
+                colorNumber = 0;
+            }
+            $("#cardHeader").css("color", COLORS[colorNumber]);
+        }
+    )
+}
+
+function bodyColor() {
+    let colorNumber = 0;
+    $("#cardBody").css("color", COLORS[colorNumber]); // Set initial color
+    $("#bodyColorButton").click(
+        function() {
+            colorNumber++;
+            if (colorNumber >= COLORS.length) {
+                colorNumber = 0;
+            }
+            $("#cardBody").css("color", COLORS[colorNumber]);
+        }
+    )
+}
+
+function footerColor() {
+    let colorNumber = 0;
+    $("#cardFooter").css("color", COLORS[colorNumber]); // Set initial color
+    $("#footerColorButton").click(
+        function() {
+            colorNumber++;
+            if (colorNumber >= COLORS.length) {
+                colorNumber = 0;
+            }
+            $("#cardFooter").css("color", COLORS[colorNumber]);
+        }
+    )
+}
+
+$(headerFont);
+$(bodyFont);
+$(footerFont);
+$(headerColor);
+$(bodyColor);
+$(footerColor);
+
+//
+//font list:
+//font-family: 'Roboto', sans-serif;
+//font-family: 'Hi Melody', cursive;
+//font-family: 'Poor Story', cursive;
+//font-family: 'Jua', sans-serif;
+//font-family: 'Yeon Sung', cursive;
+//font-family: 'Stylish', sans-serif;
+//font-family: 'Open Sans Condensed', sans-serif;
+//font-family: 'East Sea Dokdo', cursive;
+//font-family: 'Indie Flower', cursive;
+//font-family: 'Crimson Text', serif;
+//font-family: 'Anton', sans-serif;
+//font-family: 'Lobster', cursive;
+//$("#fs").change(function() {
+//    //alert($(this).val());
+//    $('.changeMe').css("font-family", $(this).val());
+//});
+//$("#size").change(function() {
+//    $('.changeMe').css("font-size", $(this).val() + "px");
+//});
+
 
 // STUFF BELOW IS FROM VENUE E-VALUATOR ******************************************************88
 // narrows list of venues based upon typed name

@@ -70,13 +70,6 @@ body {
     color: white;
 }
 
-#cardText {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 #cardHeader {
     position: absolute;
     top: 5%;
@@ -85,6 +78,14 @@ body {
     font-size: 3em;
     color: red;
 }
+
+#cardBody {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 
 #cardFooter {
     position: absolute;
