@@ -64,10 +64,15 @@ body {
 
 /* E-CARD CSS: */
 
-.cardBox {
+#cardBox {
     position: relative;
     text-align: center;
     color: white;
+    border: 10px white none;
+}
+
+#cardBox img {
+    width: 100%;
 }
 
 #cardHeader {

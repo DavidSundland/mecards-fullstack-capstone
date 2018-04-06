@@ -2,7 +2,8 @@ let LOGGEDIN = false;
 let USERNAME = "";
 
 const FONTS = ['Roboto', 'Hi Melody', 'Poor Story', 'Jua', 'Yeon Sung', 'Stylish', 'Open Sans Condensed', 'East Sea Dokdo', 'Indie Flower', 'Crimson Text', 'Anton', 'Lobster'];
-const COLORS = ['red', 'blue', 'black', 'white', 'pink', 'purple', 'yellow', 'aqua', 'brown']
+const COLORS = ['red', 'blue', 'black', 'white', 'pink', 'purple', 'yellow', 'aqua', 'brown'];
+const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 
 function changeHeader() {
     let input = $("#titleText").val();
@@ -105,12 +106,127 @@ function footerColor() {
     )
 }
 
+/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
+function headerSize() {
+    let fontSize = 2;
+    $("#cardHeader").css("font-size", fontSize + "em"); // Set initial size
+    $("#smallerTitle").click(
+        function() {
+            fontSize/=1.1;
+            $("#cardHeader").css("font-size", fontSize + "em");
+        }
+    );
+    $("#largerTitle").click(
+        function() {
+            fontSize*=1.1;
+            $("#cardHeader").css("font-size", fontSize + "em");
+        }
+    );
+}
+function bodySize() {
+    let fontSize = 1;
+    $("#cardBody").css("font-size", fontSize + "em"); // Set initial size
+    $("#smallerBody").click(
+        function() {
+            fontSize/=1.1;
+            $("#cardBody").css("font-size", fontSize + "em");
+        }
+    );
+    $("#largerBody").click(
+        function() {
+            fontSize*=1.1;
+            $("#cardBody").css("font-size", fontSize + "em");
+        }
+    );
+}
+function footerSize() {
+    let fontSize = 2;
+    $("#cardFooter").css("font-size", fontSize + "em"); // Set initial size
+    $("#smallerFooter").click(
+        function() {
+            fontSize/=1.1;
+            $("#cardFooter").css("font-size", fontSize + "em");
+        }
+    );
+    $("#largerFooter").click(
+        function() {
+            fontSize*=1.1;
+            $("#cardFooter").css("font-size", fontSize + "em");
+        }
+    );
+}
+
+/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
+function borderStyle() {
+    let styleNumber = 0;
+    $("#cardBox").css("border-style", BORDERS[styleNumber]); // Set initial border
+    $("#borderStyle").click(
+        function() {
+            styleNumber++;
+            if (styleNumber >= BORDERS.length) {
+                styleNumber = 0;
+            }
+            $("#cardBox").css("border-style", BORDERS[styleNumber]);
+        }
+    )
+}
+function borderColor() {
+    let colorNumber = 0;
+    $("#cardBox").css("border-color", COLORS[colorNumber]); // Set initial color
+    $("#borderColor").click(
+        function() {
+            if ($("#cardBox").css("border-style") === "none") {
+                $("#cardBox").css("border-style", "solid");
+            }
+            colorNumber++;
+            if (colorNumber >= COLORS.length) {
+                colorNumber = 0;
+            }
+            $("#cardBox").css("border-color", COLORS[colorNumber]);
+        }
+    )
+}
+function borderSize() {
+    let borderSize = 10;
+    $("#cardBox").css("border-width", borderSize + "px"); // Set initial size
+    $("#smallerBorder").click(
+        function() {
+            if ($("#cardBox").css("border-style") === "none") {
+                $("#cardBox").css("border-style", "solid");
+            }
+            borderSize--;
+            if(borderSize < 0) {
+                borderSize = 0;
+            }
+            $("#cardBox").css("border-width", borderSize + "px");
+        }
+    );
+    $("#largerBorder").click(
+        function() {
+            if ($("#cardBox").css("border-style") === "none") {
+                $("#cardBox").css("border-style", "solid");
+                borderSize = 0;
+            }
+            borderSize++;
+            $("#cardBox").css("border-width", borderSize + "px");
+        }
+    );
+}
+
+
 $(headerFont);
 $(bodyFont);
 $(footerFont);
 $(headerColor);
 $(bodyColor);
 $(footerColor);
+$(headerSize);
+$(bodySize);
+$(footerSize);
+$(borderStyle);
+$(borderColor);
+$(borderSize);
+
 
 //
 //font list:
