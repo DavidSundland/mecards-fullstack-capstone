@@ -11,7 +11,8 @@ const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
 const express = require('express');
 const app = express();
-const Unsplash = require('unsplash-js').default;
+//const Unsplash = require('unsplash-js').default;
+const Unsplash = require('node-unsplash');
 require('es6-promise').polyfill();  // added to get unsplash to work properly - https://github.com/unsplash/unsplash-js/issues/35
 require('isomorphic-fetch'); // added to get unsplash to work properly
 app.use(bodyParser.json());
@@ -69,30 +70,78 @@ const unsplash = new Unsplash({
 });
 
 
+Unsplash.filter({
+    keyword: 'animal',
+    page: 1
+}, function (err, photos) {
+    if (err) {
+        //handler error
+    }
+    //handler your photos
+});
+
 app.get('/unsplash/:searchTerm', function (req, res) {
     console.log("Search term: ", req.params.searchTerm);
-    unsplash.search.photos(req.params.searchTerm, 1)
-//        .then(toJson)
-        .then(results => {
-                console.log(results);
-                res.json({
-                    results
-                });
+    Unsplash.filter({
+        keyword: req.params.searchTerm,
+        page: 1
+    }, function (err, photos) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
+        }
+        res.json({
+            results
+        });
     });
-//    Location
-//        .find()
-//        .then(function (results) {
+//    unsplash.search.photos(req.params.searchTerm, 1)
+//    //        .then(toJson)
+//        .then(results => {
+//        console.log(results);
 //        res.json({
 //            results
 //        });
-//    })
-//        .catch(function (err) {
-//        console.error(err);
-//        res.status(500).json({
-//            message: 'Internal server error'
-//        });
 //    });
+    //    Location
+    //        .find()
+    //        .then(function (results) {
+    //        res.json({
+    //            results
+    //        });
+    //    })
+    //        .catch(function (err) {
+    //        console.error(err);
+    //        res.status(500).json({
+    //            message: 'Internal server error'
+    //        });
+    //    });
 });
+//app.get('/unsplash/:searchTerm', function (req, res) {
+//    console.log("Search term: ", req.params.searchTerm);
+//    unsplash.search.photos(req.params.searchTerm, 1)
+////        .then(toJson)
+//        .then(results => {
+//                console.log(results);
+//                res.json({
+//                    results
+//                });
+//    });
+////    Location
+////        .find()
+////        .then(function (results) {
+////        res.json({
+////            results
+////        });
+////    })
+////        .catch(function (err) {
+////        console.error(err);
+////        res.status(500).json({
+////            message: 'Internal server error'
+////        });
+////    });
+//});
 
 
 
