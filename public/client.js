@@ -331,6 +331,22 @@ function myAlert(sayThis, choice) {
     });
 }
 
+function getPhotos() {
+    $('#querySubmit').click(function (event) {
+        event.preventDefault(); // otherwise page reloads when this function starts
+        console.log("In getPhotos");
+        let searchTerm = $("#photoQuery").val();
+        console.log(searchTerm);
+        $.getJSON('/unsplash/:' + searchTerm, function (res) {
+                if (res.results == null || res.results == "null") {
+                    console.log("got bupkis");
+                    alert("ain't got no results");
+                } else {
+                    console.log(res);
+                }
+            });
+        });
+}
 
 
 $(headerFont);
@@ -345,6 +361,7 @@ $(footerSize);
 $(borderStyle);
 $(borderColor);
 $(borderSize);
+$(getPhotos);
 
 
 //

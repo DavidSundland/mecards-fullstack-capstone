@@ -73,7 +73,7 @@ const unsplash = new Unsplash({
 });
 
 
-var getRecepiesFromYum = function (searchTerm) {
+const getPhotos = function (searchTerm) {
     var emitter = new events.EventEmitter();
     //console.log("inside getFromActive function");
 //    unirest.get("http://api.yummly.com/v1/api/recipes?_app_id=35372e2c&_app_key=971c769d4bab882dc3281f0dc6131324&q=" + searchTerm + '&maxResult=12')
@@ -98,7 +98,7 @@ app.get('/unsplash/:searchTerm', (req, res) => {
     //console.log(req);
     //    external api function call and response
 
-    var searchReq = getRecepiesFromYum(req.params.searchTerm);
+    var searchReq = getPhotos(req.params.searchTerm);
 
     //get the data from the first api call
     searchReq.on('end', function (item) {

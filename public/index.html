@@ -47,7 +47,6 @@
             Heading: <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/><br>
             Card Body: <textarea maxlength="400" name="bodytext" id="bodytext" onkeyup="changeBody()" placeholder="My love for you is deeper than the potholes that destroyed your car's transmission.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips..."></textarea><br>
             Footer: <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Your Pookie Possum, Dick Cheney" /><br>
-            Search term for background image: <input type="text" name="imagequery" placeholder="kittens" /><br>
         </form>
         <button id="titleFontButton">Change Header Font</button>
         <button id="bodyFontButton">Change Body Font</button>
@@ -68,8 +67,13 @@
         <button id="borderColor">Border Color</button>
         <button id="smallerBorder">Smaller Border</button>
         <button id="largerBorder">Larger Border</button>
+        <br>
+        <form>
+            Search term for background image:<input name="photoQuery"  id="photoQuery" placeholder="puppies">
+            <button type="submit" id="querySubmit">Submit</button>
+        </form>
 
-                   <form id="login">
+       <form id="login">
             <div class="row">
                 <div class="col-6 loginLabel">Username:</div>
                 <div class="col-6 loginInput"><input name="signinUserName" placeholder="testuser" autocomplete="off"></div>
