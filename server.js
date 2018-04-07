@@ -71,30 +71,72 @@ const unsplash = new Unsplash({
 });
 
 
-app.get('/unsplash/:searchTerm', function (req, res) {
-    console.log("Search term: ", req.params.searchTerm);
-    unsplash.search.photos(req.params.searchTerm, 1)
-//        .then(toJson)
-        .then(results => {
-                console.log(results);
-                res.json({
-                    results
-                });
+var getRecepiesFromYum = function (searchTerm) {
+    var emitter = new events.EventEmitter();
+    //console.log("inside getFromActive function");
+//    unirest.get("http://api.yummly.com/v1/api/recipes?_app_id=35372e2c&_app_key=971c769d4bab882dc3281f0dc6131324&q=" + searchTerm + '&maxResult=12')
+    unirest.get("https://api.unsplash.com/search/photos?query=" + searchTerm + "&page=1&per_page=10&client_id=e6b8899c96e25cba8ea16bf7f346778125f9537fd83f547591e4ed430a0930d6")
+        .header("Accept", "application/json")
+        .end(function (result) {
+         console.log(result.status, result.headers, result.body);
+        //success scenario
+        if (result.ok) {
+            emitter.emit('end', result.body);
+        }
+        //failure scenario
+        else {
+            emitter.emit('error', result.code);
+        }
     });
-//    Location
-//        .find()
-//        .then(function (results) {
-//        res.json({
-//            results
-//        });
-//    })
-//        .catch(function (err) {
-//        console.error(err);
-//        res.status(500).json({
-//            message: 'Internal server error'
-//        });
-//    });
+
+    return emitter;
+};
+
+app.get('/unsplash/:searchTerm', (req, res) => {
+    //console.log(req);
+    //    external api function call and response
+
+    var searchReq = getRecepiesFromYum(req.params.searchTerm);
+
+    //get the data from the first api call
+    searchReq.on('end', function (item) {
+        res.json(item);
+    });
+
+    //error handling
+    searchReq.on('error', function (code) {
+        res.sendStatus(code);
+    });
+
 });
+
+
+
+
+//app.get('/unsplash/:searchTerm', function (req, res) {
+//    console.log("Search term: ", req.params.searchTerm);
+//    unsplash.search.photos(req.params.searchTerm, 1)
+////        .then(toJson)
+//        .then(results => {
+//                console.log(results);
+//                res.json({
+//                    results
+//                });
+//    });
+////    Location
+////        .find()
+////        .then(function (results) {
+////        res.json({
+////            results
+////        });
+////    })
+////        .catch(function (err) {
+////        console.error(err);
+////        res.status(500).json({
+////            message: 'Internal server error'
+////        });
+////    });
+//});
 
 
 
