@@ -343,6 +343,7 @@ function getPhotos() {
                     alert("ain't got no results");
                 } else {
                     console.log(res);
+                    console.log("did i hit my target", res.results[0].urls.regular);
                 }
             });
         });
