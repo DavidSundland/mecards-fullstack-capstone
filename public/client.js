@@ -334,6 +334,7 @@ function myAlert(sayThis, choice) {
 function getPhotos() {
     $('#querySubmit').click(function (event) {
         event.preventDefault(); // otherwise page reloads when this function starts
+        let photoList = [];
         console.log("In getPhotos");
         let searchTerm = $("#photoQuery").val();
         console.log(searchTerm);
@@ -344,6 +345,10 @@ function getPhotos() {
                 } else {
                     console.log(res);
                     console.log("did i hit my target", res.results[0].urls.regular);
+                    $("#photo").src(res.results[0].urls.regular);
+                    for (let x=0; x<res.results.length; x++) {
+                        photoList.push(res.results[x].urls.regular);
+                    }
                 }
             });
         });
