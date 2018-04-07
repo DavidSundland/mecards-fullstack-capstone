@@ -11,6 +11,8 @@ const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
 const express = require('express');
 const app = express();
+var unirest = require('unirest');
+var events = require('events');
 const Unsplash = require('unsplash-js').default;
 require('es6-promise').polyfill();  // added to get unsplash to work properly - https://github.com/unsplash/unsplash-js/issues/35
 require('isomorphic-fetch'); // added to get unsplash to work properly
