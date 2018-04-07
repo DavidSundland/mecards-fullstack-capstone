@@ -11,8 +11,7 @@ const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
 const express = require('express');
 const app = express();
-//const Unsplash = require('unsplash-js').default;
-const Unsplash = require('node-unsplash');
+const Unsplash = require('unsplash-js').default;
 require('es6-promise').polyfill();  // added to get unsplash to work properly - https://github.com/unsplash/unsplash-js/issues/35
 require('isomorphic-fetch'); // added to get unsplash to work properly
 app.use(bodyParser.json());
@@ -62,86 +61,40 @@ function closeServer() {
 app.use(express.static('public'));
 
 // NEW UNSPLASH CODE ****************
-// secret: "59a91ca0156d21055e91bfe056f4867eb8a07cb88af308623bf64b24be57bc43",
 const unsplash = new Unsplash({
     applicationId: "23922",
-    secret: "e6b8899c96e25cba8ea16bf7f346778125f9537fd83f547591e4ed430a0930d6",
-    callbackUrl: "https://mecards-fullstack-capstone.herokuapp.com/unsplash"
-});
-
-
-Unsplash.filter({
-    keyword: 'animal',
-    page: 1
-}, function (err, photos) {
-    if (err) {
-        //handler error
+    secret: "59a91ca0156d21055e91bfe056f4867eb8a07cb88af308623bf64b24be57bc43",
+    callbackUrl: "https://mecards-fullstack-capstone.herokuapp.com/unsplash",
+    headers: {
+        "Client-ID": "e6b8899c96e25cba8ea16bf7f346778125f9537fd83f547591e4ed430a0930d6"
     }
-    //handler your photos
 });
+
 
 app.get('/unsplash/:searchTerm', function (req, res) {
     console.log("Search term: ", req.params.searchTerm);
-    Unsplash.filter({
-        keyword: req.params.searchTerm,
-        page: 1
-    }, function (err, photos) {
-        if (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
-            });
-        }
-        res.json({
-            results
-        });
+    unsplash.search.photos(req.params.searchTerm, 1)
+//        .then(toJson)
+        .then(results => {
+                console.log(results);
+                res.json({
+                    results
+                });
     });
-//    unsplash.search.photos(req.params.searchTerm, 1)
-//    //        .then(toJson)
-//        .then(results => {
-//        console.log(results);
+//    Location
+//        .find()
+//        .then(function (results) {
 //        res.json({
 //            results
 //        });
+//    })
+//        .catch(function (err) {
+//        console.error(err);
+//        res.status(500).json({
+//            message: 'Internal server error'
+//        });
 //    });
-    //    Location
-    //        .find()
-    //        .then(function (results) {
-    //        res.json({
-    //            results
-    //        });
-    //    })
-    //        .catch(function (err) {
-    //        console.error(err);
-    //        res.status(500).json({
-    //            message: 'Internal server error'
-    //        });
-    //    });
 });
-//app.get('/unsplash/:searchTerm', function (req, res) {
-//    console.log("Search term: ", req.params.searchTerm);
-//    unsplash.search.photos(req.params.searchTerm, 1)
-////        .then(toJson)
-//        .then(results => {
-//                console.log(results);
-//                res.json({
-//                    results
-//                });
-//    });
-////    Location
-////        .find()
-////        .then(function (results) {
-////        res.json({
-////            results
-////        });
-////    })
-////        .catch(function (err) {
-////        console.error(err);
-////        res.status(500).json({
-////            message: 'Internal server error'
-////        });
-////    });
-//});
 
 
 
