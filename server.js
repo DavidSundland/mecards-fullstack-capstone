@@ -61,10 +61,10 @@ function closeServer() {
 app.use(express.static('public'));
 
 // NEW UNSPLASH CODE ****************
-
+// secret: "59a91ca0156d21055e91bfe056f4867eb8a07cb88af308623bf64b24be57bc43",
 const unsplash = new Unsplash({
     applicationId: "23922",
-    secret: "59a91ca0156d21055e91bfe056f4867eb8a07cb88af308623bf64b24be57bc43",
+    secret: "e6b8899c96e25cba8ea16bf7f346778125f9537fd83f547591e4ed430a0930d6",
     callbackUrl: "https://mecards-fullstack-capstone.herokuapp.com/unsplash"
 });
 
