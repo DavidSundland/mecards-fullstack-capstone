@@ -331,10 +331,11 @@ function myAlert(sayThis, choice) {
     });
 }
 
-function getPhotos() {
+function getImages() {
+    let photoList = [];
+    let counter = 0;
     $('#querySubmit').click(function (event) {
         event.preventDefault(); // otherwise page reloads when this function starts
-        let photoList = [];
         console.log("In getPhotos");
         let searchTerm = $("#photoQuery").val();
         console.log(searchTerm);
@@ -345,13 +346,50 @@ function getPhotos() {
                 } else {
                     console.log(res);
                     console.log("did i hit my target", res.results[0].urls.regular);
-                    $("#photo").src(res.results[0].urls.regular);
+                    $("#photo").attr("src", res.results[0].urls.regular);
+                    photoList = [];  // clear the previous results
                     for (let x=0; x<res.results.length; x++) {
                         photoList.push(res.results[x].urls.regular);
                     }
                 }
             });
         });
+    $('#clipSubmit').click(function (event) {
+        event.preventDefault(); // otherwise page reloads when this function starts
+        console.log("In getClips");
+        let searchTerm = $("#clipQuery").val();
+        console.log(searchTerm);
+        $.getJSON('/clipart/:' + searchTerm, function (res) {
+            if (res == null || res == "null") {
+                console.log("got bupkis");
+                alert("ain't got no results");
+            } else {
+                console.log(res);
+                console.log("did i hit my target", res.payload[0].svg.url);
+                $("#photo").attr("src", res.payload[0].svg.url);
+                photoList = [];  // clear the previous results
+                for (let x=0; x<res.payload.length; x++) {
+                    photoList.push(res.payload[x].svg.url);
+                }
+            }
+        });
+    });
+    $('#nextPhoto').click(function (event) {
+       event.preventDefault();
+        counter++;
+        if (counter >= photoList.length) {
+            counter = 0;
+        }
+        $("#photo").attr("src", photoList[counter]);
+    });
+    $('#prevPhoto').click(function (event) {
+        event.preventDefault();
+        counter--;
+        if (counter < 0) {
+            counter = photoList.length - 1;
+        }
+        $("#photo").attr("src", photoList[counter]);
+    });
 }
 
 
@@ -367,7 +405,7 @@ $(footerSize);
 $(borderStyle);
 $(borderColor);
 $(borderSize);
-$(getPhotos);
+$(getImages);
 
 
 //

@@ -74,43 +74,83 @@ const unsplash = new Unsplash({
 
 
 const getPhotos = function (searchTerm) {
-    var emitter = new events.EventEmitter();
-    //console.log("inside getFromActive function");
-//    unirest.get("http://api.yummly.com/v1/api/recipes?_app_id=35372e2c&_app_key=971c769d4bab882dc3281f0dc6131324&q=" + searchTerm + '&maxResult=12')
+    const emitter = new events.EventEmitter();
     unirest.get("https://api.unsplash.com/search/photos?query=" + searchTerm + "&page=1&per_page=10&client_id=e6b8899c96e25cba8ea16bf7f346778125f9537fd83f547591e4ed430a0930d6")
         .header("Accept", "application/json")
         .end(function (result) {
-         console.log(result.status, result.headers, result.body);
-        //success scenario
         if (result.ok) {
             emitter.emit('end', result.body);
         }
-        //failure scenario
         else {
             emitter.emit('error', result.code);
         }
     });
-
     return emitter;
 };
 
 app.get('/unsplash/:searchTerm', (req, res) => {
-    //console.log(req);
-    //    external api function call and response
-
-    var searchReq = getPhotos(req.params.searchTerm);
-
-    //get the data from the first api call
+    const searchReq = getPhotos(req.params.searchTerm);
     searchReq.on('end', function (item) {
+        console.log("claimed to be ok; results:", item);
         res.json(item);
     });
-
-    //error handling
     searchReq.on('error', function (code) {
         res.sendStatus(code);
     });
 
 });
+
+
+const getClipart = function (searchTerm) {
+    console.log("got into getClipart");
+    const emitter = new events.EventEmitter();
+    unirest.get("https://openclipart.org/search/json/?query=" + searchTerm + "&amount=20")
+        .end(function (result) {
+        if (result.ok) {
+            emitter.emit('end', result.body);
+        }
+        else {
+            emitter.emit('error', result.code);
+        }
+    });
+    return emitter;
+};
+
+app.get('/clipart/:searchTerm', (req, res) => {
+    const searchReq = getClipart(req.params.searchTerm);
+    console.log("search term: ", searchReq);
+    searchReq.on('end', function (item) {
+        console.log("claimed to be ok; results:", item);
+        res.json(item);
+    });
+    searchReq.on('error', function (code) {
+        console.log("wound up in error code; code = ", code);
+        res.sendStatus(code);
+    });
+
+});
+
+
+const openclipartkey = "1edba4dc2b1f025dc9e994a1eb71fe1e";
+//app.get('/clipart/:searchTerm', (req, res) => {
+//    var emitter = new events.EventEmitter();
+//    unirest.get("https://openclipart.org/search/json/?query=" + req.params.searchTerm + "&amount=20")
+//        .end(function (result) {
+//        console.log(result.status, result.headers, result.body);
+//        //success scenario
+//        if (result.ok) {
+//            emitter.emit('end', result.body);
+//        }
+//        //failure scenario
+//        else {
+//            emitter.emit('error', result.code);
+//        }
+//    });
+//});
+
+
+
+
 
 
 
