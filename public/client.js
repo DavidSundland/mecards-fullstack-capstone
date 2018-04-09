@@ -4,6 +4,7 @@ let USERNAME = "";
 const FONTS = ['Roboto', 'Hi Melody', 'Poor Story', 'Jua', 'Yeon Sung', 'Stylish', 'Open Sans Condensed', 'East Sea Dokdo', 'Indie Flower', 'Crimson Text', 'Anton', 'Lobster'];
 const COLORS = ['red', 'blue', 'black', 'white', 'pink', 'purple', 'yellow', 'aqua', 'brown'];
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
+const TEXTSTYLES = [["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["rgba(0,0,0,.4)", "none"]];
 
 function changeHeader() {
     let input = $("#titleText").val();
@@ -152,6 +153,45 @@ function footerSize() {
         function() {
             fontSize*=1.1;
             $("#cardFooter").css("font-size", fontSize + "em");
+        }
+    );
+}
+
+/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
+function headerStyle() {
+    let styleNum = -1;
+    $("#headerStyle").click(
+        function() {
+            styleNum++;
+            if (styleNum >= TEXTSTYLES.length) {
+                styleNum = 0;
+            }
+            $("#cardHeader").css("text-shadow", TEXTSTYLES[styleNum][1]);
+            $("#cardHeader").css("background-color", TEXTSTYLES[styleNum][0]);
+        }
+    );
+}
+function bodyStyle() {
+    let styleNum = -1;
+    $("#bodyStyle").click(
+        function() {
+            styleNum++;
+            if (styleNum >= TEXTSTYLES.length) {
+                styleNum = 0;
+            }
+            $("#cardBody").css("text-shadow", TEXTSTYLES[styleNum][1]);
+        }
+    );
+}
+function footerStyle() {
+    let styleNum = -1;
+    $("#footerStyle").click(
+        function() {
+            styleNum++;
+            if (styleNum >= TEXTSTYLES.length) {
+                styleNum = 0;
+            }
+            $("#cardFooter").css("text-shadow", TEXTSTYLES[styleNum][1]);
         }
     );
 }
@@ -406,6 +446,9 @@ $(borderStyle);
 $(borderColor);
 $(borderSize);
 $(getImages);
+$(headerStyle);
+$(bodyStyle);
+$(footerStyle);
 
 
 //
