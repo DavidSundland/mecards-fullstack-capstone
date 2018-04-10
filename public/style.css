@@ -1,4 +1,4 @@
-/* Color palette - http://paletton.com/#uid=6000u0ksSpBj5vWo2t5vakUDbfR */
+/* Color palette - http://paletton.com/#uid=3110q0khcw03lDT75HadULeamUJ */
 
 /* -------------------------------------
 CSS reset
@@ -51,8 +51,8 @@ Is a short set of CSS rules that resets the styling of all HTML elements to a co
 }
 
 body {
-    /*    margin: 140px 6% 0 6%;*/
     width: 100%;
+    height: 100%;
     font-size: 22px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -60,6 +60,78 @@ body {
     background-color: #202020;
     color: #bdbaba;
     height: 100%;
+}
+
+main {
+    background: url("images/cardstore.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    padding: 1% 8%;
+    position: fixed;
+    overflow: auto;
+}
+
+h1 {
+    color: #715CAF;
+    font-size: 2em;
+    text-align: center;
+}
+
+.headerSubtitle {
+    text-align: center;
+    font-size: 1.3em;
+    color: #345767;
+    font-weight: 800;
+    margin-bottom: 40px;
+}
+
+button {
+    cursor: pointer;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 20px;
+    color: white;
+    background-color: #5B6DAD;
+    font-size: .9em;
+    box-shadow: 1px 1px white;
+}
+
+
+button:hover {
+    text-shadow: 0 0 1px white;
+    background-color: #2f3d6e;
+}
+
+/*
+p {
+    color: #4E88A1;
+    text-shadow: 1px 1px white;
+
+}
+*/
+
+.intro p, #login {
+    font-weight: 600;
+    font-size: 1.2em;
+    padding: 40px;
+    text-shadow: 1px 1px #FFBE76;
+}
+
+.intro p {
+    background-color: rgba(255, 255, 255, .6);
+    color: #202020;
+}
+
+#login {
+    background-color: rgba(113, 92, 175, .4);
+    color: #FFF6C7;
+}
+
+.newUser,
+.userCard {
+    display: none;
 }
 
 /* E-CARD CSS: */
@@ -105,43 +177,13 @@ body {
 
 
 
+
+
+/* ================================================================================================================= */
+
 /* VENUE E-VALUATOR CSS: */
 
-.curtainMain {
-    z-index: 600;
-    width: 100%;
-    height: 105%;
-    position: fixed;
-    top: 0;
-}
-
-.curtainRight {
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100%;
-    z-index: 601;
-    max-width: 15%
-}
-
-.curtainLeft {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    z-index: 601;
-    max-width: 15%
-}
-
-.curtainTop {
-    /* HIDE ON NARROW SCREENS? */
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    z-index: 602;
-}
-
+/*
 header {
     width: 100%;
     margin-top: 20px;
@@ -149,18 +191,23 @@ header {
     z-index: 2;
 }
 
+*/
+
+/*
 header div,
 .venueHeader div {
     padding: 0;
     margin: 0;
     margin-left: -20%;
-    /* want to go full width behind curtains */
     text-align: center;
     border: 1px black solid;
     background-color: white;
     width: 140%;
     line-height: 38px;
 }
+
+*/
+/*
 
 h1,
 .marqueeText,
@@ -172,6 +219,7 @@ h1,
     color: black;
     margin: 4px 0 -5px 0;
 }
+*/
 
 .hideMe {
     visibility: hidden;
@@ -348,16 +396,6 @@ a:hover {
     cursor: pointer;
 }
 
-button {
-    cursor: pointer;
-    margin: 10px;
-    padding: 15px;
-    border-radius: 20px;
-    color: white;
-    background-color: #006500;
-    font-size: .9em;
-    box-shadow: 1px 1px white;
-}
 
 
 input {
@@ -376,21 +414,10 @@ input {
     margin-left: 30px;
 }
 
-button:hover {
-    text-shadow: 0 0 1px white;
-    background-color: #038503;
-}
-
 #reviewButton {
     margin-bottom: 30px;
 }
 
-.jsHide,
-.reviewBox,
-.newUser,
-.login {
-    display: none;
-}
 
 #closeVenue {
     position: fixed;

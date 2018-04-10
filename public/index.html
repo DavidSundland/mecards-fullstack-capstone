@@ -21,28 +21,12 @@
 
 <body>
     <main role="main">
-<!--        <header role="banner" id="pageTop">
-            <div>
-                <p class="hideMe">HIDE ME</p>
-                <h1 class="offScreen">Venue e-Valuator</h1> -->
-                <!-- providing hidden text for spacing AND off-screen text that will be visible to screen readers -->
-<!--            </div>
-            <div>
-                <p class="marqueeText">VENUE</p>
-            </div>
-            <div>
-                <p class="marqueeText">E-VALUATOR</p>
-            </div>
-            <div>
-                <p class="hideMe">HIDE ME</p>
-            </div>
-        </header> -->
         <header role="banner" id="pageTop">
             <h1>mE-Cards</h1>
             <p class="headerSubtitle">Your quick e-card generator.</p>
         </header>
-        <section>
-            Need to quickly send a custom e-card?  Well, look no further!  This site allows you to create personalized e-cards, each with their own unique URL.  Just create a header, a greeting, and/or a footer, pick a background image, and adjust the fonts to your liking.  Once you are satisfied with your e-card, copy its unique URL and send it on to your loved one.  Let's get started!
+        <section class="intro">
+            <p>Need to quickly send a custom e-card?  Well, look no further!  This site allows you to create personalized e-cards, each with their own unique URL.  Just create a header, a greeting, and/or a footer, pick a background image, and adjust the fonts and borders to your liking.  Once you are satisfied with your e-card, copy its unique URL and send it on to your loved one.  Sign in to get started - it's completely free!</p>
         </section>
 
         <form id="login">
@@ -55,13 +39,11 @@
                 <div class="col-6 loginInput"><input name="signinPassword" placeholder="testpassword" autocomplete="off"></div>
             </div>
             <div class="row">
-                <button id="loginClicked" type="submit">Submit</button>
+                <button id="loginClicked" type="submit">Submit</button><button id="newUserButton">New User?</button>
             </div>
         </form>
-        <div class="row"><button id="cancelLogin">Cancel</button></div>
-        <div class="row"><button id="newUserButton">New User?</button></div>
 
-        <form id="newUser">
+        <form id="newUser" class="newUser">
             <div class="row">
                 <div class="col-6 loginLabel">Username:</div>
                 <div class="col-6 loginInput"><input name="userName" placeholder="testuser" autocomplete="off"></div>
@@ -79,66 +61,67 @@
             </div>
         </form>
 
+        <div class="userCard">
+            <form>
+                Heading: <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/><br>
+                Card Body: <textarea maxlength="400" name="bodytext" id="bodytext" onkeyup="changeBody()" placeholder="My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips..."></textarea><br>
+                Footer: <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Your Pookie Possum, Dick Cheney" /><br>
+            </form>
+            <button id="prevTitleFont">Prev Header Font</button>
+            <button id="nextTitleFont">Next Header Font</button>
+            <button id="prevBodyFont">Prev Body Font</button>
+            <button id="nextBodyFont">Next Body Font</button>
+            <button id="prevFooterFont">Prev Footer Font</button>
+            <button id="nextFooterFont">Next Footer Font</button>
+            <br>
+            <button id="prevTitleColor">Prev Header Color</button>
+            <button id="nextTitleColor">Next Header Color</button>
+            <button id="prevBodyColor">Prev Body Color</button>
+            <button id="nextBodyColor">Next Body Color</button>
+            <button id="prevFooterColor">Prev Footer Color</button>
+            <button id="nextFooterColor">NextFooter Color</button>
+            <br>
+            <button id="smallerTitle">Smaller Header</button>
+            <button id="largerTitle">Larger Header</button>
+            <button id="smallerBody">Smaller Body</button>
+            <button id="largerBody">Larger Body</button>
+            <button id="smallerFooter">Smaller Footer</button>
+            <button id="largerFooter">Larger Footer</button>
+            <br>
+            <button id="prevHeaderStyle">Prev Header Style</button>
+            <button id="nextHeaderStyle">Next Header Style</button>
+            <button id="prevBodyStyle">Prev Body Style</button>
+            <button id="nextBodyStyle">Next Body Style</button>
+            <button id="prevFooterStyle">Prev Footer Style</button>
+            <button id="nextFooterStyle">Next Footer Style</button>
+            <br>
+            <button id="prevBorderStyle">Prev Border Style</button>
+            <button id="nextBorderStyle">Next Border Style</button>
+            <button id="prevBorderColor">Prev Border Color</button>
+            <button id="nextBorderColor">Next Border Color</button>
+            <button id="smallerBorder">Smaller Border</button>
+            <button id="largerBorder">Larger Border</button>
+            <br>
+            <form>
+                Search term for background image:<input name="photoQuery"  id="photoQuery" placeholder="puppies">
+                <button type="submit" id="querySubmit">Submit</button>
+            </form>
+            <form>
+                Search term for background clipart:<input name="clipQuery"  id="clipQuery" placeholder="kittens">
+                <button type="submit" id="clipSubmit">Submit</button>
+            </form>
+            <button id="prevPhoto">Previous Image</button>
+            <button id="nextPhoto">Next Image</button>
 
-        <form>
-            Heading: <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/><br>
-            Card Body: <textarea maxlength="400" name="bodytext" id="bodytext" onkeyup="changeBody()" placeholder="My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips..."></textarea><br>
-            Footer: <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Your Pookie Possum, Dick Cheney" /><br>
-        </form>
-        <button id="prevTitleFont">Prev Header Font</button>
-        <button id="nextTitleFont">Next Header Font</button>
-        <button id="prevBodyFont">Prev Body Font</button>
-        <button id="nextBodyFont">Next Body Font</button>
-        <button id="prevFooterFont">Prev Footer Font</button>
-        <button id="nextFooterFont">Next Footer Font</button>
-        <br>
-        <button id="prevTitleColor">Prev Header Color</button>
-        <button id="nextTitleColor">Next Header Color</button>
-        <button id="prevBodyColor">Prev Body Color</button>
-        <button id="nextBodyColor">Next Body Color</button>
-        <button id="prevFooterColor">Prev Footer Color</button>
-        <button id="nextFooterColor">NextFooter Color</button>
-        <br>
-        <button id="smallerTitle">Smaller Header</button>
-        <button id="largerTitle">Larger Header</button>
-        <button id="smallerBody">Smaller Body</button>
-        <button id="largerBody">Larger Body</button>
-        <button id="smallerFooter">Smaller Footer</button>
-        <button id="largerFooter">Larger Footer</button>
-        <br>
-        <button id="prevHeaderStyle">Prev Header Style</button>
-        <button id="nextHeaderStyle">Next Header Style</button>
-        <button id="prevBodyStyle">Prev Body Style</button>
-        <button id="nextBodyStyle">Next Body Style</button>
-        <button id="prevFooterStyle">Prev Footer Style</button>
-        <button id="nextFooterStyle">Next Footer Style</button>
-        <br>
-        <button id="prevBorderStyle">Prev Border Style</button>
-        <button id="nextBorderStyle">Next Border Style</button>
-        <button id="prevBorderColor">Prev Border Color</button>
-        <button id="nextBorderColor">Next Border Color</button>
-        <button id="smallerBorder">Smaller Border</button>
-        <button id="largerBorder">Larger Border</button>
-        <br>
-        <form>
-            Search term for background image:<input name="photoQuery"  id="photoQuery" placeholder="puppies">
-            <button type="submit" id="querySubmit">Submit</button>
-        </form>
-        <form>
-            Search term for background clipart:<input name="clipQuery"  id="clipQuery" placeholder="kittens">
-            <button type="submit" id="clipSubmit">Submit</button>
-        </form>
-        <button id="prevPhoto">Previous Image</button>
-        <button id="nextPhoto">Next Image</button>
 
-
-        <h2>Your Card:</h2>
-        <div class="outerBox">
-            <div id="cardBox">
-                <p id="cardHeader">To da wuv uv my life</p>
-                <img id="photo" src="https://www.pets4homes.co.uk/images/articles/3448/large/six-health-essentials-that-you-should-monitor-in-your-kittens-first-few-weeks-of-life-56a6114cb4003.jpg">
-                <p id="cardBody">My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips...</p>
-                <p id="cardFooter">Your Pookie Possum, Dick Cheney</p>
+            <h2>Your Card:</h2>
+            <div class="outerBox">
+                <div id="cardBox">
+                    <p id="cardHeader">To da wuv uv my life</p>
+                    <img id="photo" src="https://www.pets4homes.co.uk/images/articles/3448/large/six-health-essentials-that-you-should-monitor-in-your-kittens-first-few-weeks-of-life-56a6114cb4003.jpg">
+                    <p id="cardBody">My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips...</p>
+                    <p id="cardFooter">Your Pookie Possum, Dick Cheney</p>
+                </div>
             </div>
         </div>
 
@@ -148,6 +131,7 @@
         <img class="curtainRight" alt="Right Curtain" src="https://github.com/DavidSundland/venue-evaluator-node-capstone/blob/master/public/images/curtain-right.png?raw=true">
         <img class="curtainTop" alt="Top Curtain" src="https://github.com/DavidSundland/venue-evaluator-node-capstone/blob/master/public/images/curtain-top.png?raw=true">  -->
 
+       <!--
         <div class="row resultsBox">
             <div class="col-12">
                 <h2 class="venueList">DC Music Venues</h2>
@@ -158,8 +142,8 @@
                 <input type="text" id="nameSearch" onkeyup="searchNames()" placeholder="Type all or part of venue name">
             </div>
             <div class="col-7 listHolder">
-                <div class="paddingAdder paTop paLeft scrollbarExtender">
-                    <!-- Venue list is generated here -->
+                <div class="paddingAdder paTop paLeft scrollbarExtender">  -->
+                    <!-- Venue list is generated here --> <!--
                     <h3>Your List</h3>
                 </div>
                 <div class="listBox" id="listBox">
@@ -169,7 +153,7 @@
             </div>
             <div class="col-5 mapBox">
                 <div class="paddingAdder paTop paRight">
-                    <!-- Map is created here -->
+                    <!-- Map is created here --> <!--
                     <h3>Your Map</h3>
                 </div>
                 <div id="map"></div>
@@ -179,7 +163,7 @@
 
 
         <div class="row searchBox">
-            <!-- PULL-DOWN MENUS OF SEARCH/SORT PARAMETERS TO FIND VENUES -->
+            <!-- PULL-DOWN MENUS OF SEARCH/SORT PARAMETERS TO FIND VENUES --> <!--
             <h2 class="sorter col-12">Your Preferences</h2>
             <div class="col-4">
                 <h3>Venue Type*:</h3>
@@ -349,6 +333,7 @@
         <div class="alertBoxContainer" class="hideMe">
             <div class="alertBox" class="hideMe"></div>
         </div>
+-->
 
         <footer role="contentinfo">
             <div class="left">© David Sundland</div>
