@@ -459,14 +459,16 @@ $('#login').on('click', '#loginClicked', function (event) {
             .done(function (result) {
                 LOGGEDIN = true;
                 USERNAME = user;
-                myAlert(`Welcome, ${user}!  You're now logged in!`, "ok");
+                alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
                 $('input[name="signinUserName"]').val("");
                 $('input[name="signinPassword"]').val("");
                 //                $('#closeVenue').addClass('makeVisible'); // Show close venue button
-                $('.login').removeClass('makeVisible');
+                $('.intro').addClass('hideMe');
+                $('#login').addClass('hideMe');
+                $('.userCard').addClass('makeVisible');
                 //                $('#leaveReview').addClass('makeVisible');
-                let venueName = $('#reviewMarquee').attr("title");
-                showReview(venueName);
+//                let venueName = $('#reviewMarquee').attr("title");
+//                showReview(venueName);
             })
             .fail(function (jqXHR, error, errorThrown) {
                 console.log(jqXHR);

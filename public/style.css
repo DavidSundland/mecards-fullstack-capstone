@@ -175,7 +175,19 @@ p {
     color: purple;
 }
 
+.hideMe {
+    visibility: hidden;
+    display: none;
+}
 
+
+
+.makeVisible {
+    visibility: visible;
+    display: inline-block;
+    /*    z-index: 100;*/
+    text-align: center;
+}
 
 
 
@@ -220,10 +232,6 @@ h1,
     margin: 4px 0 -5px 0;
 }
 */
-
-.hideMe {
-    visibility: hidden;
-}
 
 .offScreen {
     position: absolute;
@@ -642,12 +650,6 @@ form {
     text-align: center;
 }
 
-.makeVisible {
-    visibility: visible;
-    display: inline-block;
-    /*    z-index: 100;*/
-    text-align: center;
-}
 
 .visibleAlert {
     visibility: visible;
