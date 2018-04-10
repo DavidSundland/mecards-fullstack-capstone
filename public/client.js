@@ -4,7 +4,7 @@ let USERNAME = "";
 const FONTS = ['Roboto', 'Hi Melody', 'Poor Story', 'Jua', 'Yeon Sung', 'Stylish', 'Open Sans Condensed', 'East Sea Dokdo', 'Indie Flower', 'Crimson Text', 'Anton', 'Lobster'];
 const COLORS = ['red', 'blue', 'black', 'white', 'pink', 'purple', 'yellow', 'aqua', 'brown'];
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
-const TEXTSTYLES = [["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["rgba(0,0,0,.4)", "none"]];
+const TEXTSTYLES = [["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
 
 function changeHeader() {
     let input = $("#titleText").val();
@@ -25,7 +25,7 @@ function changeFooter() {
 function headerFont() {
     let fontNumber = 0;
     $("#cardHeader").css("font-family", FONTS[fontNumber]); // Set initial font
-    $("#titleFontButton").click(
+    $("#nextTitleFont").click(
         function() {
             fontNumber++;
             if (fontNumber >= FONTS.length) {
@@ -33,13 +33,22 @@ function headerFont() {
             }
             $("#cardHeader").css("font-family", FONTS[fontNumber]);
         }
-    )
+    );
+    $("#prevTitleFont").click(
+        function() {
+            fontNumber--;
+            if (fontNumber < 0) {
+                fontNumber = FONTS.length - 1;
+            }
+            $("#cardHeader").css("font-family", FONTS[fontNumber]);
+        }
+    );
 }
 
 function bodyFont() {
     let fontNumber = 0;
     $("#cardBody").css("font-family", FONTS[fontNumber]);  // Set initial font
-    $("#bodyFontButton").click(
+    $("#nextBodyFont").click(
         function() {
             fontNumber++;
             if (fontNumber >= FONTS.length) {
@@ -47,13 +56,22 @@ function bodyFont() {
             }
             $("#cardBody").css("font-family", FONTS[fontNumber]);
         }
-    )
+    );
+    $("#prevBodyFont").click(
+        function() {
+            fontNumber--;
+            if (fontNumber < 0) {
+                fontNumber = FONTS.length - 1;
+            }
+            $("#cardBody").css("font-family", FONTS[fontNumber]);
+        }
+    );
 }
 
 function footerFont() {
     let fontNumber = 0;
     $("#cardFooter").css("font-family", FONTS[fontNumber]); // Set initial font
-    $("#footerFontButton").click(
+    $("#nextFooterFont").click(
         function() {
             fontNumber++;
             if (fontNumber >= FONTS.length) {
@@ -61,7 +79,16 @@ function footerFont() {
             }
             $("#cardFooter").css("font-family", FONTS[fontNumber]);
         }
-    )
+    );
+    $("#prevFooterFont").click(
+        function() {
+            fontNumber--;
+            if (fontNumber < 0) {
+                fontNumber = FONTS.length - 1;
+            }
+            $("#cardFooter").css("font-family", FONTS[fontNumber]);
+        }
+    );
 }
 
 /*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
@@ -157,6 +184,7 @@ function footerSize() {
     );
 }
 
+
 /*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
 function headerStyle() {
     let styleNum = -1;
@@ -180,6 +208,7 @@ function bodyStyle() {
                 styleNum = 0;
             }
             $("#cardBody").css("text-shadow", TEXTSTYLES[styleNum][1]);
+            $("#cardBody").css("background-color", TEXTSTYLES[styleNum][0]);
         }
     );
 }
@@ -192,27 +221,32 @@ function footerStyle() {
                 styleNum = 0;
             }
             $("#cardFooter").css("text-shadow", TEXTSTYLES[styleNum][1]);
+            $("#cardFooter").css("background-color", TEXTSTYLES[styleNum][0]);
         }
     );
 }
 
-/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
-function borderStyle() {
+
+function borders() {
     let styleNumber = 0;
+    let colorNumber = 0;
+    let borderSize = 10;
     $("#cardBox").css("border-style", BORDERS[styleNumber]); // Set initial border
+    $("#cardBox").css("border-color", COLORS[colorNumber]); // Set initial color
+    $("#cardBox").css("border-width", borderSize + "px"); // Set initial size
     $("#borderStyle").click(
         function() {
             styleNumber++;
             if (styleNumber >= BORDERS.length) {
                 styleNumber = 0;
             }
+            if(borderSize < 4) { // If no border or tiny border, increase border size so visible
+                borderSize = 4;
+                $("#cardBox").css("border-width", borderSize + "px");
+            }
             $("#cardBox").css("border-style", BORDERS[styleNumber]);
         }
     )
-}
-function borderColor() {
-    let colorNumber = 0;
-    $("#cardBox").css("border-color", COLORS[colorNumber]); // Set initial color
     $("#borderColor").click(
         function() {
             if ($("#cardBox").css("border-style") === "none") {
@@ -222,20 +256,20 @@ function borderColor() {
             if (colorNumber >= COLORS.length) {
                 colorNumber = 0;
             }
+            if(borderSize < 4) {
+                borderSize = 4;
+                $("#cardBox").css("border-width", borderSize + "px");
+            }
             $("#cardBox").css("border-color", COLORS[colorNumber]);
         }
     )
-}
-function borderSize() {
-    let borderSize = 10;
-    $("#cardBox").css("border-width", borderSize + "px"); // Set initial size
     $("#smallerBorder").click(
         function() {
             if ($("#cardBox").css("border-style") === "none") {
                 $("#cardBox").css("border-style", "solid");
             }
-            borderSize--;
-            if(borderSize < 0) {
+            borderSize/=1.3;
+            if(borderSize < 2) {
                 borderSize = 0;
             }
             $("#cardBox").css("border-width", borderSize + "px");
@@ -247,7 +281,13 @@ function borderSize() {
                 $("#cardBox").css("border-style", "solid");
                 borderSize = 0;
             }
-            borderSize++;
+            if (borderSize === 0) {
+                borderSize = 2;
+            }
+            borderSize*=1.3;
+            if (borderSize > 35.84) {  // set maximum size so that border doesn't get out of control
+                borderSize = 35.84;
+            }
             $("#cardBox").css("border-width", borderSize + "px");
         }
     );
@@ -442,9 +482,7 @@ $(footerColor);
 $(headerSize);
 $(bodySize);
 $(footerSize);
-$(borderStyle);
-$(borderColor);
-$(borderSize);
+$(borders);
 $(getImages);
 $(headerStyle);
 $(bodyStyle);
