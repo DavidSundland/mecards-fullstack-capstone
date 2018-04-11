@@ -96,12 +96,65 @@ button {
     background-color: #5B6DAD;
     font-size: .9em;
     box-shadow: 1px 1px white;
+    font-family: arial;
 }
 
+.userCard button {
+/*    padding: 12px 5px;*/
+    padding: 2px;
+    height: 50px;
+    width: 40px;
+    text-align: center;
+    margin: 4px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    box-shadow: none;
+    background-color: #504b5f;
+    box-shadow: 1px 1px lightgray;}
 
 button:hover {
     text-shadow: 0 0 1px white;
     background-color: #2f3d6e;
+}
+
+.oneFont {
+    font-family: "Roboto";
+}
+.twoFont {
+    font-family: "Gugi";
+}
+.threeFont {
+    font-family: "Indie Flower";
+}
+.oneColor {
+    color: #6495ED;
+}
+.twoColor {
+    color: #C9F251;
+}
+.threeColor {
+    color: #FFFF55;
+}
+.smallFont {
+    font-size: 0.4em;
+}
+.mediumFont {
+    font-size: 0.6em;
+}
+.oneStyle {
+    text-shadow: 1px 1px black;
+}
+.twoStyle {
+    text-shadow: 1px 1px red;
+}
+.oneWeight {
+    font-weight: 100;
+}
+.twoWeight {
+    font-weight: 500;
+}
+.threeWeight {
+    font-weight: 900;
 }
 
 /*
@@ -179,8 +232,6 @@ p {
     visibility: hidden;
     display: none;
 }
-
-
 
 .makeVisible {
     visibility: visible;

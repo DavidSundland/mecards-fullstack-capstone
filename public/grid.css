@@ -20,6 +20,7 @@
 }
 
 .col-1-no-mobile,
+.col-1,
 .col-2,
 .col-3,
 .col-4,
@@ -28,6 +29,7 @@
 .col-6,
 .col-7,
 .col-8,
+.col-10,
 .col-12 {
     float: left;
 
@@ -43,7 +45,9 @@
 
 /* Mobile defaults */
 
-.col-1-no-mobile .col-2,
+.col-1-no-mobile,
+.col-1,
+.col-2,
 .col-3,
 .col-4,
 .col-5,
@@ -51,6 +55,7 @@
 .col-6,
 .col-7,
 .col-8,
+.col-10,
 .col-12 {
     width: 100%;
 }
@@ -65,6 +70,9 @@
 @media only screen and (min-width: 1150px) {  /* Normally 640px */
     .col-1-no-mobile {
         display: inline-block;
+        width: 8.33%;
+    }
+    .col-1 {
         width: 8.33%;
     }
     .col-2 {
@@ -102,6 +110,10 @@
     /* 8 columns */
     .col-8 {
         width: 66.67%;
+    }
+
+    .col-10 {
+        width: 83.33%;
     }
 
     /* 12 columns */

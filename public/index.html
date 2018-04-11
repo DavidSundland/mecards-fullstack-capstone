@@ -62,45 +62,46 @@
         </form>
 
         <div class="userCard">
-            <form>
-                Heading: <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/><br>
+            <h2 class = "title">Heading: </h2>
+            <button id="prevTitleFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+            <button id="prevTitleColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+            <button id="smallerTitle"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+            <button id="prevHeaderStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+            <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/>
+            <button id="nextTitleFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+            <button id="nextTitleColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+            <button id="largerTitle">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+            <button id="nextHeaderStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+
+
                 Card Body: <textarea maxlength="400" name="bodytext" id="bodytext" onkeyup="changeBody()" placeholder="My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips..."></textarea><br>
                 Footer: <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Your Pookie Possum, Dick Cheney" /><br>
-            </form>
-            <button id="prevTitleFont">Prev Header Font</button>
-            <button id="nextTitleFont">Next Header Font</button>
-            <button id="prevBodyFont">Prev Body Font</button>
-            <button id="nextBodyFont">Next Body Font</button>
-            <button id="prevFooterFont">Prev Footer Font</button>
-            <button id="nextFooterFont">Next Footer Font</button>
+            <button id="prevBodyFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+            <button id="nextBodyFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+            <button id="prevFooterFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+            <button id="nextFooterFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
             <br>
-            <button id="prevTitleColor">Prev Header Color</button>
-            <button id="nextTitleColor">Next Header Color</button>
-            <button id="prevBodyColor">Prev Body Color</button>
-            <button id="nextBodyColor">Next Body Color</button>
-            <button id="prevFooterColor">Prev Footer Color</button>
-            <button id="nextFooterColor">NextFooter Color</button>
+            <button id="prevBodyColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+            <button id="nextBodyColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+            <button id="prevFooterColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+            <button id="nextFooterColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
             <br>
-            <button id="smallerTitle">Smaller Header</button>
-            <button id="largerTitle">Larger Header</button>
-            <button id="smallerBody">Smaller Body</button>
-            <button id="largerBody">Larger Body</button>
-            <button id="smallerFooter">Smaller Footer</button>
-            <button id="largerFooter">Larger Footer</button>
+            <button id="smallerBody"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+            <button id="largerBody">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+            <button id="smallerFooter"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+            <button id="largerFooter">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
             <br>
-            <button id="prevHeaderStyle">Prev Header Style</button>
-            <button id="nextHeaderStyle">Next Header Style</button>
-            <button id="prevBodyStyle">Prev Body Style</button>
-            <button id="nextBodyStyle">Next Body Style</button>
-            <button id="prevFooterStyle">Prev Footer Style</button>
-            <button id="nextFooterStyle">Next Footer Style</button>
+            <button id="prevBodyStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+            <button id="nextBodyStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+            <button id="prevFooterStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+            <button id="nextFooterStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
             <br>
-            <button id="prevBorderStyle">Prev Border Style</button>
-            <button id="nextBorderStyle">Next Border Style</button>
-            <button id="prevBorderColor">Prev Border Color</button>
-            <button id="nextBorderColor">Next Border Color</button>
-            <button id="smallerBorder">Smaller Border</button>
-            <button id="largerBorder">Larger Border</button>
+            <button id="prevBorderStyle">┐╗</button>
+            <button id="nextBorderStyle">╗┐</button>
+            <button id="prevBorderColor"><span class="oneColor">┐</span><span class="twoColor">┐</span><span class="threeColor">┐</span></button>
+            <button id="nextBorderColor"><span class="threeColor">┐</span><span class="twoColor">┐</span><span class="oneColor">┐</span</button>
+            <button id="smallerBorder">│▌█</button>
+            <button id="largerBorder">█ ▌│</button>
             <br>
             <form>
                 Search term for background image:<input name="photoQuery"  id="photoQuery" placeholder="puppies">
@@ -115,12 +116,19 @@
 
 
             <h2>Your Card:</h2>
-            <div class="outerBox">
-                <div id="cardBox">
+            <div class="outerBox row">
+                <div class="leftButtons col-1">
+
+                                </div>
+                <div id="cardBox" class="col-10">
                     <p id="cardHeader">To da wuv uv my life</p>
                     <img id="photo" src="https://www.pets4homes.co.uk/images/articles/3448/large/six-health-essentials-that-you-should-monitor-in-your-kittens-first-few-weeks-of-life-56a6114cb4003.jpg">
                     <p id="cardBody">My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips...</p>
                     <p id="cardFooter">Your Pookie Possum, Dick Cheney</p>
+                </div>
+                <div class="rightButtons col-1">
+                    <button id="smallerBorder">│▌█</button><br>
+                    <button id="largerBorder">█ ▌│</button>
                 </div>
             </div>
         </div>
