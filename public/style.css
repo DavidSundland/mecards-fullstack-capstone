@@ -101,7 +101,7 @@ button {
     font-family: arial;
 }
 
-.userCard button {
+.styleButton  {
 /*    padding: 12px 5px;*/
     padding: 2px;
     height: 50px;
@@ -112,7 +112,13 @@ button {
     border: 1px solid gray;
     box-shadow: none;
     background-color: #504b5f;
-    box-shadow: 1px 1px lightgray;}
+    box-shadow: 1px 1px lightgray;
+}
+
+.borderButton {
+    padding-bottom: 6px;
+    width: 50px;
+}
 
 button:hover {
     text-shadow: 0 0 1px white;
@@ -177,6 +183,10 @@ input {
     font-weight: 900;
 }
 
+.middleArea {
+    margin-top: 50px;
+    margin-bottom: 50px;;
+}
 /*
 p {
     color: #4E88A1;
@@ -243,6 +253,10 @@ p {
 }
 */
 
+.bodyColumn {
+    padding-top: 60px;
+}
+
 #cardBody {
     position: absolute;
     top: 50%;
@@ -265,6 +279,40 @@ p {
     color: purple;
 */
 }
+
+footer {
+    /*    position: fixed;*/
+    background-color: #100200;
+    /*    border-top: 10px inset #830e02;*/
+    padding: 10px 0;
+    width: 120%;
+    margin-left: -10%;
+    margin-bottom: -2%;
+    overflow: auto;
+    margin-top: 60px;
+    z-index: 400;
+}
+
+footer a {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.left {
+    float: left;
+    padding: 5px 20px 5px 12%;
+    /* Mirror image of .right */
+    width: 49%;
+}
+
+.right {
+    float: right;
+    padding: 5px 12% 5px 20px;
+    /* Need to be sure right margin clears right curtain so icons clickable */
+    width: 49%;
+    text-align: right;
+}
+
 
 .hideMe {
     visibility: hidden;
@@ -684,38 +732,6 @@ hr {
 .alertBox button {
     margin: 50px;
     font-size: .8em;
-}
-
-footer {
-    /*    position: fixed;*/
-    background-color: #100200;
-    /*    border-top: 10px inset #830e02;*/
-    padding: 10px 0;
-    width: 100%;
-    margin: 0;
-    overflow: auto;
-    margin-top: 60px;
-    z-index: 400;
-}
-
-footer a {
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.left {
-    float: left;
-    padding: 5px 20px 5px 12%;
-    /* Mirror image of .right */
-    width: 49%;
-}
-
-.right {
-    float: right;
-    padding: 5px 12% 5px 20px;
-    /* Need to be sure right margin clears right curtain so icons clickable */
-    width: 49%;
-    text-align: right;
 }
 
 form {
