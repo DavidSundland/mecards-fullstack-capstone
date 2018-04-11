@@ -222,13 +222,26 @@ p {
 
 #cardHeader {
     position: absolute;
+/*
     top: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
+*/
+/*    margin-top: 10px;*/
+    text-align: center;
+/*
     font-size: 3em;
     color: red;
+*/
     padding: 10px;
+    width: 100%;
 }
+
+/*
+.cardHeader {
+    text-align: center;
+}
+*/
 
 #cardBody {
     position: absolute;
@@ -241,11 +254,16 @@ p {
 
 #cardFooter {
     position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
+/*
     bottom: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2em;
     color: purple;
+*/
 }
 
 .hideMe {
