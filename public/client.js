@@ -13,8 +13,8 @@ function changeHeader() {
 }
 
 function changeBody() {
-    let input = $("#bodytext").val();
-    $("#cardText").text(input);
+    let input = $("#bodyText").val();
+    $("#cardBody").text(input);
 }
 
 function changeFooter() {

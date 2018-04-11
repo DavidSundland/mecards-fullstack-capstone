@@ -9,9 +9,13 @@
 <!-- FONTS FROM WHICH USERS CAN SELECT FOR THEIR CARDS:  -->
     <link href="https://fonts.googleapis.com/css?family=Arvo|Black+And+White+Picture|Black+Han+Sans|Crimson+Text|Cute+Font|Dancing+Script|Do+Hyeon|Dokdo|Dosis|Gaegu|Gamja+Flower|Gugi|Hi+Melody|Inconsolata|Indie+Flower|Jua|Lato|Libre+Baskerville|Lobster|Merriweather|Montserrat|Pacifico|Playfair+Display|Poppins|Raleway|Roboto|Shadows+Into+Light|Tajawal|Ubuntu" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono|Exo+2|Montserrat|Quicksand" rel="stylesheet">
+
 <!-- The following two font packages are from Venue e-Valuator and ultimately can be removed -->
+<!--
     <link href="https://fonts.googleapis.com/css?family=Kanit|Montserrat|Open+Sans:600|Quicksand|Raleway|Roboto:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Anton|Arimo|Dhurjati|Fira+Mono|Nova+Mono|Overpass+Mono:300,400|PT+Sans" rel="stylesheet">
+-->
 
     <link rel="icon" href="http://www.districtconcerts.com/wp-content/uploads/2015/09/Favicon_1.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="grid.css" />
@@ -62,47 +66,62 @@
         </form>
 
         <div class="userCard">
-            <h2 class = "title">Heading: </h2>
-            <button id="prevTitleFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
-            <button id="prevTitleColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
-            <button id="smallerTitle"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-            <button id="prevHeaderStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-            <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/>
-            <button id="nextTitleFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
-            <button id="nextTitleColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
-            <button id="largerTitle">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-            <button id="nextHeaderStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+            <div class="row">
+                <h2 class = "title">Heading:</h2>
+                <button id="prevTitleFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+                <button id="prevTitleColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+                <button id="smallerTitle"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                <button id="prevHeaderStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                <input type="text" name="titleText" id="titleText" placeholder="To da wuv uv my life" onkeyup="changeHeader()"/>
+                <button id="nextTitleFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+                <button id="nextTitleColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+                <button id="largerTitle">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                <button id="nextHeaderStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+            </div>
 
+            <div class="row">
+                <div id="cardBox" class="col-8">
+                    <p id="cardHeader">To da wuv uv my life</p>
+                    <img id="photo" src="https://www.pets4homes.co.uk/images/articles/3448/large/six-health-essentials-that-you-should-monitor-in-your-kittens-first-few-weeks-of-life-56a6114cb4003.jpg">
+                    <p id="cardBody">My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips...</p>
+                    <p id="cardFooter">Your Pookie Possum, Dick Cheney</p>
+                </div>
 
-                Card Body: <textarea maxlength="400" name="bodytext" id="bodytext" onkeyup="changeBody()" placeholder="My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips..."></textarea><br>
-                Footer: <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Your Pookie Possum, Dick Cheney" /><br>
-            <button id="prevBodyFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
-            <button id="nextBodyFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
-            <button id="prevFooterFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
-            <button id="nextFooterFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
-            <br>
-            <button id="prevBodyColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
-            <button id="nextBodyColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
-            <button id="prevFooterColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
-            <button id="nextFooterColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
-            <br>
-            <button id="smallerBody"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-            <button id="largerBody">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-            <button id="smallerFooter"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-            <button id="largerFooter">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-            <br>
-            <button id="prevBodyStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-            <button id="nextBodyStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
-            <button id="prevFooterStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-            <button id="nextFooterStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
-            <br>
+                <div class = "col-4">
+                    <h2 class="body">Card Body:</h2>
+                    <button id="prevBodyFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+                    <button id="prevBodyColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+                    <button id="smallerBody"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                    <button id="prevBodyStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                    <textarea maxlength="400" name="bodyText" id="bodyText" onkeyup="changeBody()" placeholder="My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips..."></textarea>
+                    <button id="nextBodyFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+                    <button id="nextBodyColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+                    <button id="largerBody">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                    <button id="nextBodyStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+                </div>
+            </div>
+
+            <div>
+            <h2 class="footer">Footer:</h2>
+                <button id="prevFooterFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+                <button id="prevFooterColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+                <button id="smallerFooter"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                <button id="prevFooterStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Your Pookie Possum, Dick Cheney" />
+                <button id="nextFooterFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+                <button id="nextFooterColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+                <button id="largerFooter">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                <button id="nextFooterStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+            </div>
+
             <button id="prevBorderStyle">┐╗</button>
             <button id="nextBorderStyle">╗┐</button>
             <button id="prevBorderColor"><span class="oneColor">┐</span><span class="twoColor">┐</span><span class="threeColor">┐</span></button>
-            <button id="nextBorderColor"><span class="threeColor">┐</span><span class="twoColor">┐</span><span class="oneColor">┐</span</button>
+            <button id="nextBorderColor"><span class="threeColor">┐</span><span class="twoColor">┐</span><span class="oneColor">┐</span></button>
             <button id="smallerBorder">│▌█</button>
             <button id="largerBorder">█ ▌│</button>
-            <br>
+               </div>
+
             <form>
                 Search term for background image:<input name="photoQuery"  id="photoQuery" placeholder="puppies">
                 <button type="submit" id="querySubmit">Submit</button>
@@ -115,23 +134,17 @@
             <button id="nextPhoto">Next Image</button>
 
 
-            <h2>Your Card:</h2>
+<!--            <h2>Your Card:</h2>
             <div class="outerBox row">
                 <div class="leftButtons col-1">
 
-                                </div>
-                <div id="cardBox" class="col-10">
-                    <p id="cardHeader">To da wuv uv my life</p>
-                    <img id="photo" src="https://www.pets4homes.co.uk/images/articles/3448/large/six-health-essentials-that-you-should-monitor-in-your-kittens-first-few-weeks-of-life-56a6114cb4003.jpg">
-                    <p id="cardBody">My love for you is deeper than the potholes that destroyed your car's suspension.  My love for you is higher than your brother during a Mystery Science Theater 3000 marathon.  My love for you is wider than your aunt Bertha's hips...</p>
-                    <p id="cardFooter">Your Pookie Possum, Dick Cheney</p>
-                </div>
-                <div class="rightButtons col-1">
+                                </div> -->
+<!--                <div class="rightButtons col-1">
                     <button id="smallerBorder">│▌█</button><br>
                     <button id="largerBorder">█ ▌│</button>
                 </div>
             </div>
-        </div>
+</div>-->
 
 
 <!--        <img class="curtainLeft" alt="Left Curtain" src="https://github.com/DavidSundland/venue-evaluator-node-capstone/blob/master/public/images/curtain-left.png?raw=true">
