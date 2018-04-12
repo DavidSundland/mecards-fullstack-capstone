@@ -289,9 +289,9 @@ function borders() {
     let styleNumber = 0;
     let colorNumber = 0;
     let borderSize = 10;
-    $("#cardBox").css("border-style", BORDERS[styleNumber]); // Set initial border
-    $("#cardBox").css("border-color", COLORS[colorNumber]); // Set initial color
-    $("#cardBox").css("border-width", borderSize + "px"); // Set initial size
+    $("#photo").css("border-style", BORDERS[styleNumber]); // Set initial border
+    $("#photo").css("border-color", COLORS[colorNumber]); // Set initial color
+    $("#photo").css("border-width", borderSize + "px"); // Set initial size
     $("#prevBorderStyle").click(
         function() {
             styleNumber--;
@@ -300,9 +300,9 @@ function borders() {
             }
             if(borderSize < 4) { // If no border or tiny border, increase border size so visible
                 borderSize = 4;
-                $("#cardBox").css("border-width", borderSize + "px");
+                $("#photo").css("border-width", borderSize + "px");
             }
-            $("#cardBox").css("border-style", BORDERS[styleNumber]);
+            $("#photo").css("border-style", BORDERS[styleNumber]);
         }
     );
     $("#nextBorderStyle").click(
@@ -313,15 +313,15 @@ function borders() {
             }
             if(borderSize < 4) { // If no border or tiny border, increase border size so visible
                 borderSize = 4;
-                $("#cardBox").css("border-width", borderSize + "px");
+                $("#photo").css("border-width", borderSize + "px");
             }
-            $("#cardBox").css("border-style", BORDERS[styleNumber]);
+            $("#photo").css("border-style", BORDERS[styleNumber]);
         }
     );
     $("#prevBorderColor").click(
         function() {
-            if ($("#cardBox").css("border-style") === "none") {
-                $("#cardBox").css("border-style", "solid");
+            if ($("#photo").css("border-style") === "none") {
+                $("#photo").css("border-style", "solid");
             }
             colorNumber--;
             if (colorNumber < 0) {
@@ -329,15 +329,15 @@ function borders() {
             }
             if(borderSize < 4) {
                 borderSize = 4;
-                $("#cardBox").css("border-width", borderSize + "px");
+                $("#photo").css("border-width", borderSize + "px");
             }
-            $("#cardBox").css("border-color", COLORS[colorNumber]);
+            $("#photo").css("border-color", COLORS[colorNumber]);
         }
     );
     $("#nextBorderColor").click(
         function() {
-            if ($("#cardBox").css("border-style") === "none") {
-                $("#cardBox").css("border-style", "solid");
+            if ($("#photo").css("border-style") === "none") {
+                $("#photo").css("border-style", "solid");
             }
             colorNumber++;
             if (colorNumber >= COLORS.length) {
@@ -345,27 +345,27 @@ function borders() {
             }
             if(borderSize < 4) {
                 borderSize = 4;
-                $("#cardBox").css("border-width", borderSize + "px");
+                $("#photo").css("border-width", borderSize + "px");
             }
-            $("#cardBox").css("border-color", COLORS[colorNumber]);
+            $("#photo").css("border-color", COLORS[colorNumber]);
         }
     );
     $("#smallerBorder").click(
         function() {
-            if ($("#cardBox").css("border-style") === "none") {
-                $("#cardBox").css("border-style", "solid");
+            if ($("#photo").css("border-style") === "none") {
+                $("#photo").css("border-style", "solid");
             }
             borderSize/=1.3;
             if(borderSize < 2) {
                 borderSize = 0;
             }
-            $("#cardBox").css("border-width", borderSize + "px");
+            $("#photo").css("border-width", borderSize + "px");
         }
     );
     $("#largerBorder").click(
         function() {
-            if ($("#cardBox").css("border-style") === "none") {
-                $("#cardBox").css("border-style", "solid");
+            if ($("#photo").css("border-style") === "none") {
+                $("#photo").css("border-style", "solid");
                 borderSize = 0;
             }
             if (borderSize === 0) {
@@ -375,7 +375,7 @@ function borders() {
             if (borderSize > 35.84) {  // set maximum size so that border doesn't get out of control
                 borderSize = 35.84;
             }
-            $("#cardBox").css("border-width", borderSize + "px");
+            $("#photo").css("border-width", borderSize + "px");
         }
     );
 }
