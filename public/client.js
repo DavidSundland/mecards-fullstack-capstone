@@ -6,23 +6,79 @@ const COLORS = ['white', 'black', 'maroon', 'teal', 'aqua', 'navy', '#6495ED', '
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
 
-
-function changeHeader() {
-    let input = $("#titleText").val();
-    $("#cardHeader").text(input);
+function setInitial() {
+    $("#cardHeader").css("font-family", FONTS[0]); // Set initial header font
+    $("#cardBody").css("font-family", FONTS[0]);  // Set initial body font
+    $("#cardFooter").css("font-family", FONTS[0]); // Set initial footer font
+    $("#cardHeader").css("color", COLORS[0]); // Set initial header color
+    $("#cardBody").css("color", COLORS[0]); // Set initial body color
+    $("#cardFooter").css("color", COLORS[0]); // Set initial footer color
 }
 
-function changeBody() {
-    let input = $("#bodyText").val();
-    $("#cardBody").text(input);
+let createCard = {
+    titleText: "",
+    bodyText: "",
+    footerText: "",
+    titleFontNumber: 0,
+    bodyFontNumber: 0,
+    footerFontNumber: 0,
+    changeHeader: function() {
+        this.titleText = $("#titleText").val();
+        $("#cardHeader").text(this.titleText);
+    },
+
+    changeBody: function() {
+        this.bodyText = $("#bodyText").val();
+        $("#cardBody").text(this.bodyText);
+    },
+
+    changeFooter: function() {
+        this.footerText = $("#footertext").val();
+        $("#cardFooter").text(this.footerText);
+    },
+    headerFont: function() {
+        $("#nextTitleFont").click(
+            function() {
+                createCard.titleFontNumber++;
+                if (createCard.titleFontNumber >= FONTS.length) {
+                    createCard.titleFontNumber = 0;
+                }
+                $("#cardHeader").css("font-family", FONTS[createCard.titleFontNumber]);
+            }
+        );
+        $("#prevTitleFont").click(
+            function() {
+                createCard.titleFontNumber--;
+                if (createCard.titleFontNumber < 0) {
+                    createCard.titleFontNumber = FONTS.length - 1;
+                }
+                $("#cardHeader").css("font-family", FONTS[createCard.titleFontNumber]);
+            }
+        );
+    },
+    bodyFont: function() {
+        $("#nextBodyFont").click(
+            function() {
+                createCard.bodyFontNumber++;
+                if (createCard.bodyFontNumber >= FONTS.length) {
+                    createCard.bodyFontNumber = 0;
+                }
+                $("#cardBody").css("font-family", FONTS[createCard.bodyFontNumber]);
+            }
+        );
+        $("#prevBodyFont").click(
+            function() {
+                createCard.bodyFontNumber--;
+                if (createCard.bodyFontNumber < 0) {
+                    createCard.bodyFontNumber = FONTS.length - 1;
+                }
+                $("#cardBody").css("font-family", FONTS[createCard.bodyFontNumber]);
+            }
+        );
+    }
 }
 
-function changeFooter() {
-    let input = $("#footertext").val();
-    $("#cardFooter").text(input);
-}
-
-/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
+/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************
 function headerFont() {
     let fontNumber = 0;
     $("#cardHeader").css("font-family", FONTS[fontNumber]); // Set initial font
@@ -44,7 +100,7 @@ function headerFont() {
             $("#cardHeader").css("font-family", FONTS[fontNumber]);
         }
     );
-}
+} */
 
 function bodyFont() {
     let fontNumber = 0;
@@ -561,9 +617,10 @@ function getImages() {
     });
 }
 
-
-$(headerFont);
-$(bodyFont);
+$(setInitial);
+$(createCard.headerFont);
+//$(headerFont);
+$(createCard.bodyFont);
 $(footerFont);
 $(headerColor);
 $(bodyColor);
