@@ -102,31 +102,32 @@
                     <button class="styleButton tooltip" id="prevBodyColor"><span class="tooltiptext toptip">Prev body color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
                     <button class="styleButton tooltip" id="nextBodyColor"><span class="tooltiptext toptip">Next body color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
                     <textarea maxlength="400" name="bodyText" id="bodyText" onkeyup="changeBody()" placeholder="Type your body text"></textarea>
-                    <button class="styleButton" id="smallerBody">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-                    <button class="styleButton" id="largerBody"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-                    <button class="styleButton" id="prevBodyStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-                    <button class="styleButton" id="nextBodyStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
-                    <br>
-                    <button class="styleButton borderButton" id="prevBorderStyle">┐╗</button>
-                    <button class="styleButton borderButton" id="nextBorderStyle">╗┐</button>
-                    <button class="styleButton borderButton" id="prevBorderColor"><span class="oneColor">┐</span><span class="twoColor">┐</span><span class="threeColor">┐</span></button>
-                    <button class="styleButton borderButton" id="nextBorderColor"><span class="threeColor">┐</span><span class="twoColor">┐</span><span class="oneColor">┐</span></button>
-                    <button class="styleButton" id="smallerBorder">│▌</button>
-                    <button class="styleButton" id="largerBorder">▌│</button>
+                    <button class="styleButton tooltip" id="smallerBody"><span class="tooltiptext bottomtip">Smaller body</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                    <button class="styleButton tooltip" id="largerBody"><span class="tooltiptext bottomtip">Larger body</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                    <button class="styleButton tooltip" id="prevBodyStyle"><span class="tooltiptext bottomtip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                    <button class="styleButton tooltip" id="nextBodyStyle"><span class="tooltiptext bottomtip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+                    <div id="borderButtons"> <!-- *MARK* - THIS DIV NEEDED?  SET HEIGHT FOR DIV TO HAVE BORDER WHATNOT SEPARATED? -->
+                        <button class="styleButton borderButton tooltip" id="prevBorderStyle"><span class="tooltiptext toptip">Prev border style</span>┐╗</button>
+                        <button class="styleButton borderButton tooltip" id="nextBorderStyle"><span class="tooltiptext toptip">Next border style</span>╗┐</button>
+                        <button class="styleButton borderButton tooltip" id="prevBorderColor"><span class="tooltiptext toptip">Prev border color</span><span class="oneColor">┐</span><span class="twoColor">┐</span><span class="threeColor">┐</span></button>
+                        <button class="styleButton borderButton tooltip" id="nextBorderColor"><span class="tooltiptext toptip">Next border color</span><span class="threeColor">┐</span><span class="twoColor">┐</span><span class="oneColor">┐</span></button>
+                        <button class="styleButton tooltip" id="smallerBorder"><span class="tooltiptext toptip">Narrower border</span>▌│</button>
+                        <button class="styleButton tooltip" id="largerBorder"><span class="tooltiptext toptip">Wider border</span>│▌</button>
+                    </div>
                 </div>
             </div>
 
             <div>
 <!--            <h2 class="footer">Footer:</h2>-->
-                <button class="styleButton" id="prevFooterFont"><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
-                <button class="styleButton" id="nextFooterFont"><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
-                <button class="styleButton" id="prevFooterColor"><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
-                <button class="styleButton" id="nextFooterColor"><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+                <button class="styleButton tooltip" id="prevFooterFont"><span class="tooltiptext toptip">Prev footer font</span><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+                <button class="styleButton tooltip" id="nextFooterFont"><span class="tooltiptext toptip">Next footer font</span><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+                <button class="styleButton tooltip" id="prevFooterColor"><span class="tooltiptext toptip">Prev footer color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+                <button class="styleButton tooltip" id="nextFooterColor"><span class="tooltiptext toptip">Next footer color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
                 <input type="text" name="footertext" id="footertext" onkeyup="changeFooter()" placeholder="Type your footer text" />
-                <button class="styleButton" id="smallerFooter">a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-                <button class="styleButton" id="largerFooter"><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-                <button class="styleButton" id="prevFooterStyle">a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-                <button class="styleButton" id="nextFooterStyle"><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+                <button class="styleButton tooltip" id="smallerFooter"><span class="tooltiptext toptip">Smaller footer</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                <button class="styleButton tooltip" id="largerFooter"><span class="tooltiptext toptip">Larger footer</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                <button class="styleButton tooltip" id="prevFooterStyle"><span class="tooltiptext toptip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                <button class="styleButton tooltip" id="nextFooterStyle"><span class="tooltiptext toptip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
             </div>
         </div>
 

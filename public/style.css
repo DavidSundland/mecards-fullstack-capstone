@@ -113,6 +113,11 @@ button {
     box-shadow: 1px 1px lightgray;
 }
 
+#borderButtons {
+    margin-top: 50px;
+/*    bottom: 0;*/
+}
+
 .borderButton {
     padding-bottom: 6px;
     width: 50px;
@@ -239,6 +244,13 @@ p {
 .toptip {
     width: 120px;
     bottom: 110%;
+    left: 50%;
+    margin-left: -55px; /* Half of the tooltip width */
+}
+
+.bottomtip {
+    width: 120px;
+    top: 110%;
     left: 50%;
     margin-left: -55px; /* Half of the tooltip width */
 }
