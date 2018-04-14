@@ -522,8 +522,9 @@ function getImages() {
                     alert("ain't got no results");
                 } else {
                     console.log(res);
-                    console.log("did i hit my target", res.results[0].urls.regular);
-                    $("#photo").attr("src", res.results[0].urls.regular);
+                    console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
+                    $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
+                    $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via Unsplash`);  // set credit for first photo
                     photoList = [];  // clear the previous results
                     for (let x=0; x<res.results.length; x++) {
                         photoList.push(res.results[x].urls.regular);
