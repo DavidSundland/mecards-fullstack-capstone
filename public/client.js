@@ -540,6 +540,7 @@ let createCard = {
 //</div>
 
 function previewCard() {
+    console.log("in previewCard");
     $("#cardPreview").addClass("makeVisible");
     $("#previewHeader").text(createCard.titleText);
     $("#previewBody").text(createCard.bodyText);
@@ -563,6 +564,8 @@ function previewCard() {
     $("#previewPhoto").css("border-color", COLORS[createCard.borderColor]);
     $("#previewPhoto").css("border-width", createCard.borderSize + "px");
     $("#cardPreview").css("background-color", COLORS[createCard.backgroundNumber]);
+    $("#previewPhoto").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
+    $("#previewCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
 }
 
 

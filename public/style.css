@@ -285,7 +285,7 @@ p {
     width: 100%;
 }
 
-#photoCreds {
+#photoCreds, #previewCreds {
     color: rgba(255,255,255,.7);
     text-shadow: 2px 2px rgba(0,0,0,.7);
     text-align: left;
@@ -295,7 +295,7 @@ p {
     font-size: .7em;
 }
 
-#cardHeader {
+#cardHeader, #previewHeader {
     position: absolute;
 /*
     top: 5%;
@@ -322,7 +322,7 @@ p {
     padding-top: 60px;
 }
 
-#cardBody {
+#cardBody, #previewBody {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -331,7 +331,7 @@ p {
 }
 
 
-#cardFooter {
+#cardFooter, #previewFooter {
     position: absolute;
     width: 100%;
     text-align: center;
@@ -347,6 +347,11 @@ p {
 
 #cardPreview {
     z-index: 50;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 footer {
