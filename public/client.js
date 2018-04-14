@@ -45,17 +45,32 @@ let createCard = {
 
     changeHeader: function() {
         this.titleText = $("#titleText").val();
-        $("#cardHeader").text(this.titleText);
+        if (this.titleText==="") {  // if user deletes text, put the instructions back on screen
+            $("#cardHeader").text("Header (optional)");
+        }
+        else {
+            $("#cardHeader").text(this.titleText);
+        }
     },
 
     changeBody: function() {
         this.bodyText = $("#bodyText").val();
-        $("#cardBody").text(this.bodyText);
+        if (this.bodyText==="") {
+            $("#cardBody").text("Body text (optional).  The header, body, and footer text are all optional.  If you want the header, body, and/or footer to be blank, click in the corresponding text box and then hit your spacebar.");
+        }
+        else {
+            $("#cardBody").text(this.bodyText);
+        }
     },
 
     changeFooter: function() {
         this.footerText = $("#footertext").val();
-        $("#cardFooter").text(this.footerText);
+        if (this.footerText==="") {
+            $("#cardFooter").text("Footer (optional)");
+        }
+        else {
+            $("#cardFooter").text(this.footerText);
+        }
     },
     headerFont: function() {
         $("#nextTitleFont").click(
@@ -517,15 +532,18 @@ function getImages() {
         let searchTerm = $("#photoQuery").val();
         console.log(searchTerm);
         $.getJSON('/unsplash/:' + searchTerm, function (res) {
-                if (res.results == null || res.results == "null") {
+                if (res.total == 0) {
                     console.log("got bupkis");
-                    alert("ain't got no results");
+                    alert(`We found no results for ${searchTerm}!`);
                 } else {
                     console.log(res);
                     console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
+                    $("#nextPhoto").addClass("makeVisible");
+                    $("#prevPhoto").addClass("makeVisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
                     photoList = [];  // clear the previous results
+                    $("#photoQuery").val("");  // clear the previous results
                     for (let x=0; x<res.results.length; x++) {
                         photoList.push({photoLink: res.results[x].urls.regular, photogName: res.results[x].user.name, photogLink: res.results[x].user.portfolio_url, width: res.results[x].width, height: res.results[x].height});
                     }

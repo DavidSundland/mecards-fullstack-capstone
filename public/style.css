@@ -99,6 +99,10 @@ button {
     font-family: arial;
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 .styleButton  {
 /*    padding: 12px 5px;*/
     padding: 2px;
