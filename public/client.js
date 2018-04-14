@@ -41,6 +41,7 @@ let createCard = {
     borderStyle: 0,
     borderColor: 0,
     borderSize: 10,
+    backgroundNumber: 0,
 
     changeHeader: function() {
         this.titleText = $("#titleText").val();
@@ -369,6 +370,19 @@ let createCard = {
                     createCard.borderSize = 35.84;
                 }
                 $("#photo").css("border-width", createCard.borderSize + "px");
+            }
+        );
+        $("#nextBackground").click(
+            function() {
+                createCard.backgroundNumber++;
+                if (createCard.backgroundNumber >= COLORS.length) {
+                    createCard.backgroundNumber = 0;
+                }
+                if(createCard.backgroundNumber < 0) {
+                    createCard.backgroundNumber = COLORS.length-1;
+                }
+                console.log(createCard.backgroundNumber);
+                $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
             }
         );
     },
