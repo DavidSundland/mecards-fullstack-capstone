@@ -7,13 +7,20 @@ const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge
 const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
 
 function setInitial() {
-    $("#cardHeader").css("font-family", FONTS[0]); // Set initial header font
-    $("#cardBody").css("font-family", FONTS[0]);  // Set initial body font
-    $("#cardFooter").css("font-family", FONTS[0]); // Set initial footer font
-    $("#cardHeader").css("color", COLORS[0]); // Set initial header color
-    $("#cardBody").css("color", COLORS[0]); // Set initial body color
-    $("#cardFooter").css("color", COLORS[0]); // Set initial footer color
+    $("#cardHeader").css("font-family", FONTS[0]);
+    $("#cardBody").css("font-family", FONTS[0]);
+    $("#cardFooter").css("font-family", FONTS[0]);
+    $("#cardHeader").css("color", COLORS[0]);
+    $("#cardBody").css("color", COLORS[0]);
+    $("#cardFooter").css("color", COLORS[0]);
+    $("#cardHeader").css("font-size", "2em");
+    $("#cardBody").css("font-size", "1em");
+    $("#cardFooter").css("font-size", "2em");
+    $("#photo").css("border-style", BORDERS[0]); // Set initial border
+    $("#photo").css("border-color", COLORS[0]); // Set initial color
+    $("#photo").css("border-width", "10px"); // Set initial size
 }
+
 
 let createCard = {
     titleText: "",
@@ -22,6 +29,19 @@ let createCard = {
     titleFontNumber: 0,
     bodyFontNumber: 0,
     footerFontNumber: 0,
+    titleColorNumber: 0,
+    bodyColorNumber: 0,
+    footerColorNumber: 0,
+    titleFontSize: 2,
+    bodyFontSize: 1,
+    footerFontSize: 2,
+    titleStyle: 0,
+    bodyStyleNumber: 0,
+    footerStyleNumber: 0,
+    borderStyle: 0,
+    borderColor: 0,
+    borderSize: 10,
+
     changeHeader: function() {
         this.titleText = $("#titleText").val();
         $("#cardHeader").text(this.titleText);
@@ -75,365 +95,283 @@ let createCard = {
                 $("#cardBody").css("font-family", FONTS[createCard.bodyFontNumber]);
             }
         );
-    }
-}
-
-/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************
-function headerFont() {
-    let fontNumber = 0;
-    $("#cardHeader").css("font-family", FONTS[fontNumber]); // Set initial font
-    $("#nextTitleFont").click(
-        function() {
-            fontNumber++;
-            if (fontNumber >= FONTS.length) {
-                fontNumber = 0;
+    },
+    footerFont: function() {
+        $("#nextFooterFont").click(
+            function() {
+                createCard.footerFontNumber++;
+                if (createCard.footerFontNumber >= FONTS.length) {
+                    createCard.footerFontNumber = 0;
+                }
+                $("#cardFooter").css("font-family", FONTS[createCard.footerFontNumber]);
             }
-            $("#cardHeader").css("font-family", FONTS[fontNumber]);
-        }
-    );
-    $("#prevTitleFont").click(
-        function() {
-            fontNumber--;
-            if (fontNumber < 0) {
-                fontNumber = FONTS.length - 1;
+        );
+        $("#prevFooterFont").click(
+            function() {
+                createCard.footerFontNumber--;
+                if (createCard.footerFontNumber < 0) {
+                    createCard.footerFontNumber = FONTS.length - 1;
+                }
+                $("#cardFooter").css("font-family", FONTS[createCard.footerFontNumber]);
             }
-            $("#cardHeader").css("font-family", FONTS[fontNumber]);
-        }
-    );
-} */
-
-function bodyFont() {
-    let fontNumber = 0;
-    $("#cardBody").css("font-family", FONTS[fontNumber]);  // Set initial font
-    $("#nextBodyFont").click(
-        function() {
-            fontNumber++;
-            if (fontNumber >= FONTS.length) {
-                fontNumber = 0;
+        );
+    },
+    headerColor: function() {
+        $("#prevTitleColor").click(
+            function() {
+                createCard.titleColorNumber--;
+                if (createCard.titleColorNumber < 0) {
+                    createCard.titleColorNumber = COLORS.length-1;
+                }
+                $("#cardHeader").css("color", COLORS[createCard.titleColorNumber]);
             }
-            $("#cardBody").css("font-family", FONTS[fontNumber]);
-        }
-    );
-    $("#prevBodyFont").click(
-        function() {
-            fontNumber--;
-            if (fontNumber < 0) {
-                fontNumber = FONTS.length - 1;
+        );
+        $("#nextTitleColor").click(
+            function() {
+                createCard.titleColorNumber++;
+                if (createCard.titleColorNumber >= COLORS.length) {
+                    createCard.titleColorNumber = 0;
+                }
+                $("#cardHeader").css("color", COLORS[createCard.titleColorNumber]);
             }
-            $("#cardBody").css("font-family", FONTS[fontNumber]);
-        }
-    );
-}
-
-function footerFont() {
-    let fontNumber = 0;
-    $("#cardFooter").css("font-family", FONTS[fontNumber]); // Set initial font
-    $("#nextFooterFont").click(
-        function() {
-            fontNumber++;
-            if (fontNumber >= FONTS.length) {
-                fontNumber = 0;
+        );
+    },
+    bodyColor: function() {
+        $("#prevBodyColor").click(
+            function() {
+            createCard.bodyColorNumber--;
+                if (createCard.bodyColorNumber < 0) {
+                    createCard.bodyColorNumber = COLORS.length-1;
+                }
+                $("#cardBody").css("color", COLORS[createCard.bodyColorNumber]);
             }
-            $("#cardFooter").css("font-family", FONTS[fontNumber]);
-        }
-    );
-    $("#prevFooterFont").click(
-        function() {
-            fontNumber--;
-            if (fontNumber < 0) {
-                fontNumber = FONTS.length - 1;
+        );
+        $("#nextBodyColor").click(
+            function() {
+                createCard.bodyColorNumber++;
+                if (createCard.bodyColorNumber >= COLORS.length) {
+                    createCard.bodyColorNumber = 0;
+                }
+                $("#cardBody").css("color", COLORS[createCard.bodyColorNumber]);
             }
-            $("#cardFooter").css("font-family", FONTS[fontNumber]);
-        }
-    );
-}
-
-/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
-function headerColor() {
-    let colorNumber = 0;
-    $("#cardHeader").css("color", COLORS[colorNumber]); // Set initial color
-    $("#prevTitleColor").click(
-        function() {
-            colorNumber--;
-            if (colorNumber < 0) {
-                colorNumber = COLORS.length-1;
+        );
+    },
+    footerColor: function() {
+        $("#prevFooterColor").click(
+            function() {
+                createCard.footerColorNumber--;
+                if (createCard.footerColorNumber < 0) {
+                    createCard.footerColorNumber = COLORS.length-1;
+                }
+                $("#cardFooter").css("color", COLORS[createCard.footerColorNumber]);
             }
-            $("#cardHeader").css("color", COLORS[colorNumber]);
-        }
-    );
-    $("#nextTitleColor").click(
-        function() {
-            colorNumber++;
-            if (colorNumber >= COLORS.length) {
-                colorNumber = 0;
+        );
+        $("#nextFooterColor").click(
+            function() {
+                createCard.footerColorNumber++;
+                if (createCard.footerColorNumber >= COLORS.length) {
+                    createCard.footerColorNumber = 0;
+                }
+                $("#cardFooter").css("color", COLORS[createCard.footerColorNumber]);
             }
-            $("#cardHeader").css("color", COLORS[colorNumber]);
-        }
-    );
-}
-
-function bodyColor() {
-    let colorNumber = 0;
-    $("#cardBody").css("color", COLORS[colorNumber]); // Set initial color
-    $("#prevBodyColor").click(
-        function() {
-            colorNumber--;
-            if (colorNumber < 0) {
-                colorNumber = COLORS.length-1;
+        );
+    },
+    headerSize: function() {
+        $("#smallerTitle").click(
+            function() {
+                createCard.titleFontSize/=1.1;
+                $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
             }
-            $("#cardBody").css("color", COLORS[colorNumber]);
-        }
-    );
-    $("#nextBodyColor").click(
-        function() {
-            colorNumber++;
-            if (colorNumber >= COLORS.length) {
-                colorNumber = 0;
+        );
+        $("#largerTitle").click(
+            function() {
+                createCard.titleFontSize*=1.1;
+                $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
             }
-            $("#cardBody").css("color", COLORS[colorNumber]);
-        }
-    );
-}
-
-function footerColor() {
-    let colorNumber = 0;
-    $("#cardFooter").css("color", COLORS[colorNumber]); // Set initial color
-    $("#prevFooterColor").click(
-        function() {
-            colorNumber--;
-            if (colorNumber < 0) {
-                colorNumber = COLORS.length-1;
+        );
+    },
+    bodySize: function() {
+        $("#smallerBody").click(
+            function() {
+                createCard.bodyFontSize/=1.1;
+                $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
             }
-            $("#cardFooter").css("color", COLORS[colorNumber]);
-        }
-    );
-    $("#nextFooterColor").click(
-        function() {
-            colorNumber++;
-            if (colorNumber >= COLORS.length) {
-                colorNumber = 0;
+        );
+        $("#largerBody").click(
+            function() {
+                createCard.bodyFontSize*=1.1;
+                $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
             }
-            $("#cardFooter").css("color", COLORS[colorNumber]);
-        }
-    );
-}
-
-/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
-function headerSize() {
-    let fontSize = 2;
-    $("#cardHeader").css("font-size", fontSize + "em"); // Set initial size
-    $("#smallerTitle").click(
-        function() {
-            fontSize/=1.1;
-            $("#cardHeader").css("font-size", fontSize + "em");
-        }
-    );
-    $("#largerTitle").click(
-        function() {
-            fontSize*=1.1;
-            $("#cardHeader").css("font-size", fontSize + "em");
-        }
-    );
-}
-function bodySize() {
-    let fontSize = 1;
-    $("#cardBody").css("font-size", fontSize + "em"); // Set initial size
-    $("#smallerBody").click(
-        function() {
-            fontSize/=1.1;
-            $("#cardBody").css("font-size", fontSize + "em");
-        }
-    );
-    $("#largerBody").click(
-        function() {
-            fontSize*=1.1;
-            $("#cardBody").css("font-size", fontSize + "em");
-        }
-    );
-}
-function footerSize() {
-    let fontSize = 2;
-    $("#cardFooter").css("font-size", fontSize + "em"); // Set initial size
-    $("#smallerFooter").click(
-        function() {
-            fontSize/=1.1;
-            $("#cardFooter").css("font-size", fontSize + "em");
-        }
-    );
-    $("#largerFooter").click(
-        function() {
-            fontSize*=1.1;
-            $("#cardFooter").css("font-size", fontSize + "em");
-        }
-    );
-}
-
-
-/*  NOTE TO SELF - CONSOLIDATE FOLLOWING THREE FUNCTIONS?  **********************************************************************/
-function headerStyle() {
-    let styleNum = 0;
-    $("#prevHeaderStyle").click(
-        function() {
-            styleNum--;
-            if (styleNum < 0) {
-                styleNum = TEXTSTYLES.length-1;
+        );
+    },
+    footerSize: function() {
+        $("#smallerFooter").click(
+            function() {
+                createCard.footerFontSize/=1.1;
+                $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
             }
-            $("#cardHeader").css("text-shadow", TEXTSTYLES[styleNum][1]);
-            $("#cardHeader").css("background-color", TEXTSTYLES[styleNum][0]);
-        }
-    );
-    $("#nextHeaderStyle").click(
-        function() {
-            styleNum++;
-            if (styleNum >= TEXTSTYLES.length) {
-                styleNum = 0;
+        );
+        $("#largerFooter").click(
+            function() {
+                createCard.footerFontSize*=1.1;
+                $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
             }
-            $("#cardHeader").css("text-shadow", TEXTSTYLES[styleNum][1]);
-            $("#cardHeader").css("background-color", TEXTSTYLES[styleNum][0]);
-        }
-    );
-}
-function bodyStyle() {
-    let styleNum = 0;
-    $("#prevBodyStyle").click(
-        function() {
-            styleNum--;
-            if (styleNum < 0) {
-                styleNum = TEXTSTYLES.length-1;
+        );
+    },
+    headerStyle: function() {
+        $("#prevHeaderStyle").click(
+            function() {
+                createCard.titleStyle--;
+                if (createCard.titleStyle < 0) {
+                    createCard.titleStyle = TEXTSTYLES.length-1;
+                }
+                $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
+                $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
             }
-            $("#cardBody").css("text-shadow", TEXTSTYLES[styleNum][1]);
-            $("#cardBody").css("background-color", TEXTSTYLES[styleNum][0]);
-        }
-    );
-    $("#nextBodyStyle").click(
-        function() {
-            styleNum++;
-            if (styleNum >= TEXTSTYLES.length) {
-                styleNum = 0;
+        );
+        $("#nextHeaderStyle").click(
+            function() {
+                createCard.titleStyle++;
+                if (createCard.titleStyle >= TEXTSTYLES.length) {
+                    createCard.titleStyle = 0;
+                }
+                $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
+                $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
             }
-            $("#cardBody").css("text-shadow", TEXTSTYLES[styleNum][1]);
-            $("#cardBody").css("background-color", TEXTSTYLES[styleNum][0]);
-        }
-    );
-}
-function footerStyle() {
-    let styleNum = 0;
-    $("#prevFooterStyle").click(
-        function() {
-            styleNum--;
-            if (styleNum < 0) {
-                styleNum = TEXTSTYLES.length-1;
+        );
+    },
+    bodyStyle: function() {
+        $("#prevBodyStyle").click(
+            function() {
+                createCard.bodyStyleNumber--;
+                if (createCard.bodyStyleNumber < 0) {
+                    createCard.bodyStyleNumber = TEXTSTYLES.length-1;
+                }
+                $("#cardBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
+                $("#cardBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
             }
-            $("#cardFooter").css("text-shadow", TEXTSTYLES[styleNum][1]);
-            $("#cardFooter").css("background-color", TEXTSTYLES[styleNum][0]);
-        }
-    );
-    $("#nextFooterStyle").click(
-        function() {
-            styleNum++;
-            if (styleNum >= TEXTSTYLES.length) {
-                styleNum = 0;
+        );
+        $("#nextBodyStyle").click(
+            function() {
+                createCard.bodyStyleNumber++;
+                if (createCard.bodyStyleNumber >= TEXTSTYLES.length) {
+                    createCard.bodyStyleNumber = 0;
+                }
+                $("#cardBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
+                $("#cardBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
             }
-            $("#cardFooter").css("text-shadow", TEXTSTYLES[styleNum][1]);
-            $("#cardFooter").css("background-color", TEXTSTYLES[styleNum][0]);
-        }
-    );
-}
-
-
-function borders() {
-    let styleNumber = 0;
-    let colorNumber = 0;
-    let borderSize = 10;
-    $("#photo").css("border-style", BORDERS[styleNumber]); // Set initial border
-    $("#photo").css("border-color", COLORS[colorNumber]); // Set initial color
-    $("#photo").css("border-width", borderSize + "px"); // Set initial size
-    $("#prevBorderStyle").click(
-        function() {
-            styleNumber--;
-            if (styleNumber < 0) {
-                styleNumber = BORDERS.length-1;
+        );
+    },
+    footerStyle: function() {
+        $("#prevFooterStyle").click(
+            function() {
+                createCard.footerStyleNumber--;
+                if (createCard.footerStyleNumber < 0) {
+                    createCard.footerStyleNumber = TEXTSTYLES.length-1;
+                }
+                $("#cardFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
+                $("#cardFooter").css("background-color", TEXTSTYLES[createCard.footerStyleNumber][0]);
             }
-            if(borderSize < 4) { // If no border or tiny border, increase border size so visible
-                borderSize = 4;
-                $("#photo").css("border-width", borderSize + "px");
+        );
+        $("#nextFooterStyle").click(
+            function() {
+                createCard.footerStyleNumber++;
+                if (createCard.footerStyleNumber >= TEXTSTYLES.length) {
+                    createCard.footerStyleNumber = 0;
+                }
+                $("#cardFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
+                $("#cardFooter").css("background-color", TEXTSTYLES[createCard.footerStyleNumber][0]);
             }
-            $("#photo").css("border-style", BORDERS[styleNumber]);
-        }
-    );
-    $("#nextBorderStyle").click(
-        function() {
-            styleNumber++;
-            if (styleNumber >= BORDERS.length) {
-                styleNumber = 0;
+        );
+    },
+    borders: function() {
+        $("#prevBorderStyle").click(
+            function() {
+                createCard.borderStyle--;
+                if (createCard.borderStyle < 0) {
+                    createCard.borderStyle = BORDERS.length-1;
+                }
+                if(createCard.borderSize < 4) { // If no border or tiny border, increase border size so visible
+                    createCard.borderSize = 4;
+                    $("#photo").css("border-width", createCard.borderSize + "px");
+                }
+                $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
             }
-            if(borderSize < 4) { // If no border or tiny border, increase border size so visible
-                borderSize = 4;
-                $("#photo").css("border-width", borderSize + "px");
+        );
+        $("#nextBorderStyle").click(
+            function() {
+                createCard.borderStyle++;
+                if (createCard.borderStyle >= BORDERS.length) {
+                    createCard.borderStyle = 0;
+                }
+                if(createCard.borderSize < 4) { // If no border or tiny border, increase border size so visible
+                    createCard.borderSize = 4;
+                    $("#photo").css("border-width", createCard.borderSize + "px");
+                }
+                $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
             }
-            $("#photo").css("border-style", BORDERS[styleNumber]);
-        }
-    );
-    $("#prevBorderColor").click(
-        function() {
-            if ($("#photo").css("border-style") === "none") {
-                $("#photo").css("border-style", "solid");
+        );
+        $("#prevBorderColor").click(
+            function() {
+                if ($("#photo").css("border-style") === "none") {
+                    $("#photo").css("border-style", "solid");
+                }
+                createCard.borderColor--;
+                if (createCard.borderColor < 0) {
+                    createCard.borderColor = COLORS.length-1;
+                }
+                if(createCard.borderSize < 4) {
+                    createCard.borderSize = 4;
+                    $("#photo").css("border-width", createCard.borderSize + "px");
+                }
+                $("#photo").css("border-color", COLORS[createCard.borderColor]);
             }
-            colorNumber--;
-            if (colorNumber < 0) {
-                colorNumber = COLORS.length-1;
+        );
+        $("#nextBorderColor").click(
+            function() {
+                if ($("#photo").css("border-style") === "none") {
+                    $("#photo").css("border-style", "solid");
+                }
+                createCard.borderColor++;
+                if (createCard.borderColor >= COLORS.length) {
+                    createCard.borderColor = 0;
+                }
+                if(createCard.borderSize < 4) {
+                    createCard.borderSize = 4;
+                    $("#photo").css("border-width", createCard.borderSize + "px");
+                }
+                $("#photo").css("border-color", COLORS[createCard.borderColor]);
             }
-            if(borderSize < 4) {
-                borderSize = 4;
-                $("#photo").css("border-width", borderSize + "px");
+        );
+        $("#smallerBorder").click(
+            function() {
+                if ($("#photo").css("border-style") === "none") {
+                    $("#photo").css("border-style", "solid");
+                }
+                createCard.borderSize/=1.3;
+                if(createCard.borderSize < 2) {
+                    createCard.borderSize = 0;
+                }
+                $("#photo").css("border-width", createCard.borderSize + "px");
             }
-            $("#photo").css("border-color", COLORS[colorNumber]);
-        }
-    );
-    $("#nextBorderColor").click(
-        function() {
-            if ($("#photo").css("border-style") === "none") {
-                $("#photo").css("border-style", "solid");
+        );
+        $("#largerBorder").click(
+            function() {
+                if ($("#photo").css("border-style") === "none") {
+                    $("#photo").css("border-style", "solid");
+                    createCard.borderSize = 0;
+                }
+                if (createCard.borderSize === 0) {
+                    createCard.borderSize = 2;
+                }
+                createCard.borderSize*=1.3;
+                if (createCard.borderSize > 35.84) {  // set maximum size so that border doesn't get out of control
+                    createCard.borderSize = 35.84;
+                }
+                $("#photo").css("border-width", createCard.borderSize + "px");
             }
-            colorNumber++;
-            if (colorNumber >= COLORS.length) {
-                colorNumber = 0;
-            }
-            if(borderSize < 4) {
-                borderSize = 4;
-                $("#photo").css("border-width", borderSize + "px");
-            }
-            $("#photo").css("border-color", COLORS[colorNumber]);
-        }
-    );
-    $("#smallerBorder").click(
-        function() {
-            if ($("#photo").css("border-style") === "none") {
-                $("#photo").css("border-style", "solid");
-            }
-            borderSize/=1.3;
-            if(borderSize < 2) {
-                borderSize = 0;
-            }
-            $("#photo").css("border-width", borderSize + "px");
-        }
-    );
-    $("#largerBorder").click(
-        function() {
-            if ($("#photo").css("border-style") === "none") {
-                $("#photo").css("border-style", "solid");
-                borderSize = 0;
-            }
-            if (borderSize === 0) {
-                borderSize = 2;
-            }
-            borderSize*=1.3;
-            if (borderSize > 35.84) {  // set maximum size so that border doesn't get out of control
-                borderSize = 35.84;
-            }
-            $("#photo").css("border-width", borderSize + "px");
-        }
-    );
+        );
+    },
 }
 
 
@@ -618,21 +556,20 @@ function getImages() {
 }
 
 $(setInitial);
-$(createCard.headerFont);
-//$(headerFont);
-$(createCard.bodyFont);
-$(footerFont);
-$(headerColor);
-$(bodyColor);
-$(footerColor);
-$(headerSize);
-$(bodySize);
-$(footerSize);
-$(borders);
 $(getImages);
-$(headerStyle);
-$(bodyStyle);
-$(footerStyle);
+$(createCard.headerFont);
+$(createCard.bodyFont);
+$(createCard.footerFont);
+$(createCard.headerColor);
+$(createCard.bodyColor);
+$(createCard.footerColor);
+$(createCard.headerSize);
+$(createCard.bodySize);
+$(createCard.footerSize);
+$(createCard.borders);
+$(createCard.headerStyle);
+$(createCard.bodyStyle);
+$(createCard.footerStyle);
 
 
 //
