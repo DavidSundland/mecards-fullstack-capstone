@@ -558,7 +558,6 @@ function getImages() {
         if (counter >= photoList.length) {
             counter = 0;
         }
-        alert(counter);
         $("#photo").attr("src", photoList[counter].photoLink);
         $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
     });
@@ -568,7 +567,6 @@ function getImages() {
         if (counter < 0) {
             counter = photoList.length - 1;
         }
-        alert(counter);
         $("#photo").attr("src", photoList[counter].photoLink);
         $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
     });
