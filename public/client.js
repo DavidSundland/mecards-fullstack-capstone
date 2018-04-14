@@ -524,10 +524,10 @@ function getImages() {
                     console.log(res);
                     console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
-                    $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via Unsplash`);  // set credit for first photo
+                    $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
                     photoList = [];  // clear the previous results
                     for (let x=0; x<res.results.length; x++) {
-                        photoList.push(res.results[x].urls.regular);
+                        photoList.push({photoLink: res.results[x].urls.regular, photogName: res.results[x].user.name, photogLink: res.results[x].user.portfolio_url, width: res.results[x].width, height: res.results[x].height});
                     }
                 }
             });
@@ -553,12 +553,14 @@ function getImages() {
         });
     });
     $('#nextPhoto').click(function (event) {
-       event.preventDefault();
+        event.preventDefault();
         counter++;
         if (counter >= photoList.length) {
             counter = 0;
         }
-        $("#photo").attr("src", photoList[counter]);
+        alert(counter);
+        $("#photo").attr("src", photoList[counter].photoLink);
+        $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
     });
     $('#prevPhoto').click(function (event) {
         event.preventDefault();
@@ -566,7 +568,9 @@ function getImages() {
         if (counter < 0) {
             counter = photoList.length - 1;
         }
-        $("#photo").attr("src", photoList[counter]);
+        alert(counter);
+        $("#photo").attr("src", photoList[counter].photoLink);
+        $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
     });
 }
 
