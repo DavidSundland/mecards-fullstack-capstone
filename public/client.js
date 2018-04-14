@@ -387,14 +387,21 @@ let createCard = {
                 $("#photo").css("border-width", createCard.borderSize + "px");
             }
         );
+        $("#prevBackground").click(
+            function() {
+                createCard.backgroundNumber--;
+                if(createCard.backgroundNumber < 0) {
+                    createCard.backgroundNumber = COLORS.length-1;
+                }
+                console.log(createCard.backgroundNumber);
+                $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
+            }
+        );
         $("#nextBackground").click(
             function() {
                 createCard.backgroundNumber++;
                 if (createCard.backgroundNumber >= COLORS.length) {
                     createCard.backgroundNumber = 0;
-                }
-                if(createCard.backgroundNumber < 0) {
-                    createCard.backgroundNumber = COLORS.length-1;
                 }
                 console.log(createCard.backgroundNumber);
                 $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
@@ -540,6 +547,7 @@ function getImages() {
                     console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
                     $("#nextPhoto").addClass("makeVisible");
                     $("#prevPhoto").addClass("makeVisible");
+                    $("#photo").addClass("makeVisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
                     photoList = [];  // clear the previous results
