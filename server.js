@@ -190,6 +190,7 @@ app.post('/users/create', (req, res) => {
     password = password.trim();
     bcrypt.genSalt(10, (err, salt) => {
         if (err) {
+            console.log("encryption error1");
             return res.status(500).json({
                 message: 'Internal server error'
             });
@@ -197,6 +198,7 @@ app.post('/users/create', (req, res) => {
 
         bcrypt.hash(password, salt, (err, hash) => {
             if (err) {
+                console.log("encryption error2");
                 return res.status(500).json({
                     message: 'Internal server error'
                 });
@@ -207,6 +209,7 @@ app.post('/users/create', (req, res) => {
                 password: hash,
             }, (err, item) => {
                 if (err) {
+                    console.log("creation error");
                     return res.status(500).json({
                         message: 'Internal Server Error'
                     });

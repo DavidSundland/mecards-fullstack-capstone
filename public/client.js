@@ -19,6 +19,8 @@ function setInitial() {
     $("#photo").css("border-style", BORDERS[0]); // Set initial border
     $("#photo").css("border-color", COLORS[0]); // Set initial color
     $("#photo").css("border-width", "10px"); // Set initial size
+//    $('#login').on('click', '#newUserButton', alert("hi"));// createNewUser);
+//    $('#newUserButton').click(createNewUser);
 }
 
 
@@ -41,7 +43,9 @@ let createCard = {
     borderStyle: 0,
     borderColor: 0,
     borderSize: 10,
-    backgroundNumber: 0,
+    backgroundNumber: 1,
+    imageNumber: 0,
+    photoList: [],
 
     changeHeader: function() {
         this.titleText = $("#titleText").val();
@@ -408,24 +412,177 @@ let createCard = {
             }
         );
     },
+    getImages: function() {
+        $('#querySubmit').click(function (event) {
+            event.preventDefault(); // otherwise page reloads when this function starts
+//            console.log("In getPhotos");
+            let searchTerm = $("#photoQuery").val();
+//            console.log(searchTerm);
+            $.getJSON('/unsplash/:' + searchTerm, function (res) {
+                if (res.total == 0) {
+                    console.log("got bupkis");
+                    alert(`We found no results for ${searchTerm}!`);
+                } else {
+//                    console.log(res);
+//                    console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
+                    $("#nextPhoto").addClass("makeVisible");
+                    $("#prevPhoto").addClass("makeVisible");
+                    $("#photo").addClass("makeVisible");
+                    $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
+                    $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
+                    createCard.photoList = [];  // clear the previous results
+                    $("#photoQuery").val("");  // clear the previous results
+                    for (let x=0; x<res.results.length; x++) {
+                        createCard.photoList.push({photoLink: res.results[x].urls.regular, photogName: res.results[x].user.name, photogLink: res.results[x].user.portfolio_url, width: res.results[x].width, height: res.results[x].height});
+                    }
+                }
+            });
+        });
+        $('#nextPhoto').click(function (event) {
+            event.preventDefault();
+            createCard.imageNumber++;
+            if (createCard.imageNumber >= createCard.photoList.length) {
+                createCard.imageNumber = 0;
+            }
+            $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
+            $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
+        });
+        $('#prevPhoto').click(function (event) {
+            event.preventDefault();
+            createCard.imageNumber--;
+            if (createCard.imageNumber < 0) {
+                createCard.imageNumber = createCard.photoList.length - 1;
+            }
+            $("#photo").attr("src", createCard.hotoList[counter].photoLink);
+            $("#photoCreds").html(`<a href="${createCard.photoList[counter].photogLink}" target="_blank">${createCard.photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
+        });
+    },
 }
+
+//imageNumber: 0,
+//    photoList: [];
+
+
+
+//getImages: function() {
+//    $('#querySubmit').click(function (event) {
+//        event.preventDefault(); // otherwise page reloads when this function starts
+//        console.log("In getPhotos");
+//        let searchTerm = $("#photoQuery").val();
+//        console.log(searchTerm);
+//        $.getJSON('/unsplash/:' + searchTerm, function (res) {
+//            if (res.total == 0) {
+//                console.log("got bupkis");
+//                alert(`We found no results for ${searchTerm}!`);
+//            } else {
+//                console.log(res);
+//                console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
+//                $("#nextPhoto").addClass("makeVisible");
+//                $("#prevPhoto").addClass("makeVisible");
+//                $("#photo").addClass("makeVisible");
+//                $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
+//                $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
+//                photoList = [];  // clear the previous results
+//                $("#photoQuery").val("");  // clear the previous results
+//                for (let x=0; x<res.results.length; x++) {
+//                    photoList.push({photoLink: res.results[x].urls.regular, photogName: res.results[x].user.name, photogLink: res.results[x].user.portfolio_url, width: res.results[x].width, height: res.results[x].height});
+//                }
+//            }
+//        });
+//    });
+//    $('#clipSubmit').click(function (event) {
+//        event.preventDefault(); // otherwise page reloads when this function starts
+//        console.log("In getClips");
+//        let searchTerm = $("#clipQuery").val();
+//        console.log(searchTerm);
+//        $.getJSON('/clipart/:' + searchTerm, function (res) {
+//            if (res == null || res == "null") {
+//                console.log("got bupkis");
+//                alert("ain't got no results");
+//            } else {
+//                console.log(res);
+//                console.log("did i hit my target", res.payload[0].svg.url);
+//                $("#photo").attr("src", res.payload[0].svg.url);
+//                photoList = [];  // clear the previous results
+//                for (let x=0; x<res.payload.length; x++) {
+//                    photoList.push(res.payload[x].svg.url);
+//                }
+//            }
+//        });
+//    });
+//    $('#nextPhoto').click(function (event) {
+//        event.preventDefault();
+//        counter++;
+//        if (counter >= photoList.length) {
+//            counter = 0;
+//        }
+//        $("#photo").attr("src", photoList[counter].photoLink);
+//        $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
+//    });
+//    $('#prevPhoto').click(function (event) {
+//        event.preventDefault();
+//        counter--;
+//        if (counter < 0) {
+//            counter = photoList.length - 1;
+//        }
+//        $("#photo").attr("src", photoList[counter].photoLink);
+//        $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
+//    });
+//}
+
+
+//<div id="cardPreview" class="invisible">
+//    <div id="previewHeader"></div>
+//<img id="previewPhoto">
+//    <p id="previewBody"></p>
+//<p id="previewFooter"></p>
+//<p id="previewCreds"></p>
+//</div>
+
+function previewCard() {
+    $("#cardPreview").addClass("makeVisible");
+    $("#previewHeader").text(createCard.titleText);
+    $("#previewBody").text(createCard.bodyText);
+    $("#previewFooter").text(createCard.footerText);
+    $("#previewHeader").css("font-family", FONTS[createCard.titleFontNumber]);
+    $("#previewBody").css("font-family", FONTS[createCard.bodyFontNumber]);
+    $("#previewFooter").css("font-family", FONTS[createCard.footerFontNumber]);
+    $("#previewHeader").css("color", COLORS[createCard.titleColorNumber]);
+    $("#previewBody").css("color", COLORS[createCard.bodyColorNumber]);
+    $("#previewFooter").css("color", COLORS[createCard.footerColorNumber]);
+    $("#previewHeader").css("font-size", createCard.titleFontSize + "em");
+    $("#previewBody").css("font-size", createCard.bodyFontSize + "em");
+    $("#previewFooter").css("font-size", createCard.footerFontSize + "em");
+    $("#previewHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
+    $("#previewHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
+    $("#previewBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
+    $("#previewBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
+    $("#previewFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
+    $("#previewFooter").css("background-color", TEXTSTYLES[createCard.footerStyleNumber][0]);
+    $("#previewPhoto").css("border-style", BORDERS[createCard.borderStyle]);
+    $("#previewPhoto").css("border-color", COLORS[createCard.borderColor]);
+    $("#previewPhoto").css("border-width", createCard.borderSize + "px");
+    $("#cardPreview").css("background-color", COLORS[createCard.backgroundNumber]);
+}
+
 
 
 // Code to create new user:
 
 $('#newUser').on('submit', function (event) {
+    alert("new user clicked");
     event.preventDefault();
     const uname = $('input[name="userName"]').val();
     const pw = $('input[name="password"]').val();
     const confirmPw = $('input[name="passwordConfirm"]').val();
     if (pw !== confirmPw) {
-        myAlert('Passwords must match!', 'ok');
+        alert('Passwords must match!');
     } else if (uname.length === 0) {
-        myAlert('You must enter a username!', 'ok');
+        alert('You must enter a username!');
     } else if (pw.length < 6) {
-        myAlert('Your password must have at least 6 characters!', 'oops');
+        alert('Your password must have at least 6 characters!');
     } else if (/\s/.test(uname) || /\s/.test(pw)) {
-        myAlert("Sorry, usernames & passwords cannot contain spaces!", "oops");
+        alert("Sorry, usernames & passwords cannot contain spaces!");
     } else {
         const newUserObject = {
             username: uname,
@@ -470,9 +627,9 @@ $('#login').on('click', '#loginClicked', function (event) {
     const inputPw = $('input[name="signinPassword"]').val();
     // check for spaces, empty, undefined
     if ((!inputUname) || (inputUname.length < 1) || (inputUname.indexOf(' ') > 0)) {
-        myAlert('You entered an invalid username', 'oops');
+        alert('You entered an invalid username');
     } else if ((!inputPw) || (inputPw.length < 1) || (inputPw.indexOf(' ') > 0)) {
-        myAlert('You entered an invalid password', 'oops');
+        alert('You entered an invalid password');
     } else {
         const unamePwObject = {
             username: inputUname,
@@ -504,10 +661,18 @@ $('#login').on('click', '#loginClicked', function (event) {
                 console.log(jqXHR);
                 console.log(error);
                 console.log(errorThrown);
-                myAlert('You entered an invalid username and password combination. Pleae check your username and password and try again.', 'oops');
+                alert('You entered an invalid username and password combination. Please check your username and password and try again.');
             });
     };
 });
+
+function createNewUser(event) {
+    console.log("hi from createNewUser");
+    event.preventDefault(); // otherwise page reloads when this function starts
+    alert("got into createNewUser");
+    $('.login').removeClass('makeVisible');
+    $('.newUser').addClass('makeVisible');
+}
 
 function myAlert(sayThis, choice) {
     let okChoices = ["Uhh, sure... OK", "Happy to oblige", "Did I have any other choice?", "It seemed the right thing to do", "I was bored", "My cat's breath smells like cat food", "I didn't realize I had a choice", "Hooray?", "Snazzy.", "Well, I'll be!", "Well, ain't that grand!"];
@@ -530,76 +695,11 @@ function myAlert(sayThis, choice) {
     });
 }
 
-function getImages() {
-    let photoList = [];
-    let counter = 0;
-    $('#querySubmit').click(function (event) {
-        event.preventDefault(); // otherwise page reloads when this function starts
-        console.log("In getPhotos");
-        let searchTerm = $("#photoQuery").val();
-        console.log(searchTerm);
-        $.getJSON('/unsplash/:' + searchTerm, function (res) {
-                if (res.total == 0) {
-                    console.log("got bupkis");
-                    alert(`We found no results for ${searchTerm}!`);
-                } else {
-                    console.log(res);
-                    console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
-                    $("#nextPhoto").addClass("makeVisible");
-                    $("#prevPhoto").addClass("makeVisible");
-                    $("#photo").addClass("makeVisible");
-                    $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
-                    $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
-                    photoList = [];  // clear the previous results
-                    $("#photoQuery").val("");  // clear the previous results
-                    for (let x=0; x<res.results.length; x++) {
-                        photoList.push({photoLink: res.results[x].urls.regular, photogName: res.results[x].user.name, photogLink: res.results[x].user.portfolio_url, width: res.results[x].width, height: res.results[x].height});
-                    }
-                }
-            });
-        });
-    $('#clipSubmit').click(function (event) {
-        event.preventDefault(); // otherwise page reloads when this function starts
-        console.log("In getClips");
-        let searchTerm = $("#clipQuery").val();
-        console.log(searchTerm);
-        $.getJSON('/clipart/:' + searchTerm, function (res) {
-            if (res == null || res == "null") {
-                console.log("got bupkis");
-                alert("ain't got no results");
-            } else {
-                console.log(res);
-                console.log("did i hit my target", res.payload[0].svg.url);
-                $("#photo").attr("src", res.payload[0].svg.url);
-                photoList = [];  // clear the previous results
-                for (let x=0; x<res.payload.length; x++) {
-                    photoList.push(res.payload[x].svg.url);
-                }
-            }
-        });
-    });
-    $('#nextPhoto').click(function (event) {
-        event.preventDefault();
-        counter++;
-        if (counter >= photoList.length) {
-            counter = 0;
-        }
-        $("#photo").attr("src", photoList[counter].photoLink);
-        $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
-    });
-    $('#prevPhoto').click(function (event) {
-        event.preventDefault();
-        counter--;
-        if (counter < 0) {
-            counter = photoList.length - 1;
-        }
-        $("#photo").attr("src", photoList[counter].photoLink);
-        $("#photoCreds").html(`<a href="${photoList[counter].photogLink}" target="_blank">${photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
-    });
-}
-
 $(setInitial);
-$(getImages);
+$(document).on('click', '#newUserButton', createNewUser);
+$(document).on('click', '#preview', previewCard);
+//$('#newUserButton').click(createNewUser);
+$(createCard.getImages);
 $(createCard.headerFont);
 $(createCard.bodyFont);
 $(createCard.footerFont);

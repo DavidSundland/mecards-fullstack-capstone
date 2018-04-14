@@ -95,7 +95,7 @@ button {
     color: white;
     background-color: #5B6DAD;
     font-size: .9em;
-    box-shadow: 1px 1px white;
+    box-shadow: 2px 2px lightgray;
     font-family: arial;
 }
 
@@ -108,13 +108,13 @@ button {
     padding: 2px;
     height: 50px;
     width: 40px;
-    text-align: center;
+/*    text-align: center;*/
     margin: 4px;
     border-radius: 5px;
-    border: 1px solid gray;
-    box-shadow: none;
-    background-color: #504b5f;
-    box-shadow: 1px 1px lightgray;
+/*    border: 1px solid gray;*/
+/*    box-shadow: none;*/
+/*    background-color: #504b5f;*/
+/*    box-shadow: 1px 1px lightgray;*/
 }
 
 #borderButtons {
@@ -127,9 +127,15 @@ button {
     width: 50px;
 }
 
+.goButton {
+    background-color: #56B97B;
+    box-shadow: 3px 3px lightgray;
+}
+
 button:hover {
     text-shadow: 0 0 1px white;
     background-color: #2f3d6e;
+    box-shadow: 1px 1px lightgray;
 }
 
 input, textarea {
@@ -339,6 +345,10 @@ p {
 */
 }
 
+#cardPreview {
+    z-index: 50;
+}
+
 footer {
     /*    position: fixed;*/
     background-color: #100200;
@@ -349,7 +359,7 @@ footer {
     margin-bottom: 0;
     overflow: auto;
     margin-top: 60px;
-    z-index: 400;
+    z-index: 40;
 }
 
 footer a {
