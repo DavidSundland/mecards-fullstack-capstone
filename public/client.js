@@ -425,8 +425,8 @@ let createCard = {
                 } else {
 //                    console.log(res);
 //                    console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
-                    $("#nextPhoto").addClass("makeVisible");
-                    $("#prevPhoto").addClass("makeVisible");
+                    $("#nextPhoto").addClass("makeVisibleInline");
+                    $("#prevPhoto").addClass("makeVisibleInline");
                     $("#photo").addClass("makeVisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
@@ -453,7 +453,7 @@ let createCard = {
             if (createCard.imageNumber < 0) {
                 createCard.imageNumber = createCard.photoList.length - 1;
             }
-            $("#photo").attr("src", createCard.hotoList[counter].photoLink);
+            $("#photo").attr("src", createCard.photoList[counter].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[counter].photogLink}" target="_blank">${createCard.photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
     },
@@ -541,7 +541,7 @@ let createCard = {
 
 function previewCard() {
     console.log("in previewCard");
-    $("#cardPreview").addClass("makeVisible");
+    $("#previewParent").addClass("makeVisible");
     $("#previewHeader").text(createCard.titleText);
     $("#previewBody").text(createCard.bodyText);
     $("#previewFooter").text(createCard.footerText);
@@ -563,11 +563,14 @@ function previewCard() {
     $("#previewPhoto").css("border-style", BORDERS[createCard.borderStyle]);
     $("#previewPhoto").css("border-color", COLORS[createCard.borderColor]);
     $("#previewPhoto").css("border-width", createCard.borderSize + "px");
-    $("#cardPreview").css("background-color", COLORS[createCard.backgroundNumber]);
+    $("#previewParent").css("background-color", COLORS[createCard.backgroundNumber]);
     $("#previewPhoto").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
     $("#previewCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
 }
 
+function closePreview() {
+    $("#previewParent").removeClass("makeVisible");
+}
 
 
 // Code to create new user:
@@ -701,6 +704,7 @@ function myAlert(sayThis, choice) {
 $(setInitial);
 $(document).on('click', '#newUserButton', createNewUser);
 $(document).on('click', '#preview', previewCard);
+$(document).on('click', '#closePreview', closePreview);
 //$('#newUserButton').click(createNewUser);
 $(createCard.getImages);
 $(createCard.headerFont);

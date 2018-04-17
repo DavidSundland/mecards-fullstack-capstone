@@ -51,7 +51,7 @@ Is a short set of CSS rules that resets the styling of all HTML elements to a co
 }
 
 html {
-    background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat center center fixed;
+    background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
     background-size: cover;
 }
 
@@ -99,22 +99,28 @@ button {
     font-family: arial;
 }
 
-.invisible {
-    visibility: hidden;
-}
-
 .styleButton  {
 /*    padding: 12px 5px;*/
     padding: 2px;
     height: 50px;
     width: 40px;
 /*    text-align: center;*/
-    margin: 4px;
-    border-radius: 5px;
+    margin: 5px;
+/*    border-radius: 5px;*/
 /*    border: 1px solid gray;*/
 /*    box-shadow: none;*/
 /*    background-color: #504b5f;*/
 /*    box-shadow: 1px 1px lightgray;*/
+}
+
+.leftButton {
+    margin-right: 1px;
+    border-radius: 10px 0 0 10px;
+}
+
+.rightButton {
+    margin-left: 0;
+    border-radius: 0 10px 10px 0;
 }
 
 #borderButtons {
@@ -139,11 +145,11 @@ button:hover {
 }
 
 input, textarea {
-    box-shadow: px 2px 2px black inset;
+    box-shadow: 2px 2px 2px #0000008a inset;
     /* ADJUST COLOR ONCE COLOR PALATTE FINALIZED */
     margin: 5px;
     padding-left: 10px;
-    font-family: 'Cutive Mono', monospace;
+/*    font-family: 'Cutive Mono', monospace;*/
 }
 
 textarea {
@@ -228,6 +234,7 @@ p {
 .newUser,
 .userCard {
     display: none;
+    text-align: center;
 }
 
 
@@ -278,11 +285,16 @@ p {
     color: white;
     padding: 0;
     background-color: black;
+    height: 600px;
 /*    border: 10px white none;*/
 }
 
-#cardBox img {
-    width: 100%;
+#cardBox img, #cardPreview img {
+    max-height: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+/*    width: 100%;*/
 }
 
 #photoCreds, #previewCreds {
@@ -302,21 +314,10 @@ p {
     left: 50%;
     transform: translate(-50%, -50%);
 */
-/*    margin-top: 10px;*/
     text-align: center;
-/*
-    font-size: 3em;
-    color: red;
-*/
     padding: 10px;
     width: 100%;
 }
-
-/*
-.cardHeader {
-    text-align: center;
-}
-*/
 
 .bodyColumn {
     padding-top: 60px;
@@ -328,7 +329,19 @@ p {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 10px;
+    /* center box in page */
+/*
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50%;
+    height: 50%;
+*/
+
 }
+/* width: some percentage, auto width;*/
 
 
 #cardFooter, #previewFooter {
@@ -336,22 +349,19 @@ p {
     width: 100%;
     text-align: center;
     bottom: 20px;
-/*
-    bottom: 5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2em;
-    color: purple;
-*/
 }
 
-#cardPreview {
+#previewParent {
     z-index: 50;
     width: 100%;
     height: 100%;
     position: fixed;
     top: 0;
     left: 0;
+}
+
+#cardPreview {
+    position: relative;
 }
 
 footer {
@@ -389,15 +399,26 @@ footer a {
 
 
 .hideMe {
-    visibility: hidden;
+/*    visibility: hidden;*/
     display: none;
 }
 
+
+.invisible {
+    display: none;
+    /*    visibility: hidden;*/
+}
+
 .makeVisible {
-    visibility: visible;
-    display: inline-block;
+/*    visibility: visible;*/
+    display: block;
+/*    display: inline-block;*/
     /*    z-index: 100;*/
-    text-align: center;
+/*    text-align: center;*/
+}
+
+.makeVisibleInline {
+    display: inline;
 }
 
 

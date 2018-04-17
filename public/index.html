@@ -30,17 +30,17 @@
             <p class="headerSubtitle">Your quick e-card generator.</p>
         </header>
         <section class="intro">
-            <p>Need to quickly send a custom e-card?  Well, look no further!  This site allows you to create personalized e-cards, each with their own unique URL.  Just create a header, a greeting, and/or a footer, pick a background image, and adjust the fonts and borders to your liking.  Once you are satisfied with your e-card, copy its unique URL and send it on to your loved one.  Sign in to get started - it's completely free!</p>
+            <p>This site allows you to create personalized e-cards, each with their own unique URL.  Create a header, a greeting, and/or a footer, pick a background image, and adjust the fonts and borders to your liking.  Once you are satisfied with your e-card, copy its unique URL and send it on to your loved one.</p>
         </section>
 
         <form id="login">
             <div class="row">
                 <div class="col-6 loginLabel">Username:</div>
-                <div class="col-6 loginInput"><input name="signinUserName" placeholder="testuser" autocomplete="off"></div>
+                <div class="col-6 loginInput"><input name="signinUserName" placeholder="testuser" autocomplete="off" value="testuser"></div>
             </div>
             <div class="row">
                 <div class="col-6 loginLabel">Password:</div>
-                <div class="col-6 loginInput"><input name="signinPassword" placeholder="testpassword" autocomplete="off"></div>
+                <div class="col-6 loginInput"><input name="signinPassword" placeholder="testpassword" autocomplete="off" value="testpassword"></div>
             </div>
             <div class="row">
                 <button id="loginClicked" type="submit">Submit</button><button id="newUserButton">New User?</button>
@@ -69,54 +69,54 @@
         <div class="userCard">
             <form>
                 <button id="prevPhoto" class="invisible">Previous Image</button>
-                <input name="photoQuery"  id="photoQuery" placeholder="Enter a search term for background image">
+                <input name="photoQuery"  id="photoQuery" placeholder="Background image search term">
                 <button type="submit" id="querySubmit">Submit</button>
                 <button id="nextPhoto" class="invisible">Next Image</button>
             </form>
 
             <div class="row">
 <!--                <h2 class = "title">Heading:</h2>-->
-                <button class="styleButton tooltip" id="prevTitleFont"><span class="tooltiptext toptip">Prev title font</span><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
-                <button class="styleButton tooltip" id="nextTitleFont"><span class="tooltiptext toptip">Next title font</span><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
-                <button class="styleButton tooltip" id="prevTitleColor"><span class="tooltiptext toptip">Prev title color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
-                <button class="styleButton tooltip" id="nextTitleColor"><span class="tooltiptext toptip">Next title color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
-                <input type="text" name="titleText" id="titleText" placeholder="Type your header text" onkeyup="createCard.changeHeader()"/>
-                <button class="styleButton tooltip" id="smallerTitle"><span class="tooltiptext toptip">Smaller title</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-                <button class="styleButton tooltip" id="largerTitle"><span class="tooltiptext toptip">Larger title</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-                <button class="styleButton tooltip" id="prevHeaderStyle"><span class="tooltiptext toptip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-                <button class="styleButton tooltip" id="nextHeaderStyle"><span class="tooltiptext toptip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+                <button class="styleButton tooltip leftButton" id="prevTitleFont"><span class="tooltiptext toptip">Prev title font</span><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+                <button class="styleButton tooltip rightButton" id="nextTitleFont"><span class="tooltiptext toptip">Next title font</span><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+                <button class="styleButton tooltip leftButton" id="prevTitleColor"><span class="tooltiptext toptip">Prev title color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+                <button class="styleButton tooltip rightButton" id="nextTitleColor"><span class="tooltiptext toptip">Next title color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+                <input type="text" name="titleText" id="titleText" placeholder="Header text" onkeyup="createCard.changeHeader()"/>
+                <button class="styleButton tooltip leftButton" id="smallerTitle"><span class="tooltiptext toptip">Smaller title</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                <button class="styleButton tooltip rightButton" id="largerTitle"><span class="tooltiptext toptip">Larger title</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                <button class="styleButton tooltip leftButton" id="prevHeaderStyle"><span class="tooltiptext toptip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                <button class="styleButton tooltip rightButton" id="nextHeaderStyle"><span class="tooltiptext toptip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
             </div>
 
             <div class="row middleArea">
                 <div id="cardBox" class="col-8">
                     <div id="cardHeader">Header (optional)</div>
                     <img id="photo" class="invisible" src="images/blackbackground.jpg">
-                    <p id="cardBody">Body text (optional).  The header, body, and footer text are all optional.  If you want the header, body, and/or footer to be blank, click in the corresponding text box and then hit your spacebar.</p>
-                    <p id="cardFooter">Footer (optional)</p>
-                    <p id="photoCreds"></p>
+                    <div id="cardBody">Body text (optional).  Header, body, & footer are all optional.  If you want the header, body, and/or footer to be blank, place a space in the corresponding text box.</div>
+                    <div id="cardFooter">Footer (optional)</div>
+                    <div id="photoCreds"></div>
                 </div>
 
                 <div class = "col-4 bodyColumn">
 <!--                    <h2 class="body">Card Body:</h2>-->
-                    <button class="styleButton tooltip" id="prevBodyFont"><span class="tooltiptext toptip">Prev body font</span><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
-                    <button class="styleButton tooltip" id="nextBodyFont"><span class="tooltiptext toptip">Next body font</span><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
-                    <button class="styleButton tooltip" id="prevBodyColor"><span class="tooltiptext toptip">Prev body color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
-                    <button class="styleButton tooltip" id="nextBodyColor"><span class="tooltiptext toptip">Next body color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+                    <button class="styleButton tooltip leftButton" id="prevBodyFont"><span class="tooltiptext toptip">Prev body font</span><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+                    <button class="styleButton tooltip rightButton" id="nextBodyFont"><span class="tooltiptext toptip">Next body font</span><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+                    <button class="styleButton tooltip leftButton" id="prevBodyColor"><span class="tooltiptext toptip">Prev body color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+                    <button class="styleButton tooltip rightButton" id="nextBodyColor"><span class="tooltiptext toptip">Next body color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
                     <textarea maxlength="400" name="bodyText" id="bodyText" onkeyup="createCard.changeBody()" placeholder="Type your body text"></textarea>
-                    <button class="styleButton tooltip" id="smallerBody"><span class="tooltiptext bottomtip">Smaller body</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-                    <button class="styleButton tooltip" id="largerBody"><span class="tooltiptext bottomtip">Larger body</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-                    <button class="styleButton tooltip" id="prevBodyStyle"><span class="tooltiptext bottomtip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-                    <button class="styleButton tooltip" id="nextBodyStyle"><span class="tooltiptext bottomtip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+                    <button class="styleButton tooltip leftButton" id="smallerBody"><span class="tooltiptext bottomtip">Smaller body</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                    <button class="styleButton tooltip rightButton" id="largerBody"><span class="tooltiptext bottomtip">Larger body</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                    <button class="styleButton tooltip leftButton" id="prevBodyStyle"><span class="tooltiptext bottomtip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                    <button class="styleButton tooltip rightButton" id="nextBodyStyle"><span class="tooltiptext bottomtip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
                     <div id="borderButtons"> <!-- *MARK* - THIS DIV NEEDED?  SET HEIGHT FOR DIV TO HAVE BORDER WHATNOT SEPARATED? -->
-                        <button class="styleButton borderButton tooltip" id="prevBorderStyle"><span class="tooltiptext toptip">Prev border style</span>┐╗</button>
-                        <button class="styleButton borderButton tooltip" id="nextBorderStyle"><span class="tooltiptext toptip">Next border style</span>╗┐</button>
-                        <button class="styleButton borderButton tooltip" id="prevBorderColor"><span class="tooltiptext toptip">Prev border color</span><span class="oneColor">┐</span><span class="twoColor">┐</span><span class="threeColor">┐</span></button>
-                        <button class="styleButton borderButton tooltip" id="nextBorderColor"><span class="tooltiptext toptip">Next border color</span><span class="threeColor">┐</span><span class="twoColor">┐</span><span class="oneColor">┐</span></button>
-                        <button class="styleButton tooltip" id="smallerBorder"><span class="tooltiptext toptip">Narrower border</span>▌│</button>
-                        <button class="styleButton tooltip" id="largerBorder"><span class="tooltiptext toptip">Wider border</span>│▌</button>
+                        <button class="styleButton borderButton tooltip leftButton" id="prevBorderStyle"><span class="tooltiptext toptip">Prev border style</span>┐╗</button>
+                        <button class="styleButton borderButton tooltip rightButton" id="nextBorderStyle"><span class="tooltiptext toptip">Next border style</span>╗┐</button>
+                        <button class="styleButton borderButton tooltip leftButton" id="prevBorderColor"><span class="tooltiptext toptip">Prev border color</span><span class="oneColor">┐</span><span class="twoColor">┐</span><span class="threeColor">┐</span></button>
+                        <button class="styleButton borderButton tooltip rightButton" id="nextBorderColor"><span class="tooltiptext toptip">Next border color</span><span class="threeColor">┐</span><span class="twoColor">┐</span><span class="oneColor">┐</span></button>
+                        <button class="styleButton tooltip leftButton" id="smallerBorder"><span class="tooltiptext toptip">Narrower border</span>▌│</button>
+                        <button class="styleButton tooltip rightButton" id="largerBorder"><span class="tooltiptext toptip">Wider border</span>│▌</button>
                         <br>
-                        <button class="styleButton tooltip" id="prevBackground"><span class="tooltiptext bottomtip">Prev background color</span><span class="twoColor">█</span><span class="oneColor">█</span></button>
-                        <button class="styleButton tooltip" id="nextBackground"><span class="tooltiptext bottomtip">Next background color</span><span class="oneColor">█</span><span class="twoColor">█</span></button>
+                        <button class="styleButton tooltip leftButton" id="prevBackground"><span class="tooltiptext bottomtip">Prev background color</span><span class="twoColor">█</span><span class="oneColor">█</span></button>
+                        <button class="styleButton tooltip rightButton" id="nextBackground"><span class="tooltiptext bottomtip">Next background color</span><span class="oneColor">█</span><span class="twoColor">█</span></button>
                         <br>
                         <button id="preview" class="tooltip goButton"><span class="tooltiptext bottomtip">Preview the card in the full browser window</span>PREVIEW CARD</button>
                     </div>
@@ -146,15 +146,15 @@
 
             <div>
 <!--            <h2 class="footer">Footer:</h2>-->
-                <button class="styleButton tooltip" id="prevFooterFont"><span class="tooltiptext toptip">Prev footer font</span><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
-                <button class="styleButton tooltip" id="nextFooterFont"><span class="tooltiptext toptip">Next footer font</span><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
-                <button class="styleButton tooltip" id="prevFooterColor"><span class="tooltiptext toptip">Prev footer color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
-                <button class="styleButton tooltip" id="nextFooterColor"><span class="tooltiptext toptip">Next footer color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
-                <input type="text" name="footertext" id="footertext" onkeyup="createCard.changeFooter()" placeholder="Type your footer text" />
-                <button class="styleButton tooltip" id="smallerFooter"><span class="tooltiptext toptip">Smaller footer</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
-                <button class="styleButton tooltip" id="largerFooter"><span class="tooltiptext toptip">Larger footer</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
-                <button class="styleButton tooltip" id="prevFooterStyle"><span class="tooltiptext toptip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
-                <button class="styleButton tooltip" id="nextFooterStyle"><span class="tooltiptext toptip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
+                <button class="styleButton tooltip leftButton" id="prevFooterFont"><span class="tooltiptext toptip">Prev footer font</span><span class="oneFont">a</span><span class="twoFont">a</span><span class="threeFont">a</span></button>
+                <button class="styleButton tooltip rightButton" id="nextFooterFont"><span class="tooltiptext toptip">Next footer font</span><span class="threeFont">a</span><span class="twoFont">a</span><span class="oneFont">a</span></button>
+                <button class="styleButton tooltip leftButton" id="prevFooterColor"><span class="tooltiptext toptip">Prev footer color</span><span class="oneColor">a</span><span class="twoColor">a</span><span class="threeColor">a</span></button>
+                <button class="styleButton tooltip rightButton" id="nextFooterColor"><span class="tooltiptext toptip">Next footer color</span><span class="threeColor">a</span><span class="twoColor">a</span><span class="oneColor">a</span></button>
+                <input type="text" name="footertext" id="footertext" onkeyup="createCard.changeFooter()" placeholder="Footer text" />
+                <button class="styleButton tooltip leftButton" id="smallerFooter"><span class="tooltiptext toptip">Smaller footer</span>a<span class="mediumFont">a</span><span class="smallFont">a</span></button>
+                <button class="styleButton tooltip rightButton" id="largerFooter"><span class="tooltiptext toptip">Larger footer</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
+                <button class="styleButton tooltip leftButton" id="prevFooterStyle"><span class="tooltiptext toptip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
+                <button class="styleButton tooltip rightButton" id="nextFooterStyle"><span class="tooltiptext toptip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
             </div>
         </div>
 
@@ -393,15 +393,16 @@
 
 
     </main>
-
-    <div id="cardPreview" class="invisible">
-        <div id="previewHeader"></div>
-        <img id="previewPhoto">
-        <p id="previewBody"></p>
-        <p id="previewFooter"></p>
-        <p id="previewCreds"></p>
+    <div id="previewParent" class="invisible">
+        <div id="cardPreview">
+            <div id="previewHeader"></div>
+            <img id="previewPhoto">
+            <p id="previewBody"></p>
+            <p id="previewFooter"></p>
+            <p id="previewCreds"></p>
+            <button id="closePreview">Close Preview</button>
+        </div>
     </div>
-
 
     <footer role="contentinfo">
         <div class="left">© David Sundland</div>
