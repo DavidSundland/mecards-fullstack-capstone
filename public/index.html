@@ -47,6 +47,31 @@
             </div>
         </form>
 
+        <div class="newUser">
+            <div class="newuserBox">
+                <h2>Create New User</h2>
+                <form id="newUser">
+                    <div class="row">
+                        <div class="col-6 loginLabel">Username:</div>
+                        <div class="col-6 loginInput"><input name="userName" autocomplete="off"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 loginLabel">Password:</div>
+                        <div class="col-6 loginInput"><input name="password" autocomplete="off"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 loginLabel">Confirm Password:</div>
+                        <div class="col-6 loginInput"><input name="passwordConfirm" autocomplete="off"></div>
+                    </div>
+                    <div class="row">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+                <button id="cancelNewUser">Cancel</button>
+            </div>
+        </div>
+
+<!--
         <form id="newUser" class="newUser">
             <div class="row">
                 <div class="col-6 loginLabel">Username:</div>
@@ -64,6 +89,7 @@
                 <button type="submit">Submit</button>
             </div>
         </form>
+-->
 
 
         <div class="userCard">
@@ -91,7 +117,7 @@
                 <div id="cardBox" class="col-8">
                     <div id="cardHeader">Header (optional)</div>
                     <img id="photo" class="invisible" src="images/blackbackground.jpg">
-                    <div id="cardBody">Body text (optional).  Header, body, & footer are all optional.  If you want the header, body, and/or footer to be blank, place a space in the corresponding text box.</div>
+                    <div id="cardBody" class="cardBody">Body text (optional).  Header, body, & footer are all optional.  If you want the header, body, and/or footer to be blank, place a space in the corresponding text box.</div>
                     <div id="cardFooter">Footer (optional)</div>
                     <div id="photoCreds"></div>
                 </div>
@@ -107,7 +133,8 @@
                     <button class="styleButton tooltip rightButton" id="largerBody"><span class="tooltiptext bottomtip">Larger body</span><span class="smallFont">a</span><span class="mediumFont">a</span>a</button>
                     <button class="styleButton tooltip leftButton" id="prevBodyStyle"><span class="tooltiptext bottomtip">Prev drop shadow</span>a<span class="oneStyle">a</span><span class="twoStyle">a</span></button>
                     <button class="styleButton tooltip rightButton" id="nextBodyStyle"><span class="tooltiptext bottomtip">Next drop shadow</span><span class="twoStyle">a</span><span class="oneStyle">a</span>a</button>
-                    <div id="borderButtons"> <!-- *MARK* - THIS DIV NEEDED?  SET HEIGHT FOR DIV TO HAVE BORDER WHATNOT SEPARATED? -->
+                    <hr>
+                    <div id="borderButtons">
                         <button class="styleButton borderButton tooltip leftButton" id="prevBorderStyle"><span class="tooltiptext toptip">Prev border style</span>┐╗</button>
                         <button class="styleButton borderButton tooltip rightButton" id="nextBorderStyle"><span class="tooltiptext toptip">Next border style</span>╗┐</button>
                         <button class="styleButton borderButton tooltip leftButton" id="prevBorderColor"><span class="tooltiptext toptip">Prev border color</span><span class="oneColor">┐</span><span class="twoColor">┐</span><span class="threeColor">┐</span></button>
@@ -118,30 +145,9 @@
                         <button class="styleButton tooltip leftButton" id="prevBackground"><span class="tooltiptext bottomtip">Prev background color</span><span class="twoColor">█</span><span class="oneColor">█</span></button>
                         <button class="styleButton tooltip rightButton" id="nextBackground"><span class="tooltiptext bottomtip">Next background color</span><span class="oneColor">█</span><span class="twoColor">█</span></button>
                         <br>
-                        <button id="preview" class="tooltip goButton"><span class="tooltiptext bottomtip">Preview the card in the full browser window</span>PREVIEW CARD</button>
+                        <button id="preview" class="tooltip goButton"><span class="tooltiptext toptip">Preview the card in the full browser window</span><span class="tooltiptext bottomtip">Note - display size may affect layout</span>PREVIEW CARD</button>
                     </div>
                 </div>
-            </div>
-
-            <div class="newUser">
-                <form id="newUser">
-                    <div class="row">
-                        <div class="col-6 loginLabel">Username:</div>
-                        <div class="col-6 loginInput"><input name="userName" placeholder="testuser" autocomplete="off"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 loginLabel">Password:</div>
-                        <div class="col-6 loginInput"><input name="password" placeholder="testpassword" autocomplete="off"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 loginLabel">Confirm Password:</div>
-                        <div class="col-6 loginInput"><input name="passwordConfirm" placeholder="testpassword" autocomplete="off"></div>
-                    </div>
-                    <div class="row">
-                        <button type="submit">Submit</button>
-                    </div>
-                </form>
-                <button id="cancelNewUser">Cancel</button>
             </div>
 
             <div>
@@ -397,7 +403,7 @@
         <div id="cardPreview">
             <div id="previewHeader"></div>
             <img id="previewPhoto">
-            <p id="previewBody"></p>
+            <p id="previewBody" class="previewBody"></p>
             <p id="previewFooter"></p>
             <p id="previewCreds"></p>
             <button id="closePreview">Close Preview</button>

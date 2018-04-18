@@ -64,6 +64,7 @@ body {
     line-height: 1.5;
     color: #bdbaba;
     height: 100%;
+    background-color: rgba(255,255,255,.4); /* To "soften" the background image in the HTML */
 }
 
 
@@ -89,7 +90,7 @@ h1 {
 
 button {
     cursor: pointer;
-    margin: 10px;
+    margin: 7px;
     padding: 15px;
     border-radius: 20px;
     color: white;
@@ -124,7 +125,7 @@ button {
 }
 
 #borderButtons {
-    margin-top: 50px;
+/*    margin-top: 50px;*/
 /*    bottom: 0;*/
 }
 
@@ -214,6 +215,14 @@ p {
 }
 */
 
+hr {
+    border: #5B6DAD solid 1px;
+    width: 60%;
+    margin: 20px auto;
+    /*    width: 90%;*/
+}
+
+
 .intro p, #login {
     font-weight: 600;
     font-size: 1.2em;
@@ -232,9 +241,71 @@ p {
 }
 
 .newUser,
+.login {
+    width: 100%;
+    height: 100%;
+    padding: 20px 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
+/*    background-color: pink;*/
+    background-size: cover;
+    z-index: 1001;
+}
+
+/*
+.newUser,
+.login {
+    z-index: 101;
+}
+*/
+/*
+
+.login form,
+.newUser form {
+    padding-top: 60px;
+}
+
+.newUser form div {
+    margin-bottom: 20px;
+}
+*/
+
+.newuserBox {
+    /* center box in page */
+    position: absolute;
+    background-color: rgba(255,213,118,.7);
+    border: 1px solid #B8B3C5;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 60%;
+    min-height: 40%;
+    max-height: 80%;
+    padding-bottom: 20px;
+/*    width: 500px;*/
+/*    height: 500px;*/
+/*    border: 5px black solid;*/
+/*    z-index: 1002;*/
+/*    margin-top: 100px;*/
+
+
+}
+
+
+
+
+.newUser,
 .userCard {
     display: none;
     text-align: center;
+    color: #715CAF;
+    font-weight: 800;
 }
 
 
@@ -297,14 +368,23 @@ p {
 /*    width: 100%;*/
 }
 
+#cardPreview {
+    height: 100%;
+}
+
+#cardPreview img {
+    display: block;
+}
+
 #photoCreds, #previewCreds {
     color: rgba(255,255,255,.7);
-    text-shadow: 2px 2px rgba(0,0,0,.7);
+/*    text-shadow: 2px 2px rgba(0,0,0,.7);*/
     text-align: left;
     bottom: 3px;
     left: 3px;
     position: absolute;
     font-size: .7em;
+    background-color: black;
 }
 
 #cardHeader, #previewHeader {
@@ -323,7 +403,7 @@ p {
     padding-top: 60px;
 }
 
-#cardBody, #previewBody {
+.cardBody, .previewBody {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -339,7 +419,11 @@ p {
     width: 50%;
     height: 50%;
 */
+}
 
+.portraitPic {
+    left: 60%;
+    transform: translate(-75%, -50%);
 }
 /* width: some percentage, auto width;*/
 
@@ -477,9 +561,9 @@ h1,
 h2 {
     text-align: center;
     font-size: 34px;
-    color: #E83A3A;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    color: #4E88A1;
+    padding-top: 15px;
+/*    padding-bottom: 20px;*/
 }
 
 .searchBox,
@@ -691,7 +775,7 @@ a:hover {
 }
 
 .newUser form div {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .loginLabel {
@@ -733,11 +817,6 @@ a:hover {
 
 .venueNameHeader a {
     color: #CC1414;
-}
-
-hr {
-    border: #A70404 solid 1px;
-    /*    width: 90%;*/
 }
 
 .venueAddress {

@@ -60,7 +60,7 @@ let createCard = {
     changeBody: function() {
         this.bodyText = $("#bodyText").val();
         if (this.bodyText==="") {
-            $("#cardBody").text("Body text (optional).  The header, body, and footer text are all optional.  If you want the header, body, and/or footer to be blank, click in the corresponding text box and then hit your spacebar.");
+            $("#cardBody").text("Body text. Header, body, & footer are all optional. If you want the header, body, and/or footer to be blank, place a space in the corresponding text box.");
         }
         else {
             $("#cardBody").text(this.bodyText);
@@ -427,6 +427,14 @@ let createCard = {
 //                    console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
                     $("#nextPhoto").addClass("makeVisibleInline");
                     $("#prevPhoto").addClass("makeVisibleInline");
+                    if (res.results[0].width < 1.1*res.results[0].height) {
+                        $("#cardBody").addClass("portraitPic");
+//                        alert("Applying narrower text");
+                    }
+                    else {
+                        $("#cardBody").removeClass("portraitPic");
+//                        alert("Wound up in else - no narrower text");
+                    }
                     $("#photo").addClass("makeVisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
@@ -444,6 +452,13 @@ let createCard = {
             if (createCard.imageNumber >= createCard.photoList.length) {
                 createCard.imageNumber = 0;
             }
+            if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
+                $("#cardBody").addClass("portraitPic");
+//                alert("Applying narrower text");
+            }
+            else {
+                $("#cardBody").removeClass("portraitPic");
+            }
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
@@ -453,8 +468,14 @@ let createCard = {
             if (createCard.imageNumber < 0) {
                 createCard.imageNumber = createCard.photoList.length - 1;
             }
-            $("#photo").attr("src", createCard.photoList[counter].photoLink);
-            $("#photoCreds").html(`<a href="${createCard.photoList[counter].photogLink}" target="_blank">${createCard.photoList[counter].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
+            if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
+                $("#cardBody").addClass("portraitPic");
+            }
+            else {
+                $("#cardBody").removeClass("portraitPic");
+            }
+            $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
+            $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
     },
 }
@@ -540,7 +561,15 @@ let createCard = {
 //</div>
 
 function previewCard() {
-    console.log("in previewCard");
+//    console.log("in previewCard");
+    if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
+        $("#previewBody").addClass("portraitPic");
+        //                        alert("Applying narrower text");
+    }
+    else {
+        $("#previewBody").removeClass("portraitPic");
+        //                        alert("Wound up in else - no narrower text");
+    }
     $("#previewParent").addClass("makeVisible");
     $("#previewHeader").text(createCard.titleText);
     $("#previewBody").text(createCard.bodyText);
@@ -576,7 +605,7 @@ function closePreview() {
 // Code to create new user:
 
 $('#newUser').on('submit', function (event) {
-    alert("new user clicked");
+//    alert("new user clicked");
     event.preventDefault();
     const uname = $('input[name="userName"]').val();
     const pw = $('input[name="password"]').val();
@@ -675,10 +704,19 @@ $('#login').on('click', '#loginClicked', function (event) {
 function createNewUser(event) {
     console.log("hi from createNewUser");
     event.preventDefault(); // otherwise page reloads when this function starts
-    alert("got into createNewUser");
+//    alert("got into createNewUser");
     $('.login').removeClass('makeVisible');
     $('.newUser').addClass('makeVisible');
 }
+
+$('.newUser').on('click', '#cancelNewUser', function () {
+    $('input[name="userName"]').val(""); // clear the input fields
+    $('input[name="password"]').val("");
+    $('input[name="passwordConfirm"]').val("");
+    $('.newUser').removeClass('makeVisible');
+    $('.jsHide').addClass("makeVisible");
+});
+
 
 function myAlert(sayThis, choice) {
     let okChoices = ["Uhh, sure... OK", "Happy to oblige", "Did I have any other choice?", "It seemed the right thing to do", "I was bored", "My cat's breath smells like cat food", "I didn't realize I had a choice", "Hooray?", "Snazzy.", "Well, I'll be!", "Well, ain't that grand!"];
