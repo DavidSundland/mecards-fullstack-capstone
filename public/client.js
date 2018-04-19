@@ -765,7 +765,7 @@ $('#login').on('click', '#loginClicked', function (event) {
                         console.log(res);
                         $('.prevCards').addClass('makeVisible');
                         for (let x=0; x < res.results.length; x++) {
-                            $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" value="${res.results[x].description}"><div class="col-2"><button class="${res.results[x]._id}">Edit</button></div></div>`);
+                            $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div></div>`);
                         }
                     }
                 });
@@ -778,6 +778,12 @@ $('#login').on('click', '#loginClicked', function (event) {
             });
     };
 });
+
+$(document).on('click', '.userCards', function(event) {
+    event.preventDefault();
+    let clickedUserCardId = $(this).parent().parent().find(".userCardsIdValue").val();
+    console.log("clicked button", clickedUserCardId); // MAKE GET CALL TO ID
+})
 
 function createNewUser(event) {
     console.log("hi from createNewUser");
