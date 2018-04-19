@@ -71,6 +71,15 @@
             </div>
         </div>
 
+        <div class="prevCards">
+            <div class="prevCardsBox">
+                <h2>Your previous cards:</h2>
+                <div id="prevCards">
+                </div>
+            </div>
+            <button id="oldUserNewCard">New Card</button>
+        </div>
+
 <!--
         <form id="newUser" class="newUser">
             <div class="row">
@@ -94,9 +103,9 @@
 
         <div class="userCard">
             <form>
-                <button id="prevPhoto" class="invisible">Previous Image</button>
                 <input name="photoQuery"  id="photoQuery" placeholder="Background image search term">
-                <button type="submit" id="querySubmit">Submit</button>
+                <button type="submit" id="querySubmit">Submit</button><br>
+                <button id="prevPhoto" class="invisible">Prev. Image</button>
                 <button id="nextPhoto" class="invisible">Next Image</button>
             </form>
 
@@ -145,7 +154,7 @@
                         <button class="styleButton tooltip leftButton" id="prevBackground"><span class="tooltiptext bottomtip">Prev background color</span><span class="twoColor">█</span><span class="oneColor">█</span></button>
                         <button class="styleButton tooltip rightButton" id="nextBackground"><span class="tooltiptext bottomtip">Next background color</span><span class="oneColor">█</span><span class="twoColor">█</span></button>
                         <br>
-                        <button id="preview" class="tooltip goButton"><span class="tooltiptext toptip">Preview the card in the full browser window</span><span class="tooltiptext bottomtip">Note - display size may affect layout</span>PREVIEW CARD</button>
+                        <button id="preview" class="tooltip goButton"><span class="tooltiptext toptip">Preview the card in the full browser window</span><span class="tooltiptext bottomtip">Note - display size may affect layout</span>PREVIEW CARD</button><button id="saveChanges" class="goButton">SAVE CARD</button>
                     </div>
                 </div>
             </div>

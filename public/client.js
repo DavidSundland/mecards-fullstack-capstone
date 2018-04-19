@@ -601,6 +601,65 @@ function closePreview() {
     $("#previewParent").removeClass("makeVisible");
 }
 
+// Save a card:
+function saveCard() {
+    let cardArray = {
+        userName: USERNAME,
+        title: createCard.titleText,
+        body: createCard.bodyText,
+        footer: createCard.footerText,
+        titleFont: FONTS[createCard.titleFontNumber],
+        bodyFont: FONTS[createCard.bodyFontNumber],
+        footerFont: FONTS[createCard.footerFontNumber],
+        titleColor: COLORS[createCard.titleColorNumber],
+        bodyColor: COLORS[createCard.bodyColorNumber],
+        footerColor: COLORS[createCard.footerColorNumber],
+        titleSize: createCard.titleFontSize,
+        bodySize: createCard.bodyFontSize,
+        footerSize: createCard.footerFontSize,
+        titleShadow: TEXTSTYLES[createCard.titleStyle][1],
+        bodyShadow: TEXTSTYLES[createCard.bodyStyleNumber][1],
+        footerShadow: TEXTSTYLES[createCard.footerStyleNumber][1],
+        titleBackground: TEXTSTYLES[createCard.titleStyle][0],
+        bodyBackground: TEXTSTYLES[createCard.bodyStyleNumber][0],
+        footerBackground: TEXTSTYLES[createCard.footerStyleNumber][0],
+        borderStyle: BORDERS[createCard.borderStyle],
+        borderColor: COLORS[createCard.borderColor],
+        borderWidth: createCard.borderSize,
+        backgroundColor: COLORS[createCard.backgroundNumber],
+        photo: createCard.photoList[createCard.imageNumber].photoLink,
+        photographer: createCard.photoList[createCard.imageNumber].photogName,
+        photoUrl: createCard.photoList[createCard.imageNumber].photogLink,
+        width: createCard.photoList[createCard.imageNumber].width,
+        height: createCard.photoList[createCard.imageNumber].height
+    };
+    $.ajax({
+            type: 'POST',
+            url: '/create',
+            dataType: 'json',
+            data: JSON.stringify(cardArray),
+            contentType: 'application/json'
+        })
+        .done(function (result) {
+            console.log("new review posted:", result);
+            alert(`Your mE-Card has been saved. It can be found at ${result._id}`);
+        })
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
+
+
+
+
+
+
+
+
+
 
 // Code to create new user:
 
@@ -653,6 +712,18 @@ $('#newUser').on('submit', function (event) {
     };
 });
 
+
+
+
+$(document).on('click', '#oldUserNewCard', addCard);
+
+function addCard() {
+    $('.prevCards').removeClass('makeVisible');
+    $('.userCard').addClass('makeVisible');
+}
+
+
+
 // Code to log user in:
 
 $('#login').on('click', '#loginClicked', function (event) {
@@ -681,16 +752,23 @@ $('#login').on('click', '#loginClicked', function (event) {
             .done(function (result) {
                 LOGGEDIN = true;
                 USERNAME = user;
-                alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
                 $('input[name="signinUserName"]').val("");
                 $('input[name="signinPassword"]').val("");
-                //                $('#closeVenue').addClass('makeVisible'); // Show close venue button
                 $('.intro').addClass('hideMe');
                 $('#login').addClass('hideMe');
-                $('.userCard').addClass('makeVisible');
-                //                $('#leaveReview').addClass('makeVisible');
-//                let venueName = $('#reviewMarquee').attr("title");
-//                showReview(venueName);
+                alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
+                $.getJSON('/findCards/' + USERNAME, function (res) {
+                    if (res.results.length === 0) { // no results - no saved cards
+                        $('.userCard').addClass('makeVisible');
+                        alert("found no cards");
+                    } else {
+                        console.log(res);
+                        $('.prevCards').addClass('makeVisible');
+                        for (let x=0; x < res.results.length; x++) {
+                            $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" value="${res.results[x].description}"><div class="col-2"><button class="${res.results[x]._id}">Edit</button></div></div>`);
+                        }
+                    }
+                });
             })
             .fail(function (jqXHR, error, errorThrown) {
                 console.log(jqXHR);
@@ -739,10 +817,19 @@ function myAlert(sayThis, choice) {
     });
 }
 
+function bobbob() {
+    console.log(this, this.id, "children:", this.children, "selectall...", this.selectAllChildren);
+}
+
 $(setInitial);
 $(document).on('click', '#newUserButton', createNewUser);
 $(document).on('click', '#preview', previewCard);
 $(document).on('click', '#closePreview', closePreview);
+$(document).on('click', '#saveChanges', saveCard);
+
+$(document).on('click', '#prevCards', bobbob);
+
+
 //$('#newUserButton').click(createNewUser);
 $(createCard.getImages);
 $(createCard.headerFont);

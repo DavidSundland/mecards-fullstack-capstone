@@ -1,5 +1,5 @@
 const User = require('./models/user');
-const Review = require('./models/reviews');
+const Card = require('./models/cards');
 const Location = require('./models/locations');
 const bodyParser = require('body-parser');
 const config = require('./config');
@@ -98,6 +98,119 @@ app.get('/unsplash/:searchTerm', (req, res) => {
         res.sendStatus(code);
     });
 
+});
+
+
+
+//console.log("in previewCard");
+//if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
+//    $("#previewBody").addClass("portraitPic");
+//    //                        alert("Applying narrower text");
+//}
+//else {
+//    $("#previewBody").removeClass("portraitPic");
+//    //                        alert("Wound up in else - no narrower text");
+//}
+//$("#previewParent").addClass("makeVisible");
+//$("#previewHeader").text(createCard.titleText);
+//$("#previewBody").text(createCard.bodyText);
+//$("#previewFooter").text(createCard.footerText);
+//$("#previewHeader").css("font-family", FONTS[createCard.titleFontNumber]);
+//$("#previewBody").css("font-family", FONTS[createCard.bodyFontNumber]);
+//$("#previewFooter").css("font-family", FONTS[createCard.footerFontNumber]);
+//$("#previewHeader").css("color", COLORS[createCard.titleColorNumber]);
+//$("#previewBody").css("color", COLORS[createCard.bodyColorNumber]);
+//$("#previewFooter").css("color", COLORS[createCard.footerColorNumber]);
+//$("#previewHeader").css("font-size", createCard.titleFontSize + "em");
+//$("#previewBody").css("font-size", createCard.bodyFontSize + "em");
+//$("#previewFooter").css("font-size", createCard.footerFontSize + "em");
+//$("#previewHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
+//$("#previewHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
+//$("#previewBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
+//$("#previewBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
+//$("#previewFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
+//$("#previewFooter").css("background-color", TEXTSTYLES[createCard.footerStyleNumber][0]);
+//$("#previewPhoto").css("border-style", BORDERS[createCard.borderStyle]);
+//$("#previewPhoto").css("border-color", COLORS[createCard.borderColor]);
+//$("#previewPhoto").css("border-width", createCard.borderSize + "px");
+//$("#previewParent").css("background-color", COLORS[createCard.backgroundNumber]);
+//$("#previewPhoto").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
+//$("#previewCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
+//}
+
+
+
+
+//save card
+app.post('/create', (req, res) => {
+    let userName = req.body.userName;
+    let title = req.body.title;
+    let body = req.body.body;
+    let footer = req.body.footer;
+    let titleFont = req.body.titleFont;
+    let bodyFont = req.body.bodyFont;
+    let footerFont = req.body.footerFont;
+    let titleColor = req.body.titleColor;
+    let bodyColor = req.body.bodyColor;
+    let footerColor = req.body.footerColor;
+    let titleSize = req.body.titleSize;
+    let bodySize = req.body.bodySize;
+    let footerSize = req.body.footerSize;
+    let titleShadow = req.body.titleShadow;
+    let bodyShadow = req.body.bodyShadow;
+    let footerShadow = req.body.footerShadow;
+    let titleBackground = req.body.titleBackground;
+    let bodyBackground = req.body.bodyBackground;
+    let footerBackground = req.body.footerBackground;
+    let borderStyle = req.body.borderStyle;
+    let borderColor = req.body.borderColor;
+    let borderWidth = req.body.borderWidth;
+    let backgroundColor = req.body.backgroundColor;
+    let photo = req.body.photo;
+    let photographer = req.body.photographer;
+    let photoUrl = req.body.photoUrl;
+    let width = req.body.width;
+    let height = req.body.height;
+    Card.create({
+        userName,
+        title,
+        body,
+        footer,
+        titleFont,
+        bodyFont,
+        footerFont,
+        titleColor,
+        bodyColor,
+        footerColor,
+        titleSize,
+        bodySize,
+        footerSize,
+        titleShadow,
+        bodyShadow,
+        footerShadow,
+        titleBackground,
+        bodyBackground,
+        footerBackground,
+        borderStyle,
+        borderColor,
+        borderWidth,
+        backgroundColor,
+        photo,
+        photographer,
+        photoUrl,
+        width,
+        height
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Infernal Server Error'
+            });
+        }
+        if (item) {
+            console.log(`Card ${title} by ${userName} saved.`);
+            return res.json(item);
+        }
+    });
 });
 
 
@@ -279,16 +392,14 @@ app.get('/locations', function (req, res) {
 });
 
 // check to see if user has review for venue
-app.get('/reviews/check/:userName/:venueName', function (req, res) {
+app.get('/findCards/:userName', function (req, res) {
     let userName = req.params.userName;
-    let venueName = req.params.venueName;
-    Review
-        .findOne({
-            venueName: venueName,
+    Card
+        .find({
             userName: userName
         })
         .then(function (results) {
-            console.log("In get one review, results: ", results);
+//            console.log("In get one review, results: ", results);
             res.json({
                 results
             });
