@@ -55,27 +55,15 @@ const cardSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    titleShadow: {
+    titleStyle: {
         type: String,
         required: false
     },
-    bodyShadow: {
+    bodyStyle: {
         type: String,
         required: false
     },
-    footerShadow: {
-        type: String,
-        required: false
-    },
-    titleBackground: {
-        type: String,
-        required: false
-    },
-    bodyBackground: {
-        type: String,
-        required: false
-    },
-    footerBackground: {
+    footerStyle: {
         type: String,
         required: false
     },

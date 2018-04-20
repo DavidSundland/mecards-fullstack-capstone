@@ -1,6 +1,7 @@
 let LOGGEDIN = false;
 let USERNAME = "";
 
+// NOTE - If the following values are changed, it could affect saved cards.  If values are added to any of these arrays, they should be added to the end so that they do not impact saved cards.
 const FONTS = ['Roboto','Tajawal','Do Hyeon','Lato','Montserrat','Hi Melody','Gugi','Raleway','Gaegu','Merriweather','Ubuntu','Black Han Sans','Playfair Display','Poppins','Gamja Flower','Inconsolata','Indie Flower','Dosis','Crimson Text','Jua','Arvo','Libre Baskerville','Cute Font','Lobster','Pacifico','Dokdo','Shadows Into Light','Dancing Script','Black And White Picture'];
 const COLORS = ['white', 'black', 'maroon', 'teal', 'aqua', 'navy', '#6495ED', '#E9967A', '#FF5555', '#FF9B55', '#35A091', '#44CC44', '#FFFC55', '#BE3F9B', '#C9F251', '#8040AB', '#DE4A81', '#34959A', '#FFFF55', '#DAB8CE', 'rgba(0,0,0,.6)', 'rgba(255,255,255,.6)'];
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
@@ -617,16 +618,13 @@ function saveCard() {
         titleSize: createCard.titleFontSize,
         bodySize: createCard.bodyFontSize,
         footerSize: createCard.footerFontSize,
-        titleShadow: TEXTSTYLES[createCard.titleStyle][1],
-        bodyShadow: TEXTSTYLES[createCard.bodyStyleNumber][1],
-        footerShadow: TEXTSTYLES[createCard.footerStyleNumber][1],
-        titleBackground: TEXTSTYLES[createCard.titleStyle][0],
-        bodyBackground: TEXTSTYLES[createCard.bodyStyleNumber][0],
-        footerBackground: TEXTSTYLES[createCard.footerStyleNumber][0],
-        borderStyle: BORDERS[createCard.borderStyle],
-        borderColor: COLORS[createCard.borderColor],
+        titleStyle: createCard.titleStyle,
+        bodyStyle: createCard.bodyStyle,
+        footerStyle: createCard.footerStyle,
+        borderStyle: createCard.borderStyle,
+        borderColor: createCard.borderColor,
         borderWidth: createCard.borderSize,
-        backgroundColor: COLORS[createCard.backgroundNumber],
+        backgroundColor: createCard.backgroundNumber,
         photo: createCard.photoList[createCard.imageNumber].photoLink,
         photographer: createCard.photoList[createCard.imageNumber].photogName,
         photoUrl: createCard.photoList[createCard.imageNumber].photogLink,
@@ -782,8 +780,32 @@ $('#login').on('click', '#loginClicked', function (event) {
 $(document).on('click', '.userCards', function(event) {
     event.preventDefault();
     let clickedUserCardId = $(this).parent().parent().find(".userCardsIdValue").val();
+    $.getJSON('/onecard/:' + clickedUserCardId, function (res) {  // MARKMARKMARK*******
+        createCard.titleText = res.titleText;
+        createCard.bodyText = res.bodyText;
+        createCard.footerText = res.footerText;
+        createCard.titleFontNumber = res.titleFontNumber;  // Number or actual font?
+        createCard.bodyFontNumber = res.bodyFontNumber;
+        createCard.footerFontNumber = res.footerFontNumber;
+        createCard.titleColorNumber = res.titleColorNumber;
+        createCard.bodyColorNumber = res.bodyColorNumber;
+        createCard.footerColorNumber = res.footerColorNumber;
+        createCard.titleFontSize = res.titleFontSize;
+        createCard.bodyFontSize = res.bodyFontSize;
+        createCard.footerFontSize = res.footerFontSize;
+        createCard.titleStyle = res.titleStyle;
+        createCard.bodyStyleNumber = res.bodyStyleNumber;
+        createCard.footerStyleNumber = res.footerStyleNumber;
+        createCard.borderStyle = res.borderStyle;
+        createCard.borderColor = res.borderColor;
+        createCard.borderSize = res.borderSize;
+        createCard.backgroundNumber = res.backgroundNumber;
+        createCard.imageNumber = res.imageNumber;
+        createCard.photoList = res.photoList;
+
+    });
     console.log("clicked button", clickedUserCardId); // MAKE GET CALL TO ID
-})
+});
 
 function createNewUser(event) {
     console.log("hi from createNewUser");
