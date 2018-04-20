@@ -7,24 +7,6 @@ const COLORS = ['white', 'black', 'maroon', 'teal', 'aqua', 'navy', '#6495ED', '
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
 
-function setInitial() {
-    $("#cardHeader").css("font-family", FONTS[0]);
-    $("#cardBody").css("font-family", FONTS[0]);
-    $("#cardFooter").css("font-family", FONTS[0]);
-    $("#cardHeader").css("color", COLORS[0]);
-    $("#cardBody").css("color", COLORS[0]);
-    $("#cardFooter").css("color", COLORS[0]);
-    $("#cardHeader").css("font-size", "2em");
-    $("#cardBody").css("font-size", "1em");
-    $("#cardFooter").css("font-size", "2em");
-    $("#photo").css("border-style", BORDERS[0]); // Set initial border
-    $("#photo").css("border-color", COLORS[0]); // Set initial color
-    $("#photo").css("border-width", "10px"); // Set initial size
-//    $('#login').on('click', '#newUserButton', alert("hi"));// createNewUser);
-//    $('#newUserButton').click(createNewUser);
-}
-
-
 let createCard = {
     titleText: "",
     bodyText: "",
@@ -38,7 +20,7 @@ let createCard = {
     titleFontSize: 2,
     bodyFontSize: 1,
     footerFontSize: 2,
-    titleStyle: 0,
+    titleStyleNumber: 0,
     bodyStyleNumber: 0,
     footerStyleNumber: 0,
     borderStyle: 0,
@@ -242,22 +224,22 @@ let createCard = {
     headerStyle: function() {
         $("#prevHeaderStyle").click(
             function() {
-                createCard.titleStyle--;
-                if (createCard.titleStyle < 0) {
-                    createCard.titleStyle = TEXTSTYLES.length-1;
+                createCard.titleStyleNumber--;
+                if (createCard.titleStyleNumber < 0) {
+                    createCard.titleStyleNumber = TEXTSTYLES.length-1;
                 }
-                $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
-                $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
+                $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
+                $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
             }
         );
         $("#nextHeaderStyle").click(
             function() {
-                createCard.titleStyle++;
-                if (createCard.titleStyle >= TEXTSTYLES.length) {
-                    createCard.titleStyle = 0;
+                createCard.titleStyleNumber++;
+                if (createCard.titleStyleNumber >= TEXTSTYLES.length) {
+                    createCard.titleStyleNumber = 0;
                 }
-                $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
-                $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
+                $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
+                $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
             }
         );
     },
@@ -481,6 +463,40 @@ let createCard = {
     },
 }
 
+
+function setInitial() {
+    $("#cardHeader").css("font-family", FONTS[createCard.titleFontNumber]);
+    $("#cardBody").css("font-family", FONTS[createCard.bodyFontNumber]);
+    $("#cardFooter").css("font-family", FONTS[createCard.footerFontNumber]);
+    $("#cardHeader").css("color", COLORS[createCard.titleColorNumber]);
+    $("#cardBody").css("color", COLORS[createCard.bodyColorNumber]);
+    $("#cardFooter").css("color", COLORS[createCard.footerColorNumber]);
+    $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
+    $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
+    $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+    $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
+    $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
+    $("#cardBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
+    $("#cardBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
+    $("#cardFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
+    $("#cardFooter").css("background-color", TEXTSTYLES[createCard.footerStyleNumber][0]);
+    $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
+    $("#photo").css("border-color", COLORS[createCard.borderColor]);
+    $("#photo").css("border-width", createCard.borderSize + "px");
+    if (createCard.photoList[createCard.imageNumber]) {
+        console.log("Line 487, photoList:", createCard.photoList);
+        $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
+        $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
+    }
+    createCard.changeHeader;
+    createCard.changeBody;
+    createCard.changeFooter;
+}
+
+
+
+
+
 //imageNumber: 0,
 //    photoList: [];
 
@@ -584,8 +600,8 @@ function previewCard() {
     $("#previewHeader").css("font-size", createCard.titleFontSize + "em");
     $("#previewBody").css("font-size", createCard.bodyFontSize + "em");
     $("#previewFooter").css("font-size", createCard.footerFontSize + "em");
-    $("#previewHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
-    $("#previewHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
+    $("#previewHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
+    $("#previewHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
     $("#previewBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
     $("#previewBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
     $("#previewFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
@@ -618,9 +634,9 @@ function saveCard() {
         titleSize: createCard.titleFontSize,
         bodySize: createCard.bodyFontSize,
         footerSize: createCard.footerFontSize,
-        titleStyle: createCard.titleStyle,
-        bodyStyle: createCard.bodyStyle,
-        footerStyle: createCard.footerStyle,
+        titleStyle: createCard.titleStyleNumber,
+        bodyStyle: createCard.bodyStyleNumber,
+        footerStyle: createCard.footerStyleNumber,
         borderStyle: createCard.borderStyle,
         borderColor: createCard.borderColor,
         borderWidth: createCard.borderSize,
@@ -755,7 +771,7 @@ $('#login').on('click', '#loginClicked', function (event) {
                 $('.intro').addClass('hideMe');
                 $('#login').addClass('hideMe');
                 alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
-                $.getJSON('/findCards/' + USERNAME, function (res) {
+                $.getJSON('/findcards/' + USERNAME, function (res) {
                     if (res.results.length === 0) { // no results - no saved cards
                         $('.userCard').addClass('makeVisible');
                         alert("found no cards");
@@ -780,28 +796,36 @@ $('#login').on('click', '#loginClicked', function (event) {
 $(document).on('click', '.userCards', function(event) {
     event.preventDefault();
     let clickedUserCardId = $(this).parent().parent().find(".userCardsIdValue").val();
-    $.getJSON('/onecard/:' + clickedUserCardId, function (res) {  // MARKMARKMARK*******
-        createCard.titleText = res.titleText;
-        createCard.bodyText = res.bodyText;
-        createCard.footerText = res.footerText;
-        createCard.titleFontNumber = res.titleFontNumber;  // Number or actual font?
-        createCard.bodyFontNumber = res.bodyFontNumber;
-        createCard.footerFontNumber = res.footerFontNumber;
-        createCard.titleColorNumber = res.titleColorNumber;
-        createCard.bodyColorNumber = res.bodyColorNumber;
-        createCard.footerColorNumber = res.footerColorNumber;
-        createCard.titleFontSize = res.titleFontSize;
-        createCard.bodyFontSize = res.bodyFontSize;
-        createCard.footerFontSize = res.footerFontSize;
-        createCard.titleStyle = res.titleStyle;
-        createCard.bodyStyleNumber = res.bodyStyleNumber;
-        createCard.footerStyleNumber = res.footerStyleNumber;
+    $.getJSON('/onecard/' + clickedUserCardId, function (res) {
+        createCard.titleText = res.title;
+        createCard.bodyText = res.body;
+        createCard.footerText = res.footer;
+        createCard.titleFontNumber = res.titleFont;
+        createCard.bodyFontNumber = res.bodyFont;
+        createCard.footerFontNumber = res.footerFont;
+        createCard.titleColorNumber = res.titleColor;
+        createCard.bodyColorNumber = res.bodyColor;
+        createCard.footerColorNumber = res.footerColor;
+        createCard.titleFontSize = res.titleSize;
+        createCard.bodyFontSize = res.bodySize;
+        createCard.footerFontSize = res.footerSize;
+        createCard.titleStyleNumber = res.titleStyle;
+        createCard.bodyStyleNumber = res.bodyStyle;
+        createCard.footerStyleNumber = res.footerStyle;
         createCard.borderStyle = res.borderStyle;
         createCard.borderColor = res.borderColor;
-        createCard.borderSize = res.borderSize;
-        createCard.backgroundNumber = res.backgroundNumber;
-        createCard.imageNumber = res.imageNumber;
-        createCard.photoList = res.photoList;
+        createCard.borderSize = res.borderWidth;
+        createCard.backgroundNumber = res.backgroundColor;
+        createCard.imageNumber = 0;
+        createCard.photoList = [{photoLink: res.photo, photogName: res.photographer, photogLink: res.photoUrl, width: res.width, height: res.height}];
+        $('.userCard').addClass('makeVisible');
+        console.log("photoList:", createCard.photoList);
+        setInitial();
+
+//        $("#nextPhoto").removeClass("makeVisibleInline");  // shouldn't be necessary, as these shouldn't be visible initially
+//        $("#prevPhoto").removeClass("makeVisibleInline");
+//        markmark
+
 
     });
     console.log("clicked button", clickedUserCardId); // MAKE GET CALL TO ID

@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public'));
 
-console.log("re-started");
+//console.log("re-started");
 
 mongoose.Promise = global.Promise;
 
@@ -91,7 +91,7 @@ const getPhotos = function (searchTerm) {
 app.get('/unsplash/:searchTerm', (req, res) => {
     const searchReq = getPhotos(req.params.searchTerm);
     searchReq.on('end', function (item) {
-        console.log("claimed to be ok; results:", item);
+//        console.log("claimed to be ok; results:", item);
         res.json(item);
     });
     searchReq.on('error', function (code) {
@@ -212,7 +212,7 @@ app.post('/create', (req, res) => {
 
 
 const getClipart = function (searchTerm) {
-    console.log("got into getClipart");
+//    console.log("got into getClipart");
     const emitter = new events.EventEmitter();
     unirest.get("https://openclipart.org/search/json/?query=" + searchTerm + "&amount=20")
         .end(function (result) {
@@ -388,8 +388,8 @@ app.get('/locations', function (req, res) {
         });
 });
 
-// check to see if user has review for venue
-app.get('/findCards/:userName', function (req, res) {
+// check to see if user has saved cards
+app.get('/findcards/:userName', function (req, res) {
     let userName = req.params.userName;
     Card
         .find({
@@ -408,6 +408,25 @@ app.get('/findCards/:userName', function (req, res) {
             });
         });
 });
+
+app.get('/onecard/:cardId', function (req, res) {
+    let cardId = req.params.cardId;
+    console.log("cardId:", cardId);
+    Card.findById(cardId)
+        .then(function (results) {
+        //            console.log("In get one review, results: ", results);
+        res.json({
+            results
+        });
+    })
+        .catch(function (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Internal server error'
+        });
+    });
+});
+
 
 // get one venue
 app.get('/locations/onevenue/:venName', function (req, res) {
