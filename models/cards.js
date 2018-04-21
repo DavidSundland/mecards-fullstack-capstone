@@ -67,6 +67,18 @@ const cardSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    titleBackground: {
+        type: String,
+        required: false
+    },
+    bodyBackground: {
+        type: String,
+        required: false
+    },
+    footerBackground: {
+        type: String,
+        required: false
+    },
     borderStyle: {
         type: String,
         required: false

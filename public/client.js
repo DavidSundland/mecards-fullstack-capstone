@@ -317,7 +317,8 @@ let createCard = {
         $("#prevBorderColor").click(
             function() {
                 if ($("#photo").css("border-style") === "none") {
-                    $("#photo").css("border-style", "solid");
+                    createCard.borderStyle = 3;
+                    $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
                 }
                 createCard.borderColor--;
                 if (createCard.borderColor < 0) {
@@ -333,7 +334,8 @@ let createCard = {
         $("#nextBorderColor").click(
             function() {
                 if ($("#photo").css("border-style") === "none") {
-                    $("#photo").css("border-style", "solid");
+                    createCard.borderStyle = 3;
+                    $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
                 }
                 createCard.borderColor++;
                 if (createCard.borderColor >= COLORS.length) {
@@ -349,7 +351,8 @@ let createCard = {
         $("#smallerBorder").click(
             function() {
                 if ($("#photo").css("border-style") === "none") {
-                    $("#photo").css("border-style", "solid");
+                    createCard.borderStyle = 3;
+                    $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
                 }
                 createCard.borderSize/=1.3;
                 if(createCard.borderSize < 2) {
@@ -361,7 +364,8 @@ let createCard = {
         $("#largerBorder").click(
             function() {
                 if ($("#photo").css("border-style") === "none") {
-                    $("#photo").css("border-style", "solid");
+                    createCard.borderStyle = 3;
+                    $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
                     createCard.borderSize = 0;
                 }
                 if (createCard.borderSize === 0) {
@@ -410,7 +414,7 @@ let createCard = {
 //                    console.log("Did i hit my targets?  Width:", res.results[0].width, "Height:", res.results[0].height, "Username:", res.results[0].user.name, "Photog URL", res.results[0].user.portfolio_url);
                     $("#nextPhoto").addClass("makeVisibleInline");
                     $("#prevPhoto").addClass("makeVisibleInline");
-                    if (res.results[0].width < 1.1*res.results[0].height) {
+                    if (Number(res.results[0].width) < 1.1*Number(res.results[0].height)) {
                         $("#cardBody").addClass("portraitPic");
 //                        alert("Applying narrower text");
                     }
@@ -435,7 +439,7 @@ let createCard = {
             if (createCard.imageNumber >= createCard.photoList.length) {
                 createCard.imageNumber = 0;
             }
-            if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
+            if (Number(createCard.photoList[createCard.imageNumber].width) < 1.1*Number(createCard.photoList[createCard.imageNumber].height)) {
                 $("#cardBody").addClass("portraitPic");
 //                alert("Applying narrower text");
             }
@@ -451,7 +455,7 @@ let createCard = {
             if (createCard.imageNumber < 0) {
                 createCard.imageNumber = createCard.photoList.length - 1;
             }
-            if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
+            if (Number(createCard.photoList[createCard.imageNumber].width) < 1.1*Number(createCard.photoList[createCard.imageNumber].height)) {
                 $("#cardBody").addClass("portraitPic");
             }
             else {
@@ -474,6 +478,7 @@ function setInitial() {
     $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
     $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
     $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+    console.log(createCard.titleStyleNumber);
     $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
     $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
     $("#cardBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
@@ -483,6 +488,7 @@ function setInitial() {
     $("#photo").css("border-style", BORDERS[createCard.borderStyle]);
     $("#photo").css("border-color", COLORS[createCard.borderColor]);
     $("#photo").css("border-width", createCard.borderSize + "px");
+    $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
     if (createCard.photoList[createCard.imageNumber]) {
         console.log("Line 487, photoList:", createCard.photoList);
         $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
@@ -579,7 +585,7 @@ function setInitial() {
 
 function previewCard() {
 //    console.log("in previewCard");
-    if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
+    if (Number(createCard.photoList[createCard.imageNumber].width) < 1.1*Number(createCard.photoList[createCard.imageNumber].height)) {
         $("#previewBody").addClass("portraitPic");
         //                        alert("Applying narrower text");
     }
@@ -620,17 +626,33 @@ function closePreview() {
 
 // Save a card:
 function saveCard() {
+    let photo, photographer, photoUrl, width, height;
+    if (!createCard.photoList[createCard.imageNumber]) {
+        // no photo selected
+        photo = "";
+        photographer = "";
+        photoUrl = "";
+        width = "0";
+        height= "0";
+    }
+    else  {
+        photo = createCard.photoList[createCard.imageNumber].photoLink;
+        photographer = createCard.photoList[createCard.imageNumber].photogName;
+        photoUrl = createCard.photoList[createCard.imageNumber].photogLink;
+        width = createCard.photoList[createCard.imageNumber].width;
+        height = createCard.photoList[createCard.imageNumber].height;
+    }
     let cardArray = {
         userName: USERNAME,
         title: createCard.titleText,
         body: createCard.bodyText,
         footer: createCard.footerText,
-        titleFont: FONTS[createCard.titleFontNumber],
-        bodyFont: FONTS[createCard.bodyFontNumber],
-        footerFont: FONTS[createCard.footerFontNumber],
-        titleColor: COLORS[createCard.titleColorNumber],
-        bodyColor: COLORS[createCard.bodyColorNumber],
-        footerColor: COLORS[createCard.footerColorNumber],
+        titleFont: createCard.titleFontNumber,
+        bodyFont: createCard.bodyFontNumber,
+        footerFont: createCard.footerFontNumber,
+        titleColor: createCard.titleColorNumber,
+        bodyColor: createCard.bodyColorNumber,
+        footerColor: createCard.footerColorNumber,
         titleSize: createCard.titleFontSize,
         bodySize: createCard.bodyFontSize,
         footerSize: createCard.footerFontSize,
@@ -641,11 +663,11 @@ function saveCard() {
         borderColor: createCard.borderColor,
         borderWidth: createCard.borderSize,
         backgroundColor: createCard.backgroundNumber,
-        photo: createCard.photoList[createCard.imageNumber].photoLink,
-        photographer: createCard.photoList[createCard.imageNumber].photogName,
-        photoUrl: createCard.photoList[createCard.imageNumber].photogLink,
-        width: createCard.photoList[createCard.imageNumber].width,
-        height: createCard.photoList[createCard.imageNumber].height
+        photo: photo,
+        photographer: photographer,
+        photoUrl: photoUrl,
+        width: width,
+        height: height
     };
     $.ajax({
             type: 'POST',
@@ -793,33 +815,43 @@ $('#login').on('click', '#loginClicked', function (event) {
     };
 });
 
+// edit saved card
 $(document).on('click', '.userCards', function(event) {
     event.preventDefault();
     let clickedUserCardId = $(this).parent().parent().find(".userCardsIdValue").val();
     $.getJSON('/onecard/' + clickedUserCardId, function (res) {
-        createCard.titleText = res.title;
-        createCard.bodyText = res.body;
-        createCard.footerText = res.footer;
-        createCard.titleFontNumber = res.titleFont;
-        createCard.bodyFontNumber = res.bodyFont;
-        createCard.footerFontNumber = res.footerFont;
-        createCard.titleColorNumber = res.titleColor;
-        createCard.bodyColorNumber = res.bodyColor;
-        createCard.footerColorNumber = res.footerColor;
-        createCard.titleFontSize = res.titleSize;
-        createCard.bodyFontSize = res.bodySize;
-        createCard.footerFontSize = res.footerSize;
-        createCard.titleStyleNumber = res.titleStyle;
-        createCard.bodyStyleNumber = res.bodyStyle;
-        createCard.footerStyleNumber = res.footerStyle;
-        createCard.borderStyle = res.borderStyle;
-        createCard.borderColor = res.borderColor;
-        createCard.borderSize = res.borderWidth;
-        createCard.backgroundNumber = res.backgroundColor;
+        console.log("card info:", res);
+        createCard.titleText = res.results.title;
+        createCard.bodyText = res.results.body;
+        createCard.footerText = res.results.footer;
+        createCard.titleFontNumber = Number(res.results.titleFont);
+        createCard.bodyFontNumber = Number(res.results.bodyFont);
+        createCard.footerFontNumber = Number(res.results.footerFont);
+        createCard.titleColorNumber = Number(res.results.titleColor);
+        createCard.bodyColorNumber = Number(res.results.bodyColor);
+        createCard.footerColorNumber = Number(res.results.footerColor);
+        createCard.titleFontSize = Number(res.results.titleSize);
+        createCard.bodyFontSize = Number(res.results.bodySize);
+        createCard.footerFontSize = Number(res.results.footerSize);
+        createCard.titleStyleNumber = Number(res.results.titleStyle);
+        createCard.bodyStyleNumber = Number(res.results.bodyStyle);
+        createCard.footerStyleNumber = Number(res.results.footerStyle);
+        createCard.borderStyle = Number(res.results.borderStyle);
+        createCard.borderColor = Number(res.results.borderColor);
+        createCard.borderSize = Number(res.results.borderWidth);
+        createCard.backgroundNumber = Number(res.results.backgroundColor);
         createCard.imageNumber = 0;
-        createCard.photoList = [{photoLink: res.photo, photogName: res.photographer, photogLink: res.photoUrl, width: res.width, height: res.height}];
+        createCard.photoList = [{photoLink: res.results.photo, photogName: res.results.photographer, photogLink: res.results.photoUrl, width: res.results.width, height: res.results.height}];
         $('.userCard').addClass('makeVisible');
+        $('.newUser').removeClass('makeVisible');
+        $('.prevCards').removeClass('makeVisible');
         console.log("photoList:", createCard.photoList);
+        $("#titleText").val(createCard.titleText);
+        $("#cardHeader").text(createCard.titleText);
+        $("#bodyText").val(createCard.bodyText);
+        $("#cardBody").text(createCard.bodyText);
+        $("#footertext").val(createCard.footerText);
+        $("#cardFooter").text(createCard.footerText);
         setInitial();
 
 //        $("#nextPhoto").removeClass("makeVisibleInline");  // shouldn't be necessary, as these shouldn't be visible initially
