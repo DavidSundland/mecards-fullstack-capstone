@@ -426,8 +426,9 @@ hr {
 
 .cardPickup {
     background-color: #FFE6AD;
-    margin-bottom: 30px;
+    margin: 30px 0;
     border: 1px solid #ccbff3;
+    padding: 5px 10px;
 }
 
 footer {

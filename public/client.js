@@ -6,6 +6,7 @@ const FONTS = ['Roboto','Tajawal','Do Hyeon','Lato','Montserrat','Hi Melody','Gu
 const COLORS = ['white', 'black', 'maroon', 'teal', 'aqua', 'navy', '#6495ED', '#E9967A', '#FF5555', '#FF9B55', '#35A091', '#44CC44', '#FFFC55', '#BE3F9B', '#C9F251', '#8040AB', '#DE4A81', '#34959A', '#FFFF55', '#DAB8CE', 'rgba(0,0,0,.6)', 'rgba(255,255,255,.6)'];
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
+let UPDATE = false;
 
 
 // primary object for app - createCard contains all card values and most functions
@@ -32,6 +33,7 @@ let createCard = {
     backgroundNumber: 1,
     imageNumber: 0,
     photoList: [],
+    cardId: "",
 
     changeHeader: function() {
         this.titleText = $("#titleText").val();
@@ -587,24 +589,43 @@ function saveCard() {
         width: width,
         height: height
     };
-    $.ajax({
-            type: 'POST',
-            url: '/create',
-            dataType: 'json',
+    if(UPDATE) {
+        $.ajax({
+            type: 'PUT',
+            url: '/update/' + createCard.cardId,
             data: JSON.stringify(cardArray),
             contentType: 'application/json'
         })
-        .done(function (result) {
-            console.log("new card saved:", result);
-            $("#cardPickup").html(`Card can be retrieved at:  <a href="https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}">https://mecards-fullstack-capstone.herokuapp.com/${result._id}</a>`);
-            $("#cardPickup").removeClass("invisible");
-            alert(`Your mE-Card has been saved! It can be retrieved at https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`);
+            .done(function (result) {
+            console.log("card updated:", result);
+            alert(`Your mE-Card has been updated!`);
         })
-        .fail(function (jqXHR, error, errorThrown) {
+            .fail(function (jqXHR, error, errorThrown) {
             console.log(jqXHR);
             console.log(error);
             console.log(errorThrown);
         });
+    }
+    else {
+        $.ajax({
+                type: 'POST',
+                url: '/create',
+                dataType: 'json',
+                data: JSON.stringify(cardArray),
+                contentType: 'application/json'
+            })
+            .done(function (result) {
+                console.log("new card saved:", result);
+                $("#cardPickup").html(`Card can be retrieved at:  <a href="https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}">https://mecards-fullstack-capstone.herokuapp.com/${result._id}</a>`);
+                $("#cardPickup").removeClass("invisible");
+                alert(`Your mE-Card has been saved! It can be retrieved at https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`);
+            })
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+            });
+    }
 }
 
 // Code to create new user:
@@ -666,8 +687,27 @@ $(document).on('click', '#oldUserNewCard', addCard);
 function addCard() {
     $('.prevCards').removeClass('makeVisible');
     $('.userCard').addClass('makeVisible');
+    $("#otherOptions").removeClass("invisible");
 }
 
+$(document).on('click', '#allCards', getCardList);
+
+function getCardList() {
+    $.getJSON('/findcards/' + USERNAME, function (res) {
+        if (res.results.length === 0) { // no results - no saved cards
+            $('.userCard').addClass('makeVisible');
+            $("#otherOptions").removeClass("invisible");
+            alert("found no cards");
+        } else {
+            console.log(res);
+            $('.prevCards').addClass('makeVisible');
+            $('#prevCards').html(""); // clear previous results, if any
+            for (let x=0; x < res.results.length; x++) {
+                $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div></div>`);
+            }
+        }
+    });
+}
 
 
 // Code to log user in:
@@ -703,19 +743,8 @@ $('#login').on('click', '#loginClicked', function (event) {
                 $('.intro').addClass('hideMe');
                 $('#login').addClass('hideMe');
                 alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
-                $.getJSON('/findcards/' + USERNAME, function (res) {
-                    if (res.results.length === 0) { // no results - no saved cards
-                        $('.userCard').addClass('makeVisible');
-                        alert("found no cards");
-                    } else {
-                        console.log(res);
-                        $('.prevCards').addClass('makeVisible');
-                        for (let x=0; x < res.results.length; x++) {
-                            $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div></div>`);
-                        }
-                    }
-                });
-            })
+                getCardList();
+        })
             .fail(function (jqXHR, error, errorThrown) {
                 console.log(jqXHR);
                 console.log(error);
@@ -728,8 +757,8 @@ $('#login').on('click', '#loginClicked', function (event) {
 // edit saved card
 $(document).on('click', '.userCards', function(event) {
     event.preventDefault();
-    let clickedUserCardId = $(this).parent().parent().find(".userCardsIdValue").val();
-    $.getJSON('/onecard/' + clickedUserCardId, function (res) {
+    createCard.cardId = $(this).parent().parent().find(".userCardsIdValue").val();
+    $.getJSON('/onecard/' + createCard.cardId, function (res) {
         console.log("card info:", res);
         createCard.titleText = res.results.title;
         createCard.bodyText = res.results.body;
@@ -762,14 +791,20 @@ $(document).on('click', '.userCards', function(event) {
         $("#cardBody").text(createCard.bodyText);
         $("#footertext").val(createCard.footerText);
         $("#cardFooter").text(createCard.footerText);
+        $("#saveChanges").text("UPDATE CARD");
+        $("#cardPickup").html(`Card can be retrieved at:  <a href="https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}">https://mecards-fullstack-capstone.herokuapp.com/${createCard.cardId}</a>`);
+        $("#cardPickup").removeClass("invisible");
+        $("#otherOptions").removeClass("invisible");
+        window.location = "#cardPickup";
+        UPDATE = true;
         setInitial();
     });
-    console.log("clicked button", clickedUserCardId); // MAKE GET CALL TO ID
+    console.log("clicked button", createCard.cardId); // MAKE GET CALL TO ID
 });
 
 // open saved card full-screen
 function displayCard() {
-    $.getJSON('/creations/' + clickedUserCardId, function (res) {
+    $.getJSON('/creations/' + createCard.cardId, function (res) {
         console.log("card info:", res);
         createCard.titleText = res.results.title;
         createCard.bodyText = res.results.body;
@@ -795,6 +830,7 @@ function displayCard() {
         $('.userCard').addClass('makeVisible');
         $('.newUser').removeClass('makeVisible');
         $('.prevCards').removeClass('makeVisible');
+        $("#otherOptions").removeClass("invisible");
         console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
         $("#cardHeader").text(createCard.titleText);

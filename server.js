@@ -316,6 +316,7 @@ app.get('/findcards/:userName', function (req, res) {
         });
 });
 
+// retrieve a saved card
 app.get('/onecard/:cardId', function (req, res) {
     let cardId = req.params.cardId;
     console.log("cardId:", cardId);
@@ -332,6 +333,27 @@ app.get('/onecard/:cardId', function (req, res) {
             message: 'Internal server error'
         });
     });
+});
+
+// update a card
+app.put('/update/:id', function (req, res) {
+    let toUpdate = {};
+    let updateableFields = ['title','body','footer','titleFont','bodyFont','footerFont','titleColor','bodyColor','footerColor','titleSize','bodySize','footerSize','titleStyle','bodyStyle','footerStyle','borderStyle','borderColor','borderWidth','backgroundColor','photo','photographer','photoUrl','width','height'];
+    updateableFields.forEach(function (field) {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
+    Card
+        .findByIdAndUpdate(req.params.id, {
+            $set: toUpdate
+        }).exec().then(function (achievement) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
 });
 
 
@@ -369,27 +391,7 @@ app.get('/onecard/:cardId', function (req, res) {
 //    });
 //});
 
-// PUT --------------------------------------
-// update a review by id
-//app.put('/review/update/:id', function (req, res) {
-//    let toUpdate = {};
-//    let updateableFields = ['listeningExperience', 'foodQuality', 'foodValue', 'musicQuality', 'musicValue', 'userReview'];
-//    updateableFields.forEach(function (field) {
-//        if (field in req.body) {
-//            toUpdate[field] = req.body[field];
-//        }
-//    });
-//    Review
-//        .findByIdAndUpdate(req.params.id, {
-//            $set: toUpdate
-//        }).exec().then(function (achievement) {
-//            return res.status(204).end();
-//        }).catch(function (err) {
-//            return res.status(500).json({
-//                message: 'Internal Server Error'
-//            });
-//        });
-//});
+
 
 
 // DELETE ----------------------------------------
