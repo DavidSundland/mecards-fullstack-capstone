@@ -80,6 +80,15 @@ h1 {
     font-family: 'Exo 2', sans-serif;
 }
 
+h2 {
+    text-align: center;
+    font-size: 34px;
+    color: #4E88A1;
+    padding-top: 15px;
+    /*    padding-bottom: 20px;*/
+}
+
+
 .headerSubtitle {
     text-align: center;
     font-size: 1.3em;
@@ -105,13 +114,7 @@ button {
     padding: 2px;
     height: 50px;
     width: 40px;
-/*    text-align: center;*/
     margin: 5px;
-/*    border-radius: 5px;*/
-/*    border: 1px solid gray;*/
-/*    box-shadow: none;*/
-/*    background-color: #504b5f;*/
-/*    box-shadow: 1px 1px lightgray;*/
 }
 
 .leftButton {
@@ -207,13 +210,6 @@ input {
     margin-top: 50px;
     margin-bottom: 50px;;
 }
-/*
-p {
-    color: #4E88A1;
-    text-shadow: 1px 1px white;
-
-}
-*/
 
 hr {
     border: #5B6DAD solid 1px;
@@ -254,23 +250,7 @@ hr {
     z-index: 1001;
 }
 
-/*
-.newUser,
-.login {
-    z-index: 101;
-}
-*/
-/*
 
-.login form,
-.newUser form {
-    padding-top: 60px;
-}
-
-.newUser form div {
-    margin-bottom: 20px;
-}
-*/
 
 .newuserBox, .prevCardsBox {
     /* center box in page */
@@ -509,185 +489,7 @@ footer a {
 
 
 
-/* ================================================================================================================= */
 
-/* VENUE E-VALUATOR CSS: */
-
-/*
-header {
-    width: 100%;
-    margin-top: 20px;
-    left: 0;
-    z-index: 2;
-}
-
-*/
-
-/*
-header div,
-.venueHeader div {
-    padding: 0;
-    margin: 0;
-    margin-left: -20%;
-    text-align: center;
-    border: 1px black solid;
-    background-color: white;
-    width: 140%;
-    line-height: 38px;
-}
-
-*/
-/*
-
-h1,
-.marqueeText,
-.hideMe {
-    font-family: 'Overpass Mono', monospace;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 300;
-    color: black;
-    margin: 4px 0 -5px 0;
-}
-*/
-
-.offScreen {
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
-
-h2 {
-    text-align: center;
-    font-size: 34px;
-    color: #4E88A1;
-    padding-top: 15px;
-/*    padding-bottom: 20px;*/
-}
-
-.searchBox,
-.resultsBox {
-    border: 7px dotted #fed9ba;
-    /* creates solid lines inside & outside of dotted border */
-    box-shadow: inset 0 -1px 0 0 #FE6767, inset 0 1px 0 0 #FE6767, 0 1px 0 0 #FE6767, 0 -1px 0 0 #FE6767, inset 1px 0 0 0 #FE6767, inset -1px 0 0 0 #FE6767, 1px 0 0 0 #FE6767, -1px 0 0 0 #FE6767;
-    margin: 70px 12%;
-    width: 76%;
-}
-
-.commentButtons {
-    margin-top: 20px;
-}
-
-.sorter {
-    text-align: center;
-    margin-bottom: 0;
-}
-
-.selectCenterer {
-    text-align: center;
-    display: block;
-    margin: 0 auto 50px auto;
-}
-
-.selectCenterer select {
-    width: 70%;
-    font-size: .8em;
-    padding: 3px;
-}
-
-.searchBox h3 {
-    text-align: center;
-    color: #FEAB67;
-    padding-bottom: 20px;
-}
-
-.searchDescriptions {
-    padding: 0 30px 30px 30px;
-    font-size: .85em;
-}
-
-.searchDescriptionTitle {
-    color: #FEAB67;
-}
-
-.searchDescriptions p {
-    padding-top: 20px;
-}
-
-.textBlock {
-    padding: 20px;
-}
-
-.venueLimiter {
-    text-align: center;
-    padding: 30px;
-    font-size: 1.2em;
-}
-
-#nameSearch {
-    width: 90%;
-    font-size: .7em;
-}
-
-.listHolder,
-.mapBox {
-    border-top: 7px dotted #fed9ba;
-    /* creates solid lines inside & outside of dotted border */
-    box-shadow: inset 0 1px 0 0 #FE6767, 0 -1px 0 0 #FE6767;
-    padding: 0;
-}
-
-.paddingAdder {
-    height: 60px;
-    background-color: #161616;
-}
-
-.paLeft {
-    border-left: 1px solid #FE6767;
-}
-
-.paRight {
-    border-right: 1px solid #FE6767;
-}
-
-.paTop {
-    border-top: 1px solid #FE6767;
-}
-
-.paBottom {
-    border-bottom: 1px solid #FE6767;
-}
-
-.paddingAdder h3 {
-    padding: 10px 30px;
-    color: #FE6767;
-    font-size: 1.2em;
-}
-
-.scrollbarExtender {
-    border-right: 16px #f1f1f1 solid;
-}
-
-.listBox {
-    /*    margin-top: 30px;*/
-    /*    margin-bottom: 30px;*/
-    height: 400px;
-    overflow-y: scroll;
-    padding: 30px 16px;
-    /*    border-top: 1px solid #FE6767;*/
-}
-
-.listBox p {
-    /*
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 20px;
-*/
-    padding: 10px 20px;
-}
 
 .even {
     background-color: #191919;

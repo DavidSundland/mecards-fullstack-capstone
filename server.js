@@ -1,6 +1,5 @@
 const User = require('./models/user');
 const Card = require('./models/cards');
-const Location = require('./models/locations');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const mongoose = require('mongoose');
@@ -99,46 +98,6 @@ app.get('/unsplash/:searchTerm', (req, res) => {
     });
 
 });
-
-
-
-//console.log("in previewCard");
-//if (createCard.photoList[createCard.imageNumber].width < 1.1*createCard.photoList[createCard.imageNumber].height) {
-//    $("#previewBody").addClass("portraitPic");
-//    //                        alert("Applying narrower text");
-//}
-//else {
-//    $("#previewBody").removeClass("portraitPic");
-//    //                        alert("Wound up in else - no narrower text");
-//}
-//$("#previewParent").addClass("makeVisible");
-//$("#previewHeader").text(createCard.titleText);
-//$("#previewBody").text(createCard.bodyText);
-//$("#previewFooter").text(createCard.footerText);
-//$("#previewHeader").css("font-family", FONTS[createCard.titleFontNumber]);
-//$("#previewBody").css("font-family", FONTS[createCard.bodyFontNumber]);
-//$("#previewFooter").css("font-family", FONTS[createCard.footerFontNumber]);
-//$("#previewHeader").css("color", COLORS[createCard.titleColorNumber]);
-//$("#previewBody").css("color", COLORS[createCard.bodyColorNumber]);
-//$("#previewFooter").css("color", COLORS[createCard.footerColorNumber]);
-//$("#previewHeader").css("font-size", createCard.titleFontSize + "em");
-//$("#previewBody").css("font-size", createCard.bodyFontSize + "em");
-//$("#previewFooter").css("font-size", createCard.footerFontSize + "em");
-//$("#previewHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyle][1]);
-//$("#previewHeader").css("background-color", TEXTSTYLES[createCard.titleStyle][0]);
-//$("#previewBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
-//$("#previewBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
-//$("#previewFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
-//$("#previewFooter").css("background-color", TEXTSTYLES[createCard.footerStyleNumber][0]);
-//$("#previewPhoto").css("border-style", BORDERS[createCard.borderStyle]);
-//$("#previewPhoto").css("border-color", COLORS[createCard.borderColor]);
-//$("#previewPhoto").css("border-width", createCard.borderSize + "px");
-//$("#previewParent").css("background-color", COLORS[createCard.backgroundNumber]);
-//$("#previewPhoto").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
-//$("#previewCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
-//}
-
-
 
 
 //save card
@@ -257,38 +216,6 @@ const openclipartkey = "1edba4dc2b1f025dc9e994a1eb71fe1e";
 
 
 
-
-
-
-
-
-//app.get('/unsplash/:searchTerm', function (req, res) {
-//    console.log("Search term: ", req.params.searchTerm);
-//    unsplash.search.photos(req.params.searchTerm, 1)
-////        .then(toJson)
-//        .then(results => {
-//                console.log(results);
-//                res.json({
-//                    results
-//                });
-//    });
-////    Location
-////        .find()
-////        .then(function (results) {
-////        res.json({
-////            results
-////        });
-////    })
-////        .catch(function (err) {
-////        console.error(err);
-////        res.status(500).json({
-////            message: 'Internal server error'
-////        });
-////    });
-//});
-
-
-
 // Create new user
 app.post('/users/create', (req, res) => {
     let username = req.body.username;
@@ -368,23 +295,6 @@ app.post('/signin', function (req, res) {
 });
 
 
-// retrieve all of the venues
-app.get('/locations', function (req, res) {
-    Location
-        .find()
-        .then(function (results) {
-            res.json({
-                results
-            });
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
-            });
-        });
-});
-
 // check to see if user has saved cards
 app.get('/findcards/:userName', function (req, res) {
     let userName = req.params.userName;
@@ -425,329 +335,75 @@ app.get('/onecard/:cardId', function (req, res) {
 });
 
 
-// get one venue
-app.get('/locations/onevenue/:venName', function (req, res) {
-    const {
-        venName
-    } = req.params;
-    Location
-        .findOne({
-            venuename: venName
-        })
-        .then(function (results) {
-            //            console.log("req.params: ", req.params, " & results: ", results);
-            res.json({
-                results
-            });
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
-            });
-        });
-});
-
-// get reviews for requested venue
-app.get('/venuereviews/:venName', function (req, res) {
-    const {
-        venName
-    } = req.params;
-    //    console.log("This is what I got for venName when retrieving reviews:", venName);
-    Review
-        .find({
-            venueName: venName
-        })
-        .then(function (results) {
-            //            console.log("RESULTS FROM QUERYING REVIEWS:", results);
-            res.json({
-                results
-            });
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
-            });
-        });
-});
-
-// get list of venues, based upon user-selected filters
-app.get('/venues/partiallist/:venuetype/:venuesize/:freeticketed', function (req, res) {
-    let venuetype = req.params.venuetype;
-    let venuesize = req.params.venuesize;
-    let freeticketed = req.params.freeticketed;
-    if (venuetype === "all" && venuesize === "all" && freeticketed === "all") {
-        Location
-            .find()
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuetype === "all" && venuesize === "all" && freeticketed === "free") {
-        Location
-            .find({
-                free: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuetype === "all" && venuesize === "all") {
-        Location
-            .find({
-                ticketed: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuetype === "all" && freeticketed === "all") {
-        Location
-            .find({
-                venuesize: venuesize
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuesize === "all" && freeticketed === "all") {
-        Location
-            .find({
-                venuetype: venuetype
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuetype === "all" && freeticketed === "free") {
-        Location
-            .find({
-                venuesize: venuesize,
-                free: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuetype === "all") {
-        Location
-            .find({
-                venuesize: venuesize,
-                ticketed: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuesize === "all" && freeticketed === "free") {
-        Location
-            .find({
-                venuetype: venuetype,
-                free: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (venuesize === "all") {
-        Location
-            .find({
-                venuetype: venuetype,
-                ticketed: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (freeticketed === "all") {
-        Location
-            .find({
-                venuetype: venuetype,
-                venuesize: venuesize
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else if (freeticketed === "free") {
-        Location
-            .find({
-                venuetype: venuetype,
-                venuesize: venuesize,
-                free: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    } else {
-        Location
-            .find({
-                venuetype: venuetype,
-                venuesize: venuesize,
-                ticketed: "TRUE"
-            })
-            .then(function (results) {
-                res.json({
-                    results
-                });
-            })
-            .catch(function (err) {
-                console.error(err);
-                res.status(500).json({
-                    message: 'Internal server error'
-                });
-            });
-    }
-});
-
 //create new review
-app.post('/new/create', (req, res) => {
-    let venueName = req.body.venueName;
-    let userName = req.body.userName;
-    let listeningExperience = req.body.listeningExperience;
-    let venueFeel = req.body.venueFeel;
-    let musicValue = req.body.musicValue;
-    let musicQuality = req.body.musicQuality;
-    let foodQuality = req.body.foodQuality;
-    let foodValue = req.body.foodValue;
-    let userReview = req.body.userReview;
-    Review.create({
-        venueName,
-        userName,
-        listeningExperience,
-        venueFeel,
-        musicValue,
-        musicQuality,
-        foodQuality,
-        foodValue,
-        userReview
-    }, (err, item) => {
-        if (err) {
-            return res.status(500).json({
-                message: 'Infernal Server Error'
-            });
-        }
-        if (item) {
-            console.log(`Review for ${venueName} by ${userName} added.`);
-            return res.json(item);
-        }
-    });
-});
+//app.post('/new/create', (req, res) => {
+//    let venueName = req.body.venueName;
+//    let userName = req.body.userName;
+//    let listeningExperience = req.body.listeningExperience;
+//    let venueFeel = req.body.venueFeel;
+//    let musicValue = req.body.musicValue;
+//    let musicQuality = req.body.musicQuality;
+//    let foodQuality = req.body.foodQuality;
+//    let foodValue = req.body.foodValue;
+//    let userReview = req.body.userReview;
+//    Review.create({
+//        venueName,
+//        userName,
+//        listeningExperience,
+//        venueFeel,
+//        musicValue,
+//        musicQuality,
+//        foodQuality,
+//        foodValue,
+//        userReview
+//    }, (err, item) => {
+//        if (err) {
+//            return res.status(500).json({
+//                message: 'Infernal Server Error'
+//            });
+//        }
+//        if (item) {
+//            console.log(`Review for ${venueName} by ${userName} added.`);
+//            return res.json(item);
+//        }
+//    });
+//});
 
 // PUT --------------------------------------
 // update a review by id
-app.put('/review/update/:id', function (req, res) {
-    let toUpdate = {};
-    let updateableFields = ['listeningExperience', 'foodQuality', 'foodValue', 'musicQuality', 'musicValue', 'userReview'];
-    updateableFields.forEach(function (field) {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
-    Review
-        .findByIdAndUpdate(req.params.id, {
-            $set: toUpdate
-        }).exec().then(function (achievement) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
+//app.put('/review/update/:id', function (req, res) {
+//    let toUpdate = {};
+//    let updateableFields = ['listeningExperience', 'foodQuality', 'foodValue', 'musicQuality', 'musicValue', 'userReview'];
+//    updateableFields.forEach(function (field) {
+//        if (field in req.body) {
+//            toUpdate[field] = req.body[field];
+//        }
+//    });
+//    Review
+//        .findByIdAndUpdate(req.params.id, {
+//            $set: toUpdate
+//        }).exec().then(function (achievement) {
+//            return res.status(204).end();
+//        }).catch(function (err) {
+//            return res.status(500).json({
+//                message: 'Internal Server Error'
+//            });
+//        });
+//});
 
 
 // DELETE ----------------------------------------
 // delete a review by id
-app.delete('/delete/:id', function (req, res) {
-    Review.findByIdAndRemove(req.params.id).exec().then(function () {
-        console.log("Review", req.params.id, "deleted");
-        return res.status(204).end();
-    }).catch(function (err) {
-        return res.status(500).json({
-            message: 'Internal Server Error - review not deleted'
-        });
-    });
-});
+//app.delete('/delete/:id', function (req, res) {
+//    Review.findByIdAndRemove(req.params.id).exec().then(function () {
+//        console.log("Review", req.params.id, "deleted");
+//        return res.status(204).end();
+//    }).catch(function (err) {
+//        return res.status(500).json({
+//            message: 'Internal Server Error - review not deleted'
+//        });
+//    });
+//});
 
 
 
