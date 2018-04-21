@@ -422,8 +422,6 @@ hr {
     left: 60%;
     transform: translate(-75%, -50%);
 }
-/* width: some percentage, auto width;*/
-
 
 #cardFooter, #previewFooter {
     position: absolute;
@@ -443,6 +441,13 @@ hr {
 
 #cardPreview {
     position: relative;
+    margin: 20px auto;
+}
+
+.cardPickup {
+    background-color: #FFE6AD;
+    margin-bottom: 30px;
+    border: 1px solid #ccbff3;
 }
 
 footer {
@@ -730,6 +735,11 @@ a:hover {
     margin-bottom: 30px;
 }
 
+.closePreview {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
 
 #closeVenue {
     position: fixed;
