@@ -490,7 +490,7 @@ function setInitial() {
     $("#photo").css("border-width", createCard.borderSize + "px");
     $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
     if (createCard.photoList[createCard.imageNumber]) {
-        console.log("Line 487, photoList:", createCard.photoList);
+//        console.log("Line 487, photoList:", createCard.photoList);
         $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
         $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     }
@@ -498,6 +498,38 @@ function setInitial() {
     createCard.changeBody;
     createCard.changeFooter;
 }
+
+$(document).on('click', '#newCard', startAnew);
+
+// start a new card  DOES NOT WORK YET!!!!! DOES NOTHING!!!!
+function startAnew() {
+    createCard.titleText = "";
+    createCard.bodyText = "";
+    createCard.footerText = "";
+    createCard.titleFontNumber = 0;
+    createCard.bodyFontNumber = 0;
+    createCard.footerFontNumber = 0;
+    createCard.titleColorNumber = 0;
+    createCard.bodyColorNumber = 0;
+    createCard.footerColorNumber = 0;
+    createCard.titleFontSize = 2;
+    createCard.bodyFontSize = 1;
+    createCard.footerFontSize = 2;
+    createCard.titleStyleNumber = 0;
+    createCard.bodyStyleNumber = 0;
+    createCard.footerStyleNumber = 0;
+    createCard.borderStyle = 0;
+    createCard.borderColor = 0;
+    createCard.borderSize = 10;
+    createCard.backgroundNumber = 1;
+    createCard.imageNumber = 0;
+    createCard.photoList = [];
+    createCard.cardId = "";
+    setInitial();
+}
+
+
+
 
 
 // open the full-screen card preview
@@ -616,8 +648,14 @@ function saveCard() {
             })
             .done(function (result) {
                 console.log("new card saved:", result);
-                $("#cardPickup").html(`Card can be retrieved at:  <a href="https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}">https://mecards-fullstack-capstone.herokuapp.com/${result._id}</a>`);
+                let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`;
+                $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
+                let copyLink = document.querySelector('#linkToCopy');
+                copyLink.addEventListener('click', function(event) {
+                    copyTextToClipboard(cardLink);
+                });
                 $("#cardPickup").removeClass("invisible");
+                window.location = "#cardPickup";
                 alert(`Your mE-Card has been saved! It can be retrieved at https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`);
             })
             .fail(function (jqXHR, error, errorThrown) {
@@ -628,6 +666,74 @@ function saveCard() {
     }
 }
 
+function copyTextToClipboard(text) {
+    // code credited to Dean Taylor via stackoverflow:  https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+    // text added to clipboard from small, invisible part of DOM
+    var textArea = document.createElement("textarea");
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.value = text;
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Attempt to copy text to clipboard was ' + msg);
+        alert("The link has been copied to your computer's clipboard.");
+    } catch (err) {
+        console.log('Oops, unable to copy');
+    }
+
+    document.body.removeChild(textArea);
+}
+
+//
+//var copyBobBtn = document.querySelector('.js-copy-bob-btn'),
+//    copyJaneBtn = document.querySelector('.js-copy-jane-btn');
+//
+//copyBobBtn.addEventListener('click', function(event) {
+//    copyTextToClipboard('Bob');
+//});
+//
+//
+//copyJaneBtn.addEventListener('click', function(event) {
+//    copyTextToClipboard('Jane');
+//});
+
+
+
+
+
+
+
+
+
+
+
+
+
+function copyThis(clickId, copyId) {
+    console.log("first values:", clickId, copyId);
+    $(document).on('click', clickId, function(event) {
+//        alert(copyId);
+        event.preventDefault();
+        let copyText = document.getElementById(copyId);
+//        alert("made it past preventDefault; copyText = ", copyText);
+        copyText.select();
+        document.execCommand("Copy");
+    });
+}
 // Code to create new user:
 
 $('#newUser').on('submit', function (event) {
@@ -792,10 +898,14 @@ $(document).on('click', '.userCards', function(event) {
         $("#footertext").val(createCard.footerText);
         $("#cardFooter").text(createCard.footerText);
         $("#saveChanges").text("UPDATE CARD");
-        $("#cardPickup").html(`Card can be retrieved at:  <a href="https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}">https://mecards-fullstack-capstone.herokuapp.com/${createCard.cardId}</a>`);
+        let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}`;
+        $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
+        let copyLink = document.querySelector('#linkToCopy');
+        copyLink.addEventListener('click', function(event) {
+            copyTextToClipboard(cardLink);
+        });
         $("#cardPickup").removeClass("invisible");
         $("#otherOptions").removeClass("invisible");
-        window.location = "#cardPickup";
         UPDATE = true;
         setInitial();
     });

@@ -422,13 +422,8 @@ hr {
 #cardPreview {
     position: relative;
     margin: 20px auto;
-}
-
-.cardPickup {
-    background-color: #FFE6AD;
-    margin: 30px 0;
-    border: 1px solid #ccbff3;
-    padding: 5px 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 footer {
@@ -464,6 +459,25 @@ footer a {
     text-align: right;
 }
 
+.cardPickup {
+    background-color: #FFE6AD;
+    margin: 30px 0;
+    border: 1px solid #ccbff3;
+    padding: 5px 10px;
+    color: #715CAF;
+}
+
+
+#copyToClipboard {
+    width: 5px;
+}
+#linkToCopy {
+/*    text-decoration: underline;*/
+    color: #7AB7D1;
+    cursor: copy;
+}
+
+
 
 .hideMe {
 /*    visibility: hidden;*/
@@ -488,8 +502,7 @@ footer a {
     display: inline;
 }
 
-
-
+/* ---------------------------------------------------------------------------------------------------------------- */
 
 
 .even {
