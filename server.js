@@ -337,7 +337,7 @@ app.get('/onecard/:cardId', function (req, res) {
 
 
 app.get('/twotwo', function (req, res) {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/twotwo.html');
 })
 
 
