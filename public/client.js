@@ -6,6 +6,10 @@ const FONTS = ['Roboto','Tajawal','Do Hyeon','Lato','Montserrat','Hi Melody','Gu
 const COLORS = ['white', 'black', 'maroon', 'teal', 'aqua', 'navy', '#6495ED', '#E9967A', '#FF5555', '#FF9B55', '#35A091', '#44CC44', '#FFFC55', '#BE3F9B', '#C9F251', '#8040AB', '#DE4A81', '#34959A', '#FFFF55', '#DAB8CE', 'rgba(0,0,0,.6)', 'rgba(255,255,255,.6)'];
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
+let DEFAULTHEADER = "Header (optional)";
+let DEFAULTBODY = "Body text. Header, body, & footer are all optional. If you want the header, body, and/or footer to be blank, place a space in the corresponding text box." ;
+let DEFAULTFOOTER = "Footer (optional)";
+
 let UPDATE = false;
 
 
@@ -38,7 +42,7 @@ let createCard = {
     changeHeader: function() {
         this.titleText = $("#titleText").val();
         if (this.titleText==="") {  // if user deletes text, put the instructions back on screen
-            $("#cardHeader").text("Header (optional)");
+            $("#cardHeader").text(DEFAULTHEADER);
         }
         else {
             $("#cardHeader").text(this.titleText);
@@ -48,7 +52,7 @@ let createCard = {
     changeBody: function() {
         this.bodyText = $("#bodyText").val();
         if (this.bodyText==="") {
-            $("#cardBody").text("Body text. Header, body, & footer are all optional. If you want the header, body, and/or footer to be blank, place a space in the corresponding text box.");
+            $("#cardBody").text(DEFAULTBODY);
         }
         else {
             $("#cardBody").text(this.bodyText);
@@ -58,7 +62,7 @@ let createCard = {
     changeFooter: function() {
         this.footerText = $("#footertext").val();
         if (this.footerText==="") {
-            $("#cardFooter").text("Footer (optional)");
+            $("#cardFooter").text(DEFAULTFOOTER);
         }
         else {
             $("#cardFooter").text(this.footerText);
@@ -501,31 +505,47 @@ function setInitial() {
 
 $(document).on('click', '#newCard', startAnew);
 
-// start a new card  DOES NOT WORK YET!!!!! DOES NOTHING!!!!
-function startAnew() {
-    createCard.titleText = "";
-    createCard.bodyText = "";
-    createCard.footerText = "";
-    createCard.titleFontNumber = 0;
-    createCard.bodyFontNumber = 0;
-    createCard.footerFontNumber = 0;
-    createCard.titleColorNumber = 0;
-    createCard.bodyColorNumber = 0;
-    createCard.footerColorNumber = 0;
-    createCard.titleFontSize = 2;
-    createCard.bodyFontSize = 1;
-    createCard.footerFontSize = 2;
-    createCard.titleStyleNumber = 0;
-    createCard.bodyStyleNumber = 0;
-    createCard.footerStyleNumber = 0;
-    createCard.borderStyle = 0;
-    createCard.borderColor = 0;
-    createCard.borderSize = 10;
-    createCard.backgroundNumber = 1;
-    createCard.imageNumber = 0;
-    createCard.photoList = [];
-    createCard.cardId = "";
-    setInitial();
+// start a new card
+function startAnew(event) {
+    event.preventDefault();
+    if (confirm("Are you sure you want to start a new card and lose any unsaved changes?")) {
+        createCard.titleText = "";
+        createCard.bodyText = "";
+        createCard.footerText = "";
+        createCard.titleFontNumber = 0;
+        createCard.bodyFontNumber = 0;
+        createCard.footerFontNumber = 0;
+        createCard.titleColorNumber = 0;
+        createCard.bodyColorNumber = 0;
+        createCard.footerColorNumber = 0;
+        createCard.titleFontSize = 2;
+        createCard.bodyFontSize = 1;
+        createCard.footerFontSize = 2;
+        createCard.titleStyleNumber = 0;
+        createCard.bodyStyleNumber = 0;
+        createCard.footerStyleNumber = 0;
+        createCard.borderStyle = 0;
+        createCard.borderColor = 0;
+        createCard.borderSize = 10;
+        createCard.backgroundNumber = 1;
+        createCard.imageNumber = 0;
+        createCard.photoList = [];
+        createCard.cardId = "";
+        $("#cardHeader").text(DEFAULTHEADER); // clear existing values from preview
+        $("#cardBody").text(DEFAULTBODY);
+        $("#cardFooter").text(DEFAULTFOOTER);
+        $("#photo").attr("src", "");  // clear user entry fields
+        $("#photoCreds").html("");
+        $("#titleText").val("");
+        $("#bodyText").val("");
+        $("#footertext").val("");
+        $("#photoQuery").val("");
+        $("#cardPickup").addClass("invisible"); // hide elements not relevant to blank page
+        $("#nextPhoto").removeClass("makeVisibleInline");
+        $("#prevPhoto").removeClass("makeVisibleInline");
+        $("#saveChanges").text("SAVE CARD");
+        setInitial();
+    }
 }
 
 
