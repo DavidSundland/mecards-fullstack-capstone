@@ -337,9 +337,7 @@ app.get('/onecard/:cardId', function (req, res) {
 
 
 app.get('/twotwo', function (req, res) {
-    res.status(222).json({
-        message: 'Holy frijoles'
-    });
+    res.sendFile(__dirname + '/public/index.html');
 })
 
 
