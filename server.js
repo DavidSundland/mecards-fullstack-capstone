@@ -335,6 +335,13 @@ app.get('/onecard/:cardId', function (req, res) {
     });
 });
 
+
+app.get('/twotwo', function (req, res) {
+    alert("something happened");
+})
+
+
+
 // update a card
 app.put('/update/:id', function (req, res) {
     let toUpdate = {};
