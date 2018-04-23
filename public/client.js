@@ -503,8 +503,6 @@ function setInitial() {
     createCard.changeFooter;
 }
 
-$(document).on('click', '#newCard', startAnew);
-
 // start a new card
 function startAnew(event) {
     event.preventDefault();
@@ -806,17 +804,11 @@ $('#newUser').on('submit', function (event) {
 });
 
 
-
-
-$(document).on('click', '#oldUserNewCard', addCard);
-
 function addCard() {
     $('.prevCards').removeClass('makeVisible');
     $('.userCard').addClass('makeVisible');
     $("#otherOptions").removeClass("invisible");
 }
-
-$(document).on('click', '#allCards', getCardList);
 
 function getCardList() {
     $.getJSON('/findcards/' + USERNAME, function (res) {
@@ -1011,22 +1003,154 @@ function myAlert(sayThis, choice) {
 }
 
 
-$(setInitial);
-$(document).on('click', '#newUserButton', createNewUser);
-$(document).on('click', '#preview', viewCard);
-$(document).on('click', '#closePreview', closePreview);
-$(document).on('click', '#saveChanges', saveCard);
-$(createCard.getImages);
-$(createCard.headerFont);
-$(createCard.bodyFont);
-$(createCard.footerFont);
-$(createCard.headerColor);
-$(createCard.bodyColor);
-$(createCard.footerColor);
-$(createCard.headerSize);
-$(createCard.bodySize);
-$(createCard.footerSize);
-$(createCard.borders);
-$(createCard.headerStyle);
-$(createCard.bodyStyle);
-$(createCard.footerStyle);
+$(document).ready(function () {
+    let urlcheck = window.location.href;
+    if (urlcheck.split('/creations/')[1]) {    // If endpoint includes /creations/ + additional text, then it is a saved card
+        alert(urlcheck.split('/creations/')[1]);
+        displaySavedCard(urlcheck.split('/creations/')[1]);
+    }
+    else { //
+        $(setInitial);
+        $(document).on('click', '#newUserButton', createNewUser);
+        $(document).on('click', '#preview', viewCard);
+        $(document).on('click', '#closePreview', closePreview);
+        $(document).on('click', '#saveChanges', saveCard);
+        $(document).on('click', '#newCard', startAnew);
+        $(document).on('click', '#oldUserNewCard', addCard);
+        $(document).on('click', '#allCards', getCardList);
+        $(createCard.getImages);
+        $(createCard.headerFont);
+        $(createCard.bodyFont);
+        $(createCard.footerFont);
+        $(createCard.headerColor);
+        $(createCard.bodyColor);
+        $(createCard.footerColor);
+        $(createCard.headerSize);
+        $(createCard.bodySize);
+        $(createCard.footerSize);
+        $(createCard.borders);
+        $(createCard.headerStyle);
+        $(createCard.bodyStyle);
+        $(createCard.footerStyle);
+    }
+
+});
+
+//$(setInitial);
+//$(document).on('click', '#newUserButton', createNewUser);
+//$(document).on('click', '#preview', viewCard);
+//$(document).on('click', '#closePreview', closePreview);
+//$(document).on('click', '#saveChanges', saveCard);
+//$(document).on('click', '#newCard', startAnew);
+//$(document).on('click', '#oldUserNewCard', addCard);
+//$(document).on('click', '#allCards', getCardList);
+//$(createCard.getImages);
+//$(createCard.headerFont);
+//$(createCard.bodyFont);
+//$(createCard.footerFont);
+//$(createCard.headerColor);
+//$(createCard.bodyColor);
+//$(createCard.footerColor);
+//$(createCard.headerSize);
+//$(createCard.bodySize);
+//$(createCard.footerSize);
+//$(createCard.borders);
+//$(createCard.headerStyle);
+//$(createCard.bodyStyle);
+//$(createCard.footerStyle);
+
+// CODE FOR SHARED CARD -----------------------------------------------------------------------------------------------
+//https://mecards-fullstack-capstone.herokuapp.com/creations/5adcb68ee6d7ec1de48e45c0
+
+function displaySavedCard(cardId) {
+    alert("got into dispaySavedCard, cardId:", cardId);
+    $.getJSON('/showsave/' + cardId, function (res) {
+        console.log("card info:", res);
+
+        if (Number(res.results.width) < 1.1*Number(res.results.height)) {
+            $("#previewBody").addClass("portraitPic");
+        }
+        else {
+            $("#previewBody").removeClass("portraitPic");
+        }
+        let height = window.innerHeight*.9;
+        let width = height*Number(res.results.width)/Number(res.results.height);
+        $("#previewParent").addClass("makeVisible");
+        $("#previewHeader").text(res.results.title);
+        $("#previewBody").text(res.results.body);
+        $("#previewFooter").text(res.results.footer);
+        $("#previewHeader").css("font-family", FONTS[res.results.titleFont]);
+        $("#previewBody").css("font-family", FONTS[res.results.bodyFont]);
+        $("#previewFooter").css("font-family", FONTS[res.results.footerFont]);
+        $("#previewHeader").css("color", COLORS[res.results.titleColor]);
+        $("#previewBody").css("color", COLORS[res.results.bodyColor]);
+        $("#previewFooter").css("color", COLORS[res.results.footerColor]);
+        $("#previewHeader").css("font-size", res.results.titleSize + "em");
+        $("#previewBody").css("font-size", res.results.bodySize + "em");
+        $("#previewFooter").css("font-size", createCard.footerFontSize + "em");
+        $("#previewHeader").css("text-shadow", TEXTSTYLES[res.results.titleStyle][1]);
+        $("#previewHeader").css("background-color", TEXTSTYLES[res.results.titleStyle][0]);
+        $("#previewBody").css("text-shadow", TEXTSTYLES[res.results.bodyStyle][1]);
+        $("#previewBody").css("background-color", TEXTSTYLES[res.results.bodyStyle][0]);
+        $("#previewFooter").css("text-shadow", TEXTSTYLES[res.results.footerStyle][1]);
+        $("#previewFooter").css("background-color", TEXTSTYLES[res.results.footerStyle][0]);
+        $("#previewPhoto").css("border-style", BORDERS[res.results.borderStyle]);
+        $("#previewPhoto").css("border-color", COLORS[res.results.borderColor]);
+        $("#previewPhoto").css("border-width", res.results.borderWidth + "px");
+        $("#previewParent").css("background-color", COLORS[res.results.backgroundColor]);
+        $("#cardPreview").css("width", width);
+        $("#cardPreview").css("height", height);
+        $("#cardPreview").css("background", `url('${res.results.photo}')`);
+        $("#previewCreds").html(`<a href="${res.results.photoUrl}" target="_blank">${res.results.photographer}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
+    });
+}
+//        createCard.titleText = res.results.title;
+//        createCard.bodyText = res.results.body;
+//        createCard.footerText = res.results.footer;
+//        createCard.titleFontNumber = Number(res.results.titleFont);
+//        createCard.bodyFontNumber = Number(res.results.bodyFont);
+//        createCard.footerFontNumber = Number(res.results.footerFont);
+//        createCard.titleColorNumber = Number(res.results.titleColor);
+//        createCard.bodyColorNumber = Number(res.results.bodyColor);
+//        createCard.footerColorNumber = Number(res.results.footerColor);
+//        createCard.titleFontSize = Number(res.results.titleSize);
+//        createCard.bodyFontSize = Number(res.results.bodySize);
+//        createCard.footerFontSize = Number(res.results.footerSize);
+//        createCard.titleStyleNumber = Number(res.results.titleStyle);
+//        createCard.bodyStyleNumber = Number(res.results.bodyStyle);
+//        createCard.footerStyleNumber = Number(res.results.footerStyle);
+//        createCard.borderStyle = Number(res.results.borderStyle);
+//        createCard.borderColor = Number(res.results.borderColor);
+//        createCard.borderSize = Number(res.results.borderWidth);
+//        createCard.backgroundNumber = Number(res.results.backgroundColor);
+//        createCard.imageNumber = 0;
+//        createCard.photoList = [{photoLink: res.results.photo, photogName: res.results.photographer, photogLink: res.results.photoUrl, width: res.results.width, height: res.results.height}];
+//        $('.userCard').addClass('makeVisible');
+//        $('.newUser').removeClass('makeVisible');
+//        $('.prevCards').removeClass('makeVisible');
+//        console.log("photoList:", createCard.photoList);
+//        $("#titleText").val(createCard.titleText);
+//        $("#cardHeader").text(createCard.titleText);
+//        $("#bodyText").val(createCard.bodyText);
+//        $("#cardBody").text(createCard.bodyText);
+//        $("#footertext").val(createCard.footerText);
+//        $("#cardFooter").text(createCard.footerText);
+//        $("#saveChanges").text("UPDATE CARD");
+//        let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}`;
+//        $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
+//        let copyLink = document.querySelector('#linkToCopy');
+//        copyLink.addEventListener('click', function(event) {
+//            copyTextToClipboard(cardLink);
+//        });
+//        $("#cardPickup").removeClass("invisible");
+//        $("#otherOptions").removeClass("invisible");
+//        UPDATE = true;
+////        setInitial();
+//    });
+////    console.log("clicked button", createCard.cardId); // MAKE GET CALL TO ID
+//});
+//
+//
+//
+//}
+//

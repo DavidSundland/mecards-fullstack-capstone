@@ -1,10 +1,24 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>TwoTwo</title>
 </head>
 <body>
-   <p>TwoTwo</p>
+   <p>TwoTwo da lulu</p>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+<script>
+    $(document).ready(function () {
+        let urlcheck = window.location.href;
+        if (urlcheck.split('/creations/')[1]) {
+            alert(urlcheck.split('/creations/')[1]);
+        }
+        else {
+            alert("didn't get nuttin");
+        }
+
+    });
+</script>
 </body>
+
 </html>

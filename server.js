@@ -336,10 +336,32 @@ app.get('/onecard/:cardId', function (req, res) {
 });
 
 
-app.get('/twotwo', function (req, res) {
-    res.sendFile(__dirname + '/public/twotwo.html');
-})
+//app.get('/twotwo', function (req, res) {
+//    res.sendFile(__dirname + '/public/twotwo.html');
+//})
 
+app.get('/creations/:cardid', function (req, res) {
+    console.log("got into initial get");
+    res.sendFile(__dirname + '/public/creations.html');
+});
+
+app.get('/showsave/:cardId', function (req, res) {
+    let cardId = req.params.cardId;
+    console.log("got into second get; cardId:", cardId);
+    Card.findById(cardId)
+        .then(function (results) {
+            console.log("In 'then', results: ", results);
+            res.json({
+                results
+            });
+        })
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
+        });
+    });
 
 
 // update a card
