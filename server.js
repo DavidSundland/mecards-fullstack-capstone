@@ -340,9 +340,11 @@ app.get('/onecard/:cardId', function (req, res) {
 //    res.sendFile(__dirname + '/public/twotwo.html');
 //})
 
+
+
 app.get('/creations/:cardid', function (req, res) {
     console.log("got into initial get");
-    res.sendFile(__dirname + '/public/creations.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/showsave/:cardId', function (req, res) {
