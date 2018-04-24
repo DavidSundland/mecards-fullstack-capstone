@@ -1,18 +1,43 @@
-let LOGGEDIN = false;
-let USERNAME = "";
-
-// NOTE - If the following values are changed, it could affect saved cards.  If values are added to any of these arrays, they should be added to the end so that they do not impact saved cards.
+// NOTE - If the following values are changed, it could affect saved cards.  If values are added to any of these arrays, they should be ADDED TO THE END so that they do not impact saved cards.
 const FONTS = ['Roboto','Tajawal','Do Hyeon','Lato','Montserrat','Hi Melody','Gugi','Raleway','Gaegu','Merriweather','Ubuntu','Black Han Sans','Playfair Display','Poppins','Gamja Flower','Inconsolata','Indie Flower','Dosis','Crimson Text','Jua','Arvo','Libre Baskerville','Cute Font','Lobster','Pacifico','Dokdo','Shadows Into Light','Dancing Script','Black And White Picture'];
 const COLORS = ['white', 'black', 'maroon', 'teal', 'aqua', 'navy', '#6495ED', '#E9967A', '#FF5555', '#FF9B55', '#35A091', '#44CC44', '#FFFC55', '#BE3F9B', '#C9F251', '#8040AB', '#DE4A81', '#34959A', '#FFFF55', '#DAB8CE', 'rgba(0,0,0,.6)', 'rgba(255,255,255,.6)'];
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
+
 let DEFAULTHEADER = "Header (optional)";
 let DEFAULTBODY = "Body text. Header, body, & footer are all optional. If you want the header, body, and/or footer to be blank, place a space in the corresponding text box." ;
 let DEFAULTFOOTER = "Footer (optional)";
+
 let DISPLAYHEIGHT = window.innerWidth*.369;
 
+let LOGGEDIN = false;
+let USERNAME = "";
 let UPDATE = false;
 
+// adjusts card preview height whenever screen is resized or new card is loaded
+function adjustPreviewHeight(photoWidth, photoHeight) {
+    DISPLAYHEIGHT = window.innerWidth*.369;
+    // if width not passed, check to ensure that photoList has been created, card is active and has width
+    if (!photoWidth && createCard.photoList[createCard.imageNumber].width) {
+        photoWidth = createCard.photoList[createCard.imageNumber].width;
+        photoHeight = createCard.photoList[createCard.imageNumber].height;
+    }
+    // If photoWidth is defined, adjust accordingly.  If undefined, do nothing.
+    if (photoWidth) {
+        if (photoWidth < 1.1*photoHeight) {
+            $("#cardBody").addClass("portraitPic");
+        }
+        else {
+            $("#cardBody").removeClass("portraitPic");
+        }
+        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
+            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
+        }
+        else {
+            $("#cardBox").css("height", DISPLAYHEIGHT);
+        }
+    }
+}
 
 // primary object for app - createCard contains all card values and most functions
 
@@ -419,7 +444,7 @@ let createCard = {
                     alert(`We found no results for ${searchTerm}!`);
                 } else {
                     $("#nextPhoto").addClass("makeVisibleInline");
-                    $("#prevPhoto").addClass("makeVisibleInline");
+                    $("#prevPhoto").addClass("makeVisibleInline"); // photowidth, photoheight, displayheight markmark
                     let photoWidth = Number(res.results[0].width);
                     let photoHeight = Number(res.results[0].height);
                     if (photoWidth < 1.1*photoHeight) {
@@ -428,17 +453,12 @@ let createCard = {
                     else {
                         $("#cardBody").removeClass("portraitPic");
                     }
-                    if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-                        $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-                    }
-                    else {
-                        $("#cardBox").css("height", DISPLAYHEIGHT);
-                    }
-                    //                    if (Number(res.results[0].width) < 1.1*Number(res.results[0].height)) {
-//                        $("#cardBody").addClass("portraitPic");
+                    adjustPreviewHeight(photoWidth, photoHeight);
+//                    if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
+//                        $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
 //                    }
 //                    else {
-//                        $("#cardBody").removeClass("portraitPic");
+//                        $("#cardBox").css("height", DISPLAYHEIGHT);
 //                    }
                     $("#photo").addClass("makeVisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
@@ -465,18 +485,12 @@ let createCard = {
             else {
                 $("#cardBody").removeClass("portraitPic");
             }
-            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-            }
-            else {
-                $("#cardBox").css("height", DISPLAYHEIGHT);
-            }
-            //            if (Number(createCard.photoList[createCard.imageNumber].width) < 1.1*Number(createCard.photoList[createCard.imageNumber].height)) {
-//                $("#cardBody").addClass("portraitPic");
-////                alert("Applying narrower text");
+            adjustPreviewHeight(photoWidth, photoHeight);
+//            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
+//                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
 //            }
 //            else {
-//                $("#cardBody").removeClass("portraitPic");
+//                $("#cardBox").css("height", DISPLAYHEIGHT);
 //            }
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
@@ -495,12 +509,13 @@ let createCard = {
             else {
                 $("#cardBody").removeClass("portraitPic");
             }
-            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-            }
-            else {
-                $("#cardBox").css("height", DISPLAYHEIGHT);
-            }
+            adjustPreviewHeight(photoWidth, photoHeight);
+//            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
+//                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
+//            }
+//            else {
+//                $("#cardBox").css("height", DISPLAYHEIGHT);
+//            }
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
@@ -582,9 +597,6 @@ function startAnew(event) {
         setInitial();
     }
 }
-
-
-
 
 
 // open the full-screen card preview
@@ -927,12 +939,13 @@ $(document).on('click', '.userCards', function(event) {
         else {
             $("#cardBody").removeClass("portraitPic");
         }
-        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-        }
-        else {
-            $("#cardBox").css("height", DISPLAYHEIGHT);
-        }
+        adjustPreviewHeight(photoWidth, photoHeight);
+//        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
+//            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
+//        }
+//        else {
+//            $("#cardBox").css("height", DISPLAYHEIGHT);
+//        }
         createCard.titleText = res.results.title;
         createCard.bodyText = res.results.body;
         createCard.footerText = res.results.footer;
@@ -1066,7 +1079,8 @@ $(document).ready(function () {
     }
     else {
         $(setInitial);
-        window.onresize = function() {DISPLAYHEIGHT = window.innerWidth*.369};
+//        window.onresize = function() {DISPLAYHEIGHT = window.innerWidth*.369};
+        window.onresize = function() {adjustPreviewHeight()};
         $(document).on('click', '#newUserButton', createNewUser);
         $(document).on('click', '#preview', viewCard);
         $(document).on('click', '#closePreview', closePreview);
@@ -1130,15 +1144,15 @@ function displaySavedCard(cardId) {
         else {
             $("#previewBody").removeClass("portraitPic");
         }
-        alert("about to if");
-        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
-            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-        }
-        else {
-            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
-            $("#cardBox").css("height", DISPLAYHEIGHT);
-        }
+//        alert("about to if");
+//        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
+//            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
+//            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
+//        }
+//        else {
+//            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
+//            $("#cardBox").css("height", DISPLAYHEIGHT);
+//        }
         let height = window.innerHeight*.9;
         let width = height*Number(res.results.width)/Number(res.results.height);
         $("#previewParent").addClass("makeVisible");
