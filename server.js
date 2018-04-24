@@ -344,7 +344,7 @@ app.get('/onecard/:cardId', function (req, res) {
 
 app.get('/creations/:cardid', function (req, res) {
     console.log("got into initial get");
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/creations/creations.html');
 });
 
 app.get('/showsave/:cardId', function (req, res) {
