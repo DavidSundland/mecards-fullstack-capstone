@@ -118,7 +118,7 @@ button {
 }
 
 .leftButton {
-    margin-right: 1px;
+    margin-right: 0;
     border-radius: 10px 0 0 10px;
 }
 
@@ -162,8 +162,12 @@ textarea {
 }
 
 input {
-    width: 50%;
+    width: 100%;
     height: 35px;
+}
+
+#photoQuery {
+    width: 50%;
 }
 
 .oneFont {
@@ -426,6 +430,10 @@ hr {
     background-size: cover;
 }
 
+.otherOptions {
+    text-align: center;
+}
+
 footer {
     /*    position: fixed;*/
     background-color: #100200;
@@ -465,6 +473,7 @@ footer a {
     border: 1px solid #ccbff3;
     padding: 5px 10px;
     color: #715CAF;
+    overflow: auto;
 }
 
 
@@ -783,65 +792,25 @@ form {
     display: block;
 }
 
+
+
+/* ================================================================== */
 @media only screen and (max-width: 1300px) {
-    #map {
-        width: 100%;
-        margin: 0;
-    }
-    .curtainLeft,
-    .curtainRight {
-        max-width: 10%;
-    }
-    .right {
-        padding-right: 8%;
-        /* Need to be sure right margin clears right curtain so icons clickable */
-    }
-    .left {
-        padding-left: 8%;
-        /* match .right */
-    }
+
 }
 
 /* Goes from multi-column to single column at 1150 px */
 
 @media only screen and (max-width: 1150px) {
-    .paRight {
-        border-left: 1px solid #FE6767;
+    .styleButton  {
+        width: 35px;
+        margin: 4px;
     }
-    #map {
-        width: 92%;
-        margin: 4%;
-    }
-    .paddingAdder:not(.paLeft) {
-        background-color: #202020;
-    }
-    .venueLimiter {
-        padding-top: 0;
-    }
-    .textBlock {
-        padding-bottom: 50px;
-    }
-    .venueAddress {
-        padding: 20px 5%;
-    }
-    .venueDescription {
-        padding: 20px 5%;
-    }
-    .loginLabel {
-        text-align: center;
-        padding-right: 0;
-    }
-    .loginInput {
-        text-align: center;
-    }
-    .login input {
-        margin-right: 20px;
-        /* match margin-left */
-    }
-    .alertBox {
-        font-size: 1.4em;
-        width: 55%;
-        height: 55%;
+}
+
+@media only screen and (max-width: 900px) {
+    input  {
+        width: 40%;
     }
 }
 
