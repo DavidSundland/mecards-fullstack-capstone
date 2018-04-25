@@ -8,7 +8,7 @@ let DEFAULTHEADER = "Header (optional)";
 let DEFAULTBODY = "Body text. Header, body, & footer are all optional. If you want the header, body, and/or footer to be blank, place a space in the corresponding text box." ;
 let DEFAULTFOOTER = "Footer (optional)";
 
-let DISPLAYHEIGHT = window.innerWidth*.369;
+let DISPLAYHEIGHT;
 
 let LOGGEDIN = false;
 let USERNAME = "";
@@ -16,7 +16,12 @@ let UPDATE = false;
 
 // adjusts card preview height whenever screen is resized or new card is loaded
 function adjustPreviewHeight(photoWidth, photoHeight) {
-    DISPLAYHEIGHT = window.innerWidth*.369;
+    if (window.innerWidth > 1150) { // below 1150 px, goes from 1 column to 2
+        DISPLAYHEIGHT = window.innerWidth*.369;
+    }
+    else {
+        DISPLAYHEIGHT = window.innerWidth*.547;
+    }
     // if width not passed, check to ensure that photoList has been created, card is active and has width
     if (!photoWidth && createCard.photoList[createCard.imageNumber].width) {
         photoWidth = createCard.photoList[createCard.imageNumber].width;
@@ -51,9 +56,9 @@ let createCard = {
     titleColorNumber: 0,
     bodyColorNumber: 0,
     footerColorNumber: 0,
-    titleFontSize: 2,
-    bodyFontSize: 1,
-    footerFontSize: 2,
+    titleFontSize: 3,
+    bodyFontSize: 1.5,
+    footerFontSize: 3,
     titleStyleNumber: 0,
     bodyStyleNumber: 0,
     footerStyleNumber: 0,
@@ -218,13 +223,13 @@ let createCard = {
         $("#smallerTitle").click(
             function() {
                 createCard.titleFontSize/=1.1;
-                $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
+                $("#cardHeader").css("font-size", createCard.titleFontSize + "vw");
             }
         );
         $("#largerTitle").click(
             function() {
                 createCard.titleFontSize*=1.1;
-                $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
+                $("#cardHeader").css("font-size", createCard.titleFontSize + "vw");
             }
         );
     },
@@ -232,13 +237,13 @@ let createCard = {
         $("#smallerBody").click(
             function() {
                 createCard.bodyFontSize/=1.1;
-                $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
+                $("#cardBody").css("font-size", createCard.bodyFontSize + "vw");
             }
         );
         $("#largerBody").click(
             function() {
                 createCard.bodyFontSize*=1.1;
-                $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
+                $("#cardBody").css("font-size", createCard.bodyFontSize + "vw");
             }
         );
     },
@@ -246,13 +251,13 @@ let createCard = {
         $("#smallerFooter").click(
             function() {
                 createCard.footerFontSize/=1.1;
-                $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+                $("#cardFooter").css("font-size", createCard.footerFontSize + "vw");
             }
         );
         $("#largerFooter").click(
             function() {
                 createCard.footerFontSize*=1.1;
-                $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+                $("#cardFooter").css("font-size", createCard.footerFontSize + "vw");
             }
         );
     },
@@ -531,9 +536,9 @@ function setInitial() {
     $("#cardHeader").css("color", COLORS[createCard.titleColorNumber]);
     $("#cardBody").css("color", COLORS[createCard.bodyColorNumber]);
     $("#cardFooter").css("color", COLORS[createCard.footerColorNumber]);
-    $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
-    $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
-    $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+    $("#cardHeader").css("font-size", createCard.titleFontSize + "vw");
+    $("#cardBody").css("font-size", createCard.bodyFontSize + "vw");
+    $("#cardFooter").css("font-size", createCard.footerFontSize + "vw");
     console.log(createCard.titleStyleNumber);
     $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
     $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
@@ -568,9 +573,9 @@ function startAnew(event) {
         createCard.titleColorNumber = 0;
         createCard.bodyColorNumber = 0;
         createCard.footerColorNumber = 0;
-        createCard.titleFontSize = 2;
-        createCard.bodyFontSize = 1;
-        createCard.footerFontSize = 2;
+        createCard.titleFontSize = 3;
+        createCard.bodyFontSize = 1.5;
+        createCard.footerFontSize = 3;
         createCard.titleStyleNumber = 0;
         createCard.bodyStyleNumber = 0;
         createCard.footerStyleNumber = 0;
@@ -622,9 +627,9 @@ function viewCard() {
     $("#previewHeader").css("color", COLORS[createCard.titleColorNumber]);
     $("#previewBody").css("color", COLORS[createCard.bodyColorNumber]);
     $("#previewFooter").css("color", COLORS[createCard.footerColorNumber]);
-    $("#previewHeader").css("font-size", createCard.titleFontSize + "em");
-    $("#previewBody").css("font-size", createCard.bodyFontSize + "em");
-    $("#previewFooter").css("font-size", createCard.footerFontSize + "em");
+    $("#previewHeader").css("font-size", createCard.titleFontSize + "vw");
+    $("#previewBody").css("font-size", createCard.bodyFontSize + "vw");
+    $("#previewFooter").css("font-size", createCard.footerFontSize + "vw");
     $("#previewHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
     $("#previewHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
     $("#previewBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
@@ -1165,9 +1170,9 @@ function displaySavedCard(cardId) {
         $("#previewHeader").css("color", COLORS[res.results.titleColor]);
         $("#previewBody").css("color", COLORS[res.results.bodyColor]);
         $("#previewFooter").css("color", COLORS[res.results.footerColor]);
-        $("#previewHeader").css("font-size", res.results.titleSize + "em");
-        $("#previewBody").css("font-size", res.results.bodySize + "em");
-        $("#previewFooter").css("font-size", createCard.footerFontSize + "em");
+        $("#previewHeader").css("font-size", res.results.titleSize + "vw");
+        $("#previewBody").css("font-size", res.results.bodySize + "vw");
+        $("#previewFooter").css("font-size", createCard.footerFontSize + "vw");
         $("#previewHeader").css("text-shadow", TEXTSTYLES[res.results.titleStyle][1]);
         $("#previewHeader").css("background-color", TEXTSTYLES[res.results.titleStyle][0]);
         $("#previewBody").css("text-shadow", TEXTSTYLES[res.results.bodyStyle][1]);
