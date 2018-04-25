@@ -23,7 +23,8 @@ function adjustCardHeight(photoWidth, photoHeight) {
         DISPLAYHEIGHT = window.innerWidth*.547;
     }
     // if width not passed, check to ensure that photoList has been created, card is active and has width
-    if (!photoWidth && createCard.photoList[createCard.imageNumber].width) {
+    console.log(photoWidth, createCard.photoList[createCard.imageNumber]);
+    if ((!photoWidth) && (createCard.photoList[createCard.imageNumber] !== undefined)) {
         photoWidth = createCard.photoList[createCard.imageNumber].width;
         photoHeight = createCard.photoList[createCard.imageNumber].height;
     }
@@ -49,6 +50,10 @@ function adjustCardHeight(photoWidth, photoHeight) {
     }
     $("#cardPreview").css("width", previewPhotoWidth);
     $("#cardPreview").css("height", previewPhotoHeight);
+    //    let height = window.innerHeight*.9;
+    //    let width = height*Number(res.results.width)/Number(res.results.height);
+    //    $("#cardPreview").css("width", width);
+    //    $("#cardPreview").css("height", height);
 }
 
 
@@ -190,7 +195,7 @@ let createCard = {
     bodyColor: function() {
         $("#prevBodyColor").click(
             function() {
-            createCard.bodyColorNumber--;
+                createCard.bodyColorNumber--;
                 if (createCard.bodyColorNumber < 0) {
                     createCard.bodyColorNumber = COLORS.length-1;
                 }
@@ -467,12 +472,6 @@ let createCard = {
                         $("#cardBody").removeClass("portraitPic");
                     }
                     adjustCardHeight(photoWidth, photoHeight);
-//                    if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-//                        $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-//                    }
-//                    else {
-//                        $("#cardBox").css("height", DISPLAYHEIGHT);
-//                    }
                     $("#photo").addClass("makeVisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
@@ -499,12 +498,6 @@ let createCard = {
                 $("#cardBody").removeClass("portraitPic");
             }
             adjustCardHeight(photoWidth, photoHeight);
-//            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-//                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-//            }
-//            else {
-//                $("#cardBox").css("height", DISPLAYHEIGHT);
-//            }
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
@@ -523,12 +516,6 @@ let createCard = {
                 $("#cardBody").removeClass("portraitPic");
             }
             adjustCardHeight(photoWidth, photoHeight);
-//            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-//                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-//            }
-//            else {
-//                $("#cardBox").css("height", DISPLAYHEIGHT);
-//            }
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
@@ -559,7 +546,7 @@ function setInitial() {
     $("#photo").css("border-width", createCard.borderSize + "px");
     $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
     if (createCard.photoList[createCard.imageNumber]) {
-//        console.log("Line 487, photoList:", createCard.photoList);
+        //        console.log("Line 487, photoList:", createCard.photoList);
         $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
         $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     }
@@ -623,18 +610,6 @@ function viewCard() {
     else {
         $("#previewBody").removeClass("portraitPic");
     }
-//    let previewPhotoHeight;
-//    let previewPhotoWidth;
-//    window.onresize = function() {
-//        if (window.innerHeight/window.innerWidth > previewHeight/previewWidth) {
-//            previewPhotoWidth = window.innerWidth*.9;
-//            previewPhotoHeight = width*previewWidth/previewHeight;
-//        }
-//        else {
-//            previewPhotoHeight = window.innerHeight*.9;
-//            previewPhotoWidth = height*previewWidth/previewHeight;
-//        }
-//    };
     adjustCardHeight(previewWidth, previewHeight);
     $("#previewParent").addClass("makeVisible");
     $("#previewHeader").text(createCard.titleText);
@@ -733,29 +708,29 @@ function saveCard() {
     }
     else {
         $.ajax({
-                type: 'POST',
-                url: '/create',
-                dataType: 'json',
-                data: JSON.stringify(cardArray),
-                contentType: 'application/json'
-            })
+            type: 'POST',
+            url: '/create',
+            dataType: 'json',
+            data: JSON.stringify(cardArray),
+            contentType: 'application/json'
+        })
             .done(function (result) {
-                console.log("new card saved:", result);
-                let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`;
-                $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
-                let copyLink = document.querySelector('#linkToCopy');
-                copyLink.addEventListener('click', function(event) {
-                    copyTextToClipboard(cardLink);
-                });
-                $("#cardPickup").removeClass("invisible");
-                window.location = "#cardPickup";
-                alert(`Your mE-Card has been saved! It can be retrieved at https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`);
-            })
-            .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
+            console.log("new card saved:", result);
+            let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`;
+            $("#cardPickup").html(`Click <span id="linkToCopy">here</span> for link to saved card`);
+            let copyLink = document.querySelector('#linkToCopy');
+            copyLink.addEventListener('click', function(event) {
+                copyTextToClipboard(cardLink);
             });
+            $("#cardPickup").removeClass("invisible");
+            window.location = "#cardPickup";
+            alert(`Your mE-Card has been saved!`);
+        })
+            .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
     }
 }
 
@@ -819,10 +794,10 @@ function copyTextToClipboard(text) {
 function copyThis(clickId, copyId) {
     console.log("first values:", clickId, copyId);
     $(document).on('click', clickId, function(event) {
-//        alert(copyId);
+        //        alert(copyId);
         event.preventDefault();
         let copyText = document.getElementById(copyId);
-//        alert("made it past preventDefault; copyText = ", copyText);
+        //        alert("made it past preventDefault; copyText = ", copyText);
         copyText.select();
         document.execCommand("Copy");
     });
@@ -830,7 +805,7 @@ function copyThis(clickId, copyId) {
 // Code to create new user:
 
 $('#newUser').on('submit', function (event) {
-//    alert("new user clicked");
+    //    alert("new user clicked");
     event.preventDefault();
     const uname = $('input[name="userName"]').val();
     const pw = $('input[name="password"]').val();
@@ -851,30 +826,30 @@ $('#newUser').on('submit', function (event) {
         // will assign a value to variable 'user' in signin step below
         // AJAX call to send form data up to server/DB and create new user
         $.ajax({
-                type: 'POST',
-                url: '/users/create',
-                dataType: 'json',
-                data: JSON.stringify(newUserObject),
-                contentType: 'application/json'
-            })
+            type: 'POST',
+            url: '/users/create',
+            dataType: 'json',
+            data: JSON.stringify(newUserObject),
+            contentType: 'application/json'
+        })
             .done(function (result) {
-                myAlert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
-                console.log(result);
-                $('input[name="userName"]').val(""); // clear the input fields
-                $('input[name="password"]').val("");
-                $('input[name="passwordConfirm"]').val("");
-                $('.newUser').removeClass('makeVisible');
-                $('.login').addClass('makeVisible');
-            })
+            myAlert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
+            console.log(result);
+            $('input[name="userName"]').val(""); // clear the input fields
+            $('input[name="password"]').val("");
+            $('input[name="passwordConfirm"]').val("");
+            $('.newUser').removeClass('makeVisible');
+            $('.login').addClass('makeVisible');
+        })
             .fail(function (jqXHR, error, errorThrown) {
-                alert("Uh-oh, something went wrong! Try a different username.");
-                $('input[name="userName"]').val(""); // clear the input fields
-                $('input[name="password"]').val("");
-                $('input[name="passwordConfirm"]').val("");
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-            });
+            alert("Uh-oh, something went wrong! Try a different username.");
+            $('input[name="userName"]').val(""); // clear the input fields
+            $('input[name="password"]').val("");
+            $('input[name="passwordConfirm"]').val("");
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
     };
 });
 
@@ -922,28 +897,28 @@ $('#login').on('click', '#loginClicked', function (event) {
         };
         user = inputUname;
         $.ajax({
-                type: "POST",
-                url: "/signin",
-                dataType: 'json',
-                data: JSON.stringify(unamePwObject),
-                contentType: 'application/json'
-            })
+            type: "POST",
+            url: "/signin",
+            dataType: 'json',
+            data: JSON.stringify(unamePwObject),
+            contentType: 'application/json'
+        })
             .done(function (result) {
-                LOGGEDIN = true;
-                USERNAME = user;
-                $('input[name="signinUserName"]').val("");
-                $('input[name="signinPassword"]').val("");
-                $('.intro').addClass('hideMe');
-                $('#login').addClass('hideMe');
-                alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
-                getCardList();
+            LOGGEDIN = true;
+            USERNAME = user;
+            $('input[name="signinUserName"]').val("");
+            $('input[name="signinPassword"]').val("");
+            $('.intro').addClass('hideMe');
+            $('#login').addClass('hideMe');
+            alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
+            getCardList();
         })
             .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-                alert('You entered an invalid username and password combination. Please check your username and password and try again.');
-            });
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('You entered an invalid username and password combination. Please check your username and password and try again.');
+        });
     };
 });
 
@@ -962,12 +937,6 @@ $(document).on('click', '.userCards', function(event) {
             $("#cardBody").removeClass("portraitPic");
         }
         adjustCardHeight(photoWidth, photoHeight);
-//        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-//            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-//        }
-//        else {
-//            $("#cardBox").css("height", DISPLAYHEIGHT);
-//        }
         createCard.titleText = res.results.title;
         createCard.bodyText = res.results.body;
         createCard.footerText = res.results.footer;
@@ -1001,7 +970,7 @@ $(document).on('click', '.userCards', function(event) {
         $("#cardFooter").text(createCard.footerText);
         $("#saveChanges").text("UPDATE CARD");
         let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}`;
-        $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
+        $("#cardPickup").html(`Click <span id="linkToCopy">here</span> for link to saved card`);
         let copyLink = document.querySelector('#linkToCopy');
         copyLink.addEventListener('click', function(event) {
             copyTextToClipboard(cardLink);
@@ -1057,7 +1026,7 @@ function displayCard() {
 function createNewUser(event) {
     console.log("hi from createNewUser");
     event.preventDefault(); // otherwise page reloads when this function starts
-//    alert("got into createNewUser");
+    //    alert("got into createNewUser");
     $('.login').removeClass('makeVisible');
     $('.newUser').addClass('makeVisible');
 }
@@ -1096,13 +1065,14 @@ function myAlert(sayThis, choice) {
 $(document).ready(function () {
     let urlcheck = window.location.href;
     if (urlcheck.split('/creations/')[1]) {    // If endpoint includes /creations/ + additional text, then it is a saved card
-        alert(urlcheck.split('/creations/')[1]);
+        //        alert(urlcheck.split('/creations/')[1]);
         displaySavedCard(urlcheck.split('/creations/')[1]);
     }
     else {
         $(setInitial);
-//        window.onresize = function() {DISPLAYHEIGHT = window.innerWidth*.369};
         window.onresize = function() {adjustCardHeight()};
+
+        //        window.onresize = function() {DISPLAYHEIGHT = window.innerWidth*.369};
         $(document).on('click', '#newUserButton', createNewUser);
         $(document).on('click', '#preview', viewCard);
         $(document).on('click', '#closePreview', closePreview);
@@ -1128,55 +1098,26 @@ $(document).ready(function () {
 
 });
 
-//$(setInitial);
-//$(document).on('click', '#newUserButton', createNewUser);
-//$(document).on('click', '#preview', viewCard);
-//$(document).on('click', '#closePreview', closePreview);
-//$(document).on('click', '#saveChanges', saveCard);
-//$(document).on('click', '#newCard', startAnew);
-//$(document).on('click', '#oldUserNewCard', addCard);
-//$(document).on('click', '#allCards', getCardList);
-//$(createCard.getImages);
-//$(createCard.headerFont);
-//$(createCard.bodyFont);
-//$(createCard.footerFont);
-//$(createCard.headerColor);
-//$(createCard.bodyColor);
-//$(createCard.footerColor);
-//$(createCard.headerSize);
-//$(createCard.bodySize);
-//$(createCard.footerSize);
-//$(createCard.borders);
-//$(createCard.headerStyle);
-//$(createCard.bodyStyle);
-//$(createCard.footerStyle);
 
 // CODE FOR SHARED CARD -----------------------------------------------------------------------------------------------
 //https://mecards-fullstack-capstone.herokuapp.com/creations/5adcb68ee6d7ec1de48e45c0
 
 function displaySavedCard(cardId) {
-    alert("got into dispaySavedCard, cardId:", cardId);
+    //    alert("got into dispaySavedCard, cardId:", cardId);
     $.getJSON('/showsave/' + cardId, function (res) {
         console.log("card info:", res);
-        let photoWidth = Number(res.results.width);
-        let photoHeight = Number(res.results.height);
-        if (photoWidth < 1.1*photoHeight) {
+        console.log(createCard.photoList);
+        width = Number(res.results.width);
+        height = Number(res.results.height);
+        console.log(createCard);
+        if (width < 1.1*height) {
             $("#previewBody").addClass("portraitPic");
         }
         else {
             $("#previewBody").removeClass("portraitPic");
         }
-//        alert("about to if");
-//        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-//            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
-//            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-//        }
-//        else {
-//            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
-//            $("#cardBox").css("height", DISPLAYHEIGHT);
-//        }
-        let height = window.innerHeight*.9;
-        let width = height*Number(res.results.width)/Number(res.results.height);
+        window.onresize = function() {adjustCardHeight(width, height)};
+        adjustCardHeight(width, height);
         $("#previewParent").addClass("makeVisible");
         $("#previewHeader").text(res.results.title);
         $("#previewBody").text(res.results.body);
@@ -1200,59 +1141,8 @@ function displaySavedCard(cardId) {
         $("#previewPhoto").css("border-color", COLORS[res.results.borderColor]);
         $("#previewPhoto").css("border-width", res.results.borderWidth + "px");
         $("#previewParent").css("background-color", COLORS[res.results.backgroundColor]);
-        $("#cardPreview").css("width", width);
-        $("#cardPreview").css("height", height);
         $("#cardPreview").css("background", `url('${res.results.photo}')`);
         $("#previewCreds").html(`<a href="${res.results.photoUrl}" target="_blank">${res.results.photographer}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     });
 }
-//        createCard.titleText = res.results.title;
-//        createCard.bodyText = res.results.body;
-//        createCard.footerText = res.results.footer;
-//        createCard.titleFontNumber = Number(res.results.titleFont);
-//        createCard.bodyFontNumber = Number(res.results.bodyFont);
-//        createCard.footerFontNumber = Number(res.results.footerFont);
-//        createCard.titleColorNumber = Number(res.results.titleColor);
-//        createCard.bodyColorNumber = Number(res.results.bodyColor);
-//        createCard.footerColorNumber = Number(res.results.footerColor);
-//        createCard.titleFontSize = Number(res.results.titleSize);
-//        createCard.bodyFontSize = Number(res.results.bodySize);
-//        createCard.footerFontSize = Number(res.results.footerSize);
-//        createCard.titleStyleNumber = Number(res.results.titleStyle);
-//        createCard.bodyStyleNumber = Number(res.results.bodyStyle);
-//        createCard.footerStyleNumber = Number(res.results.footerStyle);
-//        createCard.borderStyle = Number(res.results.borderStyle);
-//        createCard.borderColor = Number(res.results.borderColor);
-//        createCard.borderSize = Number(res.results.borderWidth);
-//        createCard.backgroundNumber = Number(res.results.backgroundColor);
-//        createCard.imageNumber = 0;
-//        createCard.photoList = [{photoLink: res.results.photo, photogName: res.results.photographer, photogLink: res.results.photoUrl, width: res.results.width, height: res.results.height}];
-//        $('.userCard').addClass('makeVisible');
-//        $('.newUser').removeClass('makeVisible');
-//        $('.prevCards').removeClass('makeVisible');
-//        console.log("photoList:", createCard.photoList);
-//        $("#titleText").val(createCard.titleText);
-//        $("#cardHeader").text(createCard.titleText);
-//        $("#bodyText").val(createCard.bodyText);
-//        $("#cardBody").text(createCard.bodyText);
-//        $("#footertext").val(createCard.footerText);
-//        $("#cardFooter").text(createCard.footerText);
-//        $("#saveChanges").text("UPDATE CARD");
-//        let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}`;
-//        $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
-//        let copyLink = document.querySelector('#linkToCopy');
-//        copyLink.addEventListener('click', function(event) {
-//            copyTextToClipboard(cardLink);
-//        });
-//        $("#cardPickup").removeClass("invisible");
-//        $("#otherOptions").removeClass("invisible");
-//        UPDATE = true;
-////        setInitial();
-//    });
-////    console.log("clicked button", createCard.cardId); // MAKE GET CALL TO ID
-//});
-//
-//
-//
-//}
-//
+

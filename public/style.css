@@ -474,7 +474,8 @@ footer a {
     border: 1px solid #ccbff3;
     padding: 5px 10px;
     color: #715CAF;
-    overflow: auto;
+    text-align: center;
+    font-size: 1.6em;
 }
 
 

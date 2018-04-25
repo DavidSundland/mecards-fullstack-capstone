@@ -1,17 +1,60 @@
-let LOGGEDIN = false;
-let USERNAME = "";
-
-// NOTE - If the following values are changed, it could affect saved cards.  If values are added to any of these arrays, they should be added to the end so that they do not impact saved cards.
+// NOTE - If the following values are changed, it could affect saved cards.  If values are added to any of these arrays, they should be ADDED TO THE END so that they do not impact saved cards.
 const FONTS = ['Roboto','Tajawal','Do Hyeon','Lato','Montserrat','Hi Melody','Gugi','Raleway','Gaegu','Merriweather','Ubuntu','Black Han Sans','Playfair Display','Poppins','Gamja Flower','Inconsolata','Indie Flower','Dosis','Crimson Text','Jua','Arvo','Libre Baskerville','Cute Font','Lobster','Pacifico','Dokdo','Shadows Into Light','Dancing Script','Black And White Picture'];
 const COLORS = ['white', 'black', 'maroon', 'teal', 'aqua', 'navy', '#6495ED', '#E9967A', '#FF5555', '#FF9B55', '#35A091', '#44CC44', '#FFFC55', '#BE3F9B', '#C9F251', '#8040AB', '#DE4A81', '#34959A', '#FFFF55', '#DAB8CE', 'rgba(0,0,0,.6)', 'rgba(255,255,255,.6)'];
 const BORDERS = ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
-const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px black"],["transparent", "5px 5px black"],["transparent", "2px 2px white"],["transparent", "5px 5px white"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
+const TEXTSTYLES = [["transparent", "none"],["transparent", "2px 2px red"],["transparent", "4px 4px red"],["transparent", "2px 2px black"],["transparent", "4px 4px black"],["transparent", "2px 2px white"],["transparent", "4px 4px white"],["transparent", "2px 2px 8px red"],["transparent", "2px 2px 8px white"],["transparent", "2px 2px 8px black"],["transparent", "0 0 3px #FF0000, 0 0 5px #0000FF"],["rgba(0,0,0,.4)", "none"],["rgba(255,255,255,.4)", "none"]];
+
 let DEFAULTHEADER = "Header (optional)";
 let DEFAULTBODY = "Body text. Header, body, & footer are all optional. If you want the header, body, and/or footer to be blank, place a space in the corresponding text box." ;
 let DEFAULTFOOTER = "Footer (optional)";
-let DISPLAYHEIGHT = window.innerWidth*.369;
 
+let DISPLAYHEIGHT;
+
+let LOGGEDIN = false;
+let USERNAME = "";
 let UPDATE = false;
+
+// adjusts card preview height whenever screen is resized or new card is loaded
+function adjustCardHeight(photoWidth, photoHeight) {
+    if (window.innerWidth > 1150) { // below 1150 px, edit page goes from 1 column to 2
+        DISPLAYHEIGHT = window.innerWidth*.369;
+    }
+    else {
+        DISPLAYHEIGHT = window.innerWidth*.547;
+    }
+    // if width not passed, check to ensure that photoList has been created, card is active and has width
+    console.log(photoWidth, createCard.photoList[createCard.imageNumber]);
+    if ((!photoWidth) && (createCard.photoList[createCard.imageNumber] !== undefined)) {
+        photoWidth = createCard.photoList[createCard.imageNumber].width;
+        photoHeight = createCard.photoList[createCard.imageNumber].height;
+    }
+    // If photoWidth is defined, adjust accordingly.  If undefined, do nothing.
+    if (photoWidth) {
+        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
+            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
+        }
+        else {
+            $("#cardBox").css("height", DISPLAYHEIGHT);
+        }
+    }
+    // set dimensions for full-screen preview:
+    let previewPhotoHeight;
+    let previewPhotoWidth;
+    if (window.innerHeight/window.innerWidth > photoHeight/photoWidth) {
+        previewPhotoWidth = window.innerWidth*.9;
+        previewPhotoHeight = previewPhotoWidth*photoHeight/photoWidth;
+    }
+    else {
+        previewPhotoHeight = window.innerHeight*.9;
+        previewPhotoWidth = previewPhotoHeight*photoWidth/photoHeight;
+    }
+    $("#cardPreview").css("width", previewPhotoWidth);
+    $("#cardPreview").css("height", previewPhotoHeight);
+//    let height = window.innerHeight*.9;
+//    let width = height*Number(res.results.width)/Number(res.results.height);
+//    $("#cardPreview").css("width", width);
+//    $("#cardPreview").css("height", height);
+}
 
 
 // primary object for app - createCard contains all card values and most functions
@@ -26,9 +69,9 @@ let createCard = {
     titleColorNumber: 0,
     bodyColorNumber: 0,
     footerColorNumber: 0,
-    titleFontSize: 2,
-    bodyFontSize: 1,
-    footerFontSize: 2,
+    titleFontSize: 3,
+    bodyFontSize: 1.5,
+    footerFontSize: 3,
     titleStyleNumber: 0,
     bodyStyleNumber: 0,
     footerStyleNumber: 0,
@@ -152,7 +195,7 @@ let createCard = {
     bodyColor: function() {
         $("#prevBodyColor").click(
             function() {
-            createCard.bodyColorNumber--;
+                createCard.bodyColorNumber--;
                 if (createCard.bodyColorNumber < 0) {
                     createCard.bodyColorNumber = COLORS.length-1;
                 }
@@ -193,13 +236,13 @@ let createCard = {
         $("#smallerTitle").click(
             function() {
                 createCard.titleFontSize/=1.1;
-                $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
+                $("#cardHeader").css("font-size", createCard.titleFontSize + "vw");
             }
         );
         $("#largerTitle").click(
             function() {
                 createCard.titleFontSize*=1.1;
-                $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
+                $("#cardHeader").css("font-size", createCard.titleFontSize + "vw");
             }
         );
     },
@@ -207,13 +250,13 @@ let createCard = {
         $("#smallerBody").click(
             function() {
                 createCard.bodyFontSize/=1.1;
-                $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
+                $("#cardBody").css("font-size", createCard.bodyFontSize + "vw");
             }
         );
         $("#largerBody").click(
             function() {
                 createCard.bodyFontSize*=1.1;
-                $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
+                $("#cardBody").css("font-size", createCard.bodyFontSize + "vw");
             }
         );
     },
@@ -221,13 +264,13 @@ let createCard = {
         $("#smallerFooter").click(
             function() {
                 createCard.footerFontSize/=1.1;
-                $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+                $("#cardFooter").css("font-size", createCard.footerFontSize + "vw");
             }
         );
         $("#largerFooter").click(
             function() {
                 createCard.footerFontSize*=1.1;
-                $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+                $("#cardFooter").css("font-size", createCard.footerFontSize + "vw");
             }
         );
     },
@@ -428,18 +471,7 @@ let createCard = {
                     else {
                         $("#cardBody").removeClass("portraitPic");
                     }
-                    if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-                        $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-                    }
-                    else {
-                        $("#cardBox").css("height", DISPLAYHEIGHT);
-                    }
-                    //                    if (Number(res.results[0].width) < 1.1*Number(res.results[0].height)) {
-//                        $("#cardBody").addClass("portraitPic");
-//                    }
-//                    else {
-//                        $("#cardBody").removeClass("portraitPic");
-//                    }
+                    adjustCardHeight(photoWidth, photoHeight);
                     $("#photo").addClass("makeVisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
@@ -465,19 +497,7 @@ let createCard = {
             else {
                 $("#cardBody").removeClass("portraitPic");
             }
-            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-            }
-            else {
-                $("#cardBox").css("height", DISPLAYHEIGHT);
-            }
-            //            if (Number(createCard.photoList[createCard.imageNumber].width) < 1.1*Number(createCard.photoList[createCard.imageNumber].height)) {
-//                $("#cardBody").addClass("portraitPic");
-////                alert("Applying narrower text");
-//            }
-//            else {
-//                $("#cardBody").removeClass("portraitPic");
-//            }
+            adjustCardHeight(photoWidth, photoHeight);
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
@@ -495,12 +515,7 @@ let createCard = {
             else {
                 $("#cardBody").removeClass("portraitPic");
             }
-            if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-                $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-            }
-            else {
-                $("#cardBox").css("height", DISPLAYHEIGHT);
-            }
+            adjustCardHeight(photoWidth, photoHeight);
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
             $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`)
         });
@@ -516,9 +531,9 @@ function setInitial() {
     $("#cardHeader").css("color", COLORS[createCard.titleColorNumber]);
     $("#cardBody").css("color", COLORS[createCard.bodyColorNumber]);
     $("#cardFooter").css("color", COLORS[createCard.footerColorNumber]);
-    $("#cardHeader").css("font-size", createCard.titleFontSize + "em");
-    $("#cardBody").css("font-size", createCard.bodyFontSize + "em");
-    $("#cardFooter").css("font-size", createCard.footerFontSize + "em");
+    $("#cardHeader").css("font-size", createCard.titleFontSize + "vw");
+    $("#cardBody").css("font-size", createCard.bodyFontSize + "vw");
+    $("#cardFooter").css("font-size", createCard.footerFontSize + "vw");
     console.log(createCard.titleStyleNumber);
     $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
     $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
@@ -531,7 +546,7 @@ function setInitial() {
     $("#photo").css("border-width", createCard.borderSize + "px");
     $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
     if (createCard.photoList[createCard.imageNumber]) {
-//        console.log("Line 487, photoList:", createCard.photoList);
+        //        console.log("Line 487, photoList:", createCard.photoList);
         $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
         $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     }
@@ -553,9 +568,9 @@ function startAnew(event) {
         createCard.titleColorNumber = 0;
         createCard.bodyColorNumber = 0;
         createCard.footerColorNumber = 0;
-        createCard.titleFontSize = 2;
-        createCard.bodyFontSize = 1;
-        createCard.footerFontSize = 2;
+        createCard.titleFontSize = 3;
+        createCard.bodyFontSize = 1.5;
+        createCard.footerFontSize = 3;
         createCard.titleStyleNumber = 0;
         createCard.bodyStyleNumber = 0;
         createCard.footerStyleNumber = 0;
@@ -584,22 +599,18 @@ function startAnew(event) {
 }
 
 
-
-
-
 // open the full-screen card preview
 
 function viewCard() {
-    let photoWidth = Number(createCard.photoList[createCard.imageNumber].width);
-    let photoHeight = Number(createCard.photoList[createCard.imageNumber].height);
-    if (photoWidth < 1.1*photoHeight) {
+    let previewWidth = Number(createCard.photoList[createCard.imageNumber].width);
+    let previewHeight = Number(createCard.photoList[createCard.imageNumber].height);
+    if (previewWidth < 1.1*previewHeight) {
         $("#previewBody").addClass("portraitPic");
     }
     else {
         $("#previewBody").removeClass("portraitPic");
     }
-    let height = window.innerHeight*.9;
-    let width = height*photoWidth/photoHeight;
+    adjustCardHeight(previewWidth, previewHeight);
     $("#previewParent").addClass("makeVisible");
     $("#previewHeader").text(createCard.titleText);
     $("#previewBody").text(createCard.bodyText);
@@ -610,21 +621,19 @@ function viewCard() {
     $("#previewHeader").css("color", COLORS[createCard.titleColorNumber]);
     $("#previewBody").css("color", COLORS[createCard.bodyColorNumber]);
     $("#previewFooter").css("color", COLORS[createCard.footerColorNumber]);
-    $("#previewHeader").css("font-size", createCard.titleFontSize + "em");
-    $("#previewBody").css("font-size", createCard.bodyFontSize + "em");
-    $("#previewFooter").css("font-size", createCard.footerFontSize + "em");
+    $("#previewHeader").css("font-size", createCard.titleFontSize + "vw");
+    $("#previewBody").css("font-size", createCard.bodyFontSize + "vw");
+    $("#previewFooter").css("font-size", createCard.footerFontSize + "vw");
     $("#previewHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
     $("#previewHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
     $("#previewBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
     $("#previewBody").css("background-color", TEXTSTYLES[createCard.bodyStyleNumber][0]);
     $("#previewFooter").css("text-shadow", TEXTSTYLES[createCard.footerStyleNumber][1]);
     $("#previewFooter").css("background-color", TEXTSTYLES[createCard.footerStyleNumber][0]);
-    $("#previewPhoto").css("border-style", BORDERS[createCard.borderStyle]);
-    $("#previewPhoto").css("border-color", COLORS[createCard.borderColor]);
-    $("#previewPhoto").css("border-width", createCard.borderSize + "px");
+    $("#cardPreview").css("border-style", BORDERS[createCard.borderStyle]);
+    $("#cardPreview").css("border-color", COLORS[createCard.borderColor]);
+    $("#cardPreview").css("border-width", createCard.borderSize + "px");
     $("#previewParent").css("background-color", COLORS[createCard.backgroundNumber]);
-    $("#cardPreview").css("width", width);
-    $("#cardPreview").css("height", height);
     $("#cardPreview").css("background", `url('${createCard.photoList[createCard.imageNumber].photoLink}')`);
     $("#cardPreview").css("background-repeat", "no-repeat");
     $("#cardPreview").css("background-size", "cover");
@@ -699,29 +708,29 @@ function saveCard() {
     }
     else {
         $.ajax({
-                type: 'POST',
-                url: '/create',
-                dataType: 'json',
-                data: JSON.stringify(cardArray),
-                contentType: 'application/json'
-            })
+            type: 'POST',
+            url: '/create',
+            dataType: 'json',
+            data: JSON.stringify(cardArray),
+            contentType: 'application/json'
+        })
             .done(function (result) {
-                console.log("new card saved:", result);
-                let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`;
-                $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
-                let copyLink = document.querySelector('#linkToCopy');
-                copyLink.addEventListener('click', function(event) {
-                    copyTextToClipboard(cardLink);
-                });
-                $("#cardPickup").removeClass("invisible");
-                window.location = "#cardPickup";
-                alert(`Your mE-Card has been saved! It can be retrieved at https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`);
-            })
-            .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
+            console.log("new card saved:", result);
+            let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`;
+            $("#cardPickup").html(`Click <span id="linkToCopy">here</span> for link to saved card`);
+            let copyLink = document.querySelector('#linkToCopy');
+            copyLink.addEventListener('click', function(event) {
+                copyTextToClipboard(cardLink);
             });
+            $("#cardPickup").removeClass("invisible");
+            window.location = "#cardPickup";
+            alert(`Your mE-Card has been saved!`);
+        })
+            .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
     }
 }
 
@@ -785,10 +794,10 @@ function copyTextToClipboard(text) {
 function copyThis(clickId, copyId) {
     console.log("first values:", clickId, copyId);
     $(document).on('click', clickId, function(event) {
-//        alert(copyId);
+        //        alert(copyId);
         event.preventDefault();
         let copyText = document.getElementById(copyId);
-//        alert("made it past preventDefault; copyText = ", copyText);
+        //        alert("made it past preventDefault; copyText = ", copyText);
         copyText.select();
         document.execCommand("Copy");
     });
@@ -796,7 +805,7 @@ function copyThis(clickId, copyId) {
 // Code to create new user:
 
 $('#newUser').on('submit', function (event) {
-//    alert("new user clicked");
+    //    alert("new user clicked");
     event.preventDefault();
     const uname = $('input[name="userName"]').val();
     const pw = $('input[name="password"]').val();
@@ -817,30 +826,30 @@ $('#newUser').on('submit', function (event) {
         // will assign a value to variable 'user' in signin step below
         // AJAX call to send form data up to server/DB and create new user
         $.ajax({
-                type: 'POST',
-                url: '/users/create',
-                dataType: 'json',
-                data: JSON.stringify(newUserObject),
-                contentType: 'application/json'
-            })
+            type: 'POST',
+            url: '/users/create',
+            dataType: 'json',
+            data: JSON.stringify(newUserObject),
+            contentType: 'application/json'
+        })
             .done(function (result) {
-                myAlert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
-                console.log(result);
-                $('input[name="userName"]').val(""); // clear the input fields
-                $('input[name="password"]').val("");
-                $('input[name="passwordConfirm"]').val("");
-                $('.newUser').removeClass('makeVisible');
-                $('.login').addClass('makeVisible');
-            })
+            myAlert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
+            console.log(result);
+            $('input[name="userName"]').val(""); // clear the input fields
+            $('input[name="password"]').val("");
+            $('input[name="passwordConfirm"]').val("");
+            $('.newUser').removeClass('makeVisible');
+            $('.login').addClass('makeVisible');
+        })
             .fail(function (jqXHR, error, errorThrown) {
-                alert("Uh-oh, something went wrong! Try a different username.");
-                $('input[name="userName"]').val(""); // clear the input fields
-                $('input[name="password"]').val("");
-                $('input[name="passwordConfirm"]').val("");
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-            });
+            alert("Uh-oh, something went wrong! Try a different username.");
+            $('input[name="userName"]').val(""); // clear the input fields
+            $('input[name="password"]').val("");
+            $('input[name="passwordConfirm"]').val("");
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
     };
 });
 
@@ -888,28 +897,28 @@ $('#login').on('click', '#loginClicked', function (event) {
         };
         user = inputUname;
         $.ajax({
-                type: "POST",
-                url: "/signin",
-                dataType: 'json',
-                data: JSON.stringify(unamePwObject),
-                contentType: 'application/json'
-            })
+            type: "POST",
+            url: "/signin",
+            dataType: 'json',
+            data: JSON.stringify(unamePwObject),
+            contentType: 'application/json'
+        })
             .done(function (result) {
-                LOGGEDIN = true;
-                USERNAME = user;
-                $('input[name="signinUserName"]').val("");
-                $('input[name="signinPassword"]').val("");
-                $('.intro').addClass('hideMe');
-                $('#login').addClass('hideMe');
-                alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
-                getCardList();
+            LOGGEDIN = true;
+            USERNAME = user;
+            $('input[name="signinUserName"]').val("");
+            $('input[name="signinPassword"]').val("");
+            $('.intro').addClass('hideMe');
+            $('#login').addClass('hideMe');
+            alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
+            getCardList();
         })
             .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-                alert('You entered an invalid username and password combination. Please check your username and password and try again.');
-            });
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('You entered an invalid username and password combination. Please check your username and password and try again.');
+        });
     };
 });
 
@@ -927,12 +936,7 @@ $(document).on('click', '.userCards', function(event) {
         else {
             $("#cardBody").removeClass("portraitPic");
         }
-        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-        }
-        else {
-            $("#cardBox").css("height", DISPLAYHEIGHT);
-        }
+        adjustCardHeight(photoWidth, photoHeight);
         createCard.titleText = res.results.title;
         createCard.bodyText = res.results.body;
         createCard.footerText = res.results.footer;
@@ -966,7 +970,7 @@ $(document).on('click', '.userCards', function(event) {
         $("#cardFooter").text(createCard.footerText);
         $("#saveChanges").text("UPDATE CARD");
         let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}`;
-        $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
+        $("#cardPickup").html(`Click <span id="linkToCopy">here</span> for link to saved card`);
         let copyLink = document.querySelector('#linkToCopy');
         copyLink.addEventListener('click', function(event) {
             copyTextToClipboard(cardLink);
@@ -1022,7 +1026,7 @@ function displayCard() {
 function createNewUser(event) {
     console.log("hi from createNewUser");
     event.preventDefault(); // otherwise page reloads when this function starts
-//    alert("got into createNewUser");
+    //    alert("got into createNewUser");
     $('.login').removeClass('makeVisible');
     $('.newUser').addClass('makeVisible');
 }
@@ -1061,12 +1065,14 @@ function myAlert(sayThis, choice) {
 $(document).ready(function () {
     let urlcheck = window.location.href;
     if (urlcheck.split('/creations/')[1]) {    // If endpoint includes /creations/ + additional text, then it is a saved card
-        alert(urlcheck.split('/creations/')[1]);
+        //        alert(urlcheck.split('/creations/')[1]);
         displaySavedCard(urlcheck.split('/creations/')[1]);
     }
     else {
         $(setInitial);
-        window.onresize = function() {DISPLAYHEIGHT = window.innerWidth*.369};
+        window.onresize = function() {adjustCardHeight()};
+
+        //        window.onresize = function() {DISPLAYHEIGHT = window.innerWidth*.369};
         $(document).on('click', '#newUserButton', createNewUser);
         $(document).on('click', '#preview', viewCard);
         $(document).on('click', '#closePreview', closePreview);
@@ -1092,55 +1098,26 @@ $(document).ready(function () {
 
 });
 
-//$(setInitial);
-//$(document).on('click', '#newUserButton', createNewUser);
-//$(document).on('click', '#preview', viewCard);
-//$(document).on('click', '#closePreview', closePreview);
-//$(document).on('click', '#saveChanges', saveCard);
-//$(document).on('click', '#newCard', startAnew);
-//$(document).on('click', '#oldUserNewCard', addCard);
-//$(document).on('click', '#allCards', getCardList);
-//$(createCard.getImages);
-//$(createCard.headerFont);
-//$(createCard.bodyFont);
-//$(createCard.footerFont);
-//$(createCard.headerColor);
-//$(createCard.bodyColor);
-//$(createCard.footerColor);
-//$(createCard.headerSize);
-//$(createCard.bodySize);
-//$(createCard.footerSize);
-//$(createCard.borders);
-//$(createCard.headerStyle);
-//$(createCard.bodyStyle);
-//$(createCard.footerStyle);
 
 // CODE FOR SHARED CARD -----------------------------------------------------------------------------------------------
 //https://mecards-fullstack-capstone.herokuapp.com/creations/5adcb68ee6d7ec1de48e45c0
 
 function displaySavedCard(cardId) {
-    alert("got into dispaySavedCard, cardId:", cardId);
+    //    alert("got into dispaySavedCard, cardId:", cardId);
     $.getJSON('/showsave/' + cardId, function (res) {
         console.log("card info:", res);
-        let photoWidth = Number(res.results.width);
-        let photoHeight = Number(res.results.height);
-        if (photoWidth < 1.1*photoHeight) {
+        console.log(createCard.photoList);
+        width = Number(res.results.width);
+        height = Number(res.results.height);
+        console.log(createCard);
+        if (width < 1.1*height) {
             $("#previewBody").addClass("portraitPic");
         }
         else {
             $("#previewBody").removeClass("portraitPic");
         }
-        alert("about to if");
-        if (photoWidth > 1.5*photoHeight) {  // if extra-wide photo, reduce view height proportionately so displays properly
-            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
-            $("#cardBox").css("height", DISPLAYHEIGHT*1.5*photoHeight/photoWidth); // default height * standard photo ratio / actual ratio
-        }
-        else {
-            console.log("In if, disp & win:", DISPLAYHEIGHT, window.innerWidth);
-            $("#cardBox").css("height", DISPLAYHEIGHT);
-        }
-        let height = window.innerHeight*.9;
-        let width = height*Number(res.results.width)/Number(res.results.height);
+        window.onresize = function() {adjustCardHeight(width, height)};
+        adjustCardHeight(width, height);
         $("#previewParent").addClass("makeVisible");
         $("#previewHeader").text(res.results.title);
         $("#previewBody").text(res.results.body);
@@ -1151,9 +1128,9 @@ function displaySavedCard(cardId) {
         $("#previewHeader").css("color", COLORS[res.results.titleColor]);
         $("#previewBody").css("color", COLORS[res.results.bodyColor]);
         $("#previewFooter").css("color", COLORS[res.results.footerColor]);
-        $("#previewHeader").css("font-size", res.results.titleSize + "em");
-        $("#previewBody").css("font-size", res.results.bodySize + "em");
-        $("#previewFooter").css("font-size", createCard.footerFontSize + "em");
+        $("#previewHeader").css("font-size", res.results.titleSize + "vw");
+        $("#previewBody").css("font-size", res.results.bodySize + "vw");
+        $("#previewFooter").css("font-size", createCard.footerFontSize + "vw");
         $("#previewHeader").css("text-shadow", TEXTSTYLES[res.results.titleStyle][1]);
         $("#previewHeader").css("background-color", TEXTSTYLES[res.results.titleStyle][0]);
         $("#previewBody").css("text-shadow", TEXTSTYLES[res.results.bodyStyle][1]);
@@ -1164,59 +1141,8 @@ function displaySavedCard(cardId) {
         $("#previewPhoto").css("border-color", COLORS[res.results.borderColor]);
         $("#previewPhoto").css("border-width", res.results.borderWidth + "px");
         $("#previewParent").css("background-color", COLORS[res.results.backgroundColor]);
-        $("#cardPreview").css("width", width);
-        $("#cardPreview").css("height", height);
         $("#cardPreview").css("background", `url('${res.results.photo}')`);
         $("#previewCreds").html(`<a href="${res.results.photoUrl}" target="_blank">${res.results.photographer}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     });
 }
-//        createCard.titleText = res.results.title;
-//        createCard.bodyText = res.results.body;
-//        createCard.footerText = res.results.footer;
-//        createCard.titleFontNumber = Number(res.results.titleFont);
-//        createCard.bodyFontNumber = Number(res.results.bodyFont);
-//        createCard.footerFontNumber = Number(res.results.footerFont);
-//        createCard.titleColorNumber = Number(res.results.titleColor);
-//        createCard.bodyColorNumber = Number(res.results.bodyColor);
-//        createCard.footerColorNumber = Number(res.results.footerColor);
-//        createCard.titleFontSize = Number(res.results.titleSize);
-//        createCard.bodyFontSize = Number(res.results.bodySize);
-//        createCard.footerFontSize = Number(res.results.footerSize);
-//        createCard.titleStyleNumber = Number(res.results.titleStyle);
-//        createCard.bodyStyleNumber = Number(res.results.bodyStyle);
-//        createCard.footerStyleNumber = Number(res.results.footerStyle);
-//        createCard.borderStyle = Number(res.results.borderStyle);
-//        createCard.borderColor = Number(res.results.borderColor);
-//        createCard.borderSize = Number(res.results.borderWidth);
-//        createCard.backgroundNumber = Number(res.results.backgroundColor);
-//        createCard.imageNumber = 0;
-//        createCard.photoList = [{photoLink: res.results.photo, photogName: res.results.photographer, photogLink: res.results.photoUrl, width: res.results.width, height: res.results.height}];
-//        $('.userCard').addClass('makeVisible');
-//        $('.newUser').removeClass('makeVisible');
-//        $('.prevCards').removeClass('makeVisible');
-//        console.log("photoList:", createCard.photoList);
-//        $("#titleText").val(createCard.titleText);
-//        $("#cardHeader").text(createCard.titleText);
-//        $("#bodyText").val(createCard.bodyText);
-//        $("#cardBody").text(createCard.bodyText);
-//        $("#footertext").val(createCard.footerText);
-//        $("#cardFooter").text(createCard.footerText);
-//        $("#saveChanges").text("UPDATE CARD");
-//        let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${createCard.cardId}`;
-//        $("#cardPickup").html(`Card can be retrieved at:  <span id="linkToCopy">${cardLink}</span>`);
-//        let copyLink = document.querySelector('#linkToCopy');
-//        copyLink.addEventListener('click', function(event) {
-//            copyTextToClipboard(cardLink);
-//        });
-//        $("#cardPickup").removeClass("invisible");
-//        $("#otherOptions").removeClass("invisible");
-//        UPDATE = true;
-////        setInitial();
-//    });
-////    console.log("clicked button", createCard.cardId); // MAKE GET CALL TO ID
-//});
-//
-//
-//
-//}
-//
+
