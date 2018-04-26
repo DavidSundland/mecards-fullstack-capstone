@@ -51,8 +51,7 @@ Is a short set of CSS rules that resets the styling of all HTML elements to a co
 }
 
 html {
-    background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
-    background-size: cover;
+    background-color: black;
 }
 
 body {

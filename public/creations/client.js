@@ -36,24 +36,20 @@ function adjustCardHeight(photoWidth, photoHeight) {
         else {
             $("#cardBox").css("height", DISPLAYHEIGHT);
         }
+        // set dimensions for full-screen display:
+        let previewPhotoHeight;
+        let previewPhotoWidth;
+        if (window.innerHeight/window.innerWidth > photoHeight/photoWidth) {
+            previewPhotoWidth = window.innerWidth*.9;
+            previewPhotoHeight = previewPhotoWidth*photoHeight/photoWidth;
+        }
+        else {
+            previewPhotoHeight = window.innerHeight*.9;
+            previewPhotoWidth = previewPhotoHeight*photoWidth/photoHeight;
+        }
+        $("#cardPreview").css("width", previewPhotoWidth);
+        $("#cardPreview").css("height", previewPhotoHeight);
     }
-    // set dimensions for full-screen preview:
-    let previewPhotoHeight;
-    let previewPhotoWidth;
-    if (window.innerHeight/window.innerWidth > photoHeight/photoWidth) {
-        previewPhotoWidth = window.innerWidth*.9;
-        previewPhotoHeight = previewPhotoWidth*photoHeight/photoWidth;
-    }
-    else {
-        previewPhotoHeight = window.innerHeight*.9;
-        previewPhotoWidth = previewPhotoHeight*photoWidth/photoHeight;
-    }
-    $("#cardPreview").css("width", previewPhotoWidth);
-    $("#cardPreview").css("height", previewPhotoHeight);
-//    let height = window.innerHeight*.9;
-//    let width = height*Number(res.results.width)/Number(res.results.height);
-//    $("#cardPreview").css("width", width);
-//    $("#cardPreview").css("height", height);
 }
 
 
@@ -1109,6 +1105,7 @@ function displaySavedCard(cardId) {
         console.log(createCard.photoList);
         width = Number(res.results.width);
         height = Number(res.results.height);
+        adjustCardHeight(width, height);
         console.log(createCard);
         if (width < 1.1*height) {
             $("#previewBody").addClass("portraitPic");
@@ -1117,7 +1114,6 @@ function displaySavedCard(cardId) {
             $("#previewBody").removeClass("portraitPic");
         }
         window.onresize = function() {adjustCardHeight(width, height)};
-        adjustCardHeight(width, height);
         $("#previewParent").addClass("makeVisible");
         $("#previewHeader").text(res.results.title);
         $("#previewBody").text(res.results.body);
@@ -1137,11 +1133,13 @@ function displaySavedCard(cardId) {
         $("#previewBody").css("background-color", TEXTSTYLES[res.results.bodyStyle][0]);
         $("#previewFooter").css("text-shadow", TEXTSTYLES[res.results.footerStyle][1]);
         $("#previewFooter").css("background-color", TEXTSTYLES[res.results.footerStyle][0]);
-        $("#previewPhoto").css("border-style", BORDERS[res.results.borderStyle]);
-        $("#previewPhoto").css("border-color", COLORS[res.results.borderColor]);
-        $("#previewPhoto").css("border-width", res.results.borderWidth + "px");
+        $("#cardPreview").css("border-style", BORDERS[res.results.borderStyle]);
+        $("#cardPreview").css("border-color", COLORS[res.results.borderColor]);
+        $("#cardPreview").css("border-width", res.results.borderWidth + "px");
         $("#previewParent").css("background-color", COLORS[res.results.backgroundColor]);
         $("#cardPreview").css("background", `url('${res.results.photo}')`);
+        $("#cardPreview").css("background-repeat", "no-repeat");
+        $("#cardPreview").css("background-size", "cover");
         $("#previewCreds").html(`<a href="${res.results.photoUrl}" target="_blank">${res.results.photographer}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     });
 }

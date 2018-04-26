@@ -42,12 +42,12 @@
                 <div class="col-6 loginLabel">Password:</div>
                 <div class="col-6 loginInput"><input name="signinPassword" placeholder="testpassword" autocomplete="off" value="testpassword"></div>
             </div>
-            <div class="row">
+            <div class="row loginButtons">
                 <button id="loginClicked" type="submit">Submit</button><button id="newUserButton">New User?</button>
             </div>
         </form>
 
-        <div class="newUser">
+        <div class="newUser invisible">
             <div class="newuserBox">
                 <h2>Create New User</h2>
                 <form id="newUser">
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div class="prevCards">
+        <div class="prevCards invisible">
             <div class="prevCardsBox">
                 <h2>Your previous cards:</h2>
                 <div id="prevCards">
@@ -81,7 +81,7 @@
         </div>
 
 
-        <div class="userCard">
+        <div class="userCard invisible">
             <form>
 <!--                <div class="tooltip"><input name="photoQuery" id="photoQuery" placeholder="Image search term"><span class="tooltiptext toptip">Enter search term for background photo</span></div>-->
                 <input name="photoQuery" id="photoQuery" placeholder="Image search term">
@@ -115,7 +115,7 @@
                     <img id="photo" src="images/blackbackground.jpg">
                     <div class="cardBody"><span  id="cardBody">Body text (optional).  Header, body, & footer are all optional.  If you want the header, body, and/or footer to be blank, place a space in the corresponding text box.</span></div>
                     <div class="cardFooter"><span id="cardFooter">Footer (optional)</span></div>
-                    <div id="photoCreds"></div>
+                    <div id="photoCreds" class="invisible"></div>
                 </div>
 
                 <div class = "col-4 bodyColumn">

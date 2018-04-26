@@ -36,24 +36,20 @@ function adjustCardHeight(photoWidth, photoHeight) {
         else {
             $("#cardBox").css("height", DISPLAYHEIGHT);
         }
+        // set dimensions for full-screen display:
+        let previewPhotoHeight;
+        let previewPhotoWidth;
+        if (window.innerHeight/window.innerWidth > photoHeight/photoWidth) {
+            previewPhotoWidth = window.innerWidth*.9;
+            previewPhotoHeight = previewPhotoWidth*photoHeight/photoWidth;
+        }
+        else {
+            previewPhotoHeight = window.innerHeight*.9;
+            previewPhotoWidth = previewPhotoHeight*photoWidth/photoHeight;
+        }
+        $("#cardPreview").css("width", previewPhotoWidth);
+        $("#cardPreview").css("height", previewPhotoHeight);
     }
-    // set dimensions for full-screen preview:
-    let previewPhotoHeight;
-    let previewPhotoWidth;
-    if (window.innerHeight/window.innerWidth > photoHeight/photoWidth) {
-        previewPhotoWidth = window.innerWidth*.9;
-        previewPhotoHeight = previewPhotoWidth*photoHeight/photoWidth;
-    }
-    else {
-        previewPhotoHeight = window.innerHeight*.9;
-        previewPhotoWidth = previewPhotoHeight*photoWidth/photoHeight;
-    }
-    $("#cardPreview").css("width", previewPhotoWidth);
-    $("#cardPreview").css("height", previewPhotoHeight);
-    //    let height = window.innerHeight*.9;
-    //    let width = height*Number(res.results.width)/Number(res.results.height);
-    //    $("#cardPreview").css("width", width);
-    //    $("#cardPreview").css("height", height);
 }
 
 
@@ -80,7 +76,7 @@ let createCard = {
     borderSize: 10,
     backgroundNumber: 1,
     imageNumber: 0,
-    photoList: [],
+    photoList: [{photoLink: "images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}],
     cardId: "",
 
     changeHeader: function() {
@@ -466,14 +462,15 @@ let createCard = {
                     let photoWidth = Number(res.results[0].width);
                     let photoHeight = Number(res.results[0].height);
                     if (photoWidth < 1.1*photoHeight) {
-                        $("#cardBody").addClass("portraitPic");
+                        $(".cardBody").addClass("portraitPic");
                     }
                     else {
-                        $("#cardBody").removeClass("portraitPic");
+                        $(".cardBody").removeClass("portraitPic");
                     }
                     adjustCardHeight(photoWidth, photoHeight);
-                    $("#photo").addClass("makeVisible");
+                    $("#photo").removeClass("invisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
+                    $("#photoCreds").removeClass("invisible");
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
                     createCard.photoList = [];  // clear the previous results
                     $("#photoQuery").val("");  // clear the previous results
@@ -492,10 +489,10 @@ let createCard = {
             let photoWidth = Number(createCard.photoList[createCard.imageNumber].width);
             let photoHeight = Number(createCard.photoList[createCard.imageNumber].height);
             if (photoWidth < 1.1*photoHeight) {
-                $("#cardBody").addClass("portraitPic");
+                $(".cardBody").addClass("portraitPic");
             }
             else {
-                $("#cardBody").removeClass("portraitPic");
+                $(".cardBody").removeClass("portraitPic");
             }
             adjustCardHeight(photoWidth, photoHeight);
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
@@ -510,10 +507,10 @@ let createCard = {
             let photoWidth = Number(createCard.photoList[createCard.imageNumber].width);
             let photoHeight = Number(createCard.photoList[createCard.imageNumber].height);
             if (photoWidth < 1.1*photoHeight) {
-                $("#cardBody").addClass("portraitPic");
+                $(".cardBody").addClass("portraitPic");
             }
             else {
-                $("#cardBody").removeClass("portraitPic");
+                $(".cardBody").removeClass("portraitPic");
             }
             adjustCardHeight(photoWidth, photoHeight);
             $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
@@ -545,9 +542,9 @@ function setInitial() {
     $("#photo").css("border-color", COLORS[createCard.borderColor]);
     $("#photo").css("border-width", createCard.borderSize + "px");
     $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
-    if (createCard.photoList[createCard.imageNumber]) {
-        //        console.log("Line 487, photoList:", createCard.photoList);
+    if (createCard.photoList[createCard.imageNumber].photogName !== "") {
         $("#photo").attr("src", createCard.photoList[createCard.imageNumber].photoLink);
+        $("#photoCreds").removeClass("invisible");
         $("#photoCreds").html(`<a href="${createCard.photoList[createCard.imageNumber].photogLink}" target="_blank">${createCard.photoList[createCard.imageNumber].photogName}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     }
     createCard.changeHeader;
@@ -585,6 +582,7 @@ function startAnew(event) {
         $("#cardBody").text(DEFAULTBODY);
         $("#cardFooter").text(DEFAULTFOOTER);
         $("#photo").attr("src", "");  // clear user entry fields
+        $("#photoCreds").addClass("invisible");
         $("#photoCreds").html("");
         $("#titleText").val("");
         $("#bodyText").val("");
@@ -611,7 +609,7 @@ function viewCard() {
         $("#previewBody").removeClass("portraitPic");
     }
     adjustCardHeight(previewWidth, previewHeight);
-    $("#previewParent").addClass("makeVisible");
+    $("#previewParent").removeClass("invisible");
     $("#previewHeader").text(createCard.titleText);
     $("#previewBody").text(createCard.bodyText);
     $("#previewFooter").text(createCard.footerText);
@@ -641,7 +639,7 @@ function viewCard() {
 }
 
 function closePreview() {
-    $("#previewParent").removeClass("makeVisible");
+    $("#previewParent").addClass("invisible");
 }
 
 // Save a card:
@@ -838,8 +836,8 @@ $('#newUser').on('submit', function (event) {
             $('input[name="userName"]').val(""); // clear the input fields
             $('input[name="password"]').val("");
             $('input[name="passwordConfirm"]').val("");
-            $('.newUser').removeClass('makeVisible');
-            $('.login').addClass('makeVisible');
+            $('.newUser').addClass('invisible');
+            $('.login').removeClass('invisible');
         })
             .fail(function (jqXHR, error, errorThrown) {
             alert("Uh-oh, something went wrong! Try a different username.");
@@ -855,20 +853,20 @@ $('#newUser').on('submit', function (event) {
 
 
 function addCard() {
-    $('.prevCards').removeClass('makeVisible');
-    $('.userCard').addClass('makeVisible');
+    $('.prevCards').addClass('invisible');
+    $('.userCard').removeClass('invisible');
     $("#otherOptions").removeClass("invisible");
 }
 
 function getCardList() {
     $.getJSON('/findcards/' + USERNAME, function (res) {
         if (res.results.length === 0) { // no results - no saved cards
-            $('.userCard').addClass('makeVisible');
+            $('.userCard').removeClass('invisible');
             $("#otherOptions").removeClass("invisible");
-            alert("found no cards");
+//            alert("found no cards");
         } else {
             console.log(res);
-            $('.prevCards').addClass('makeVisible');
+            $('.prevCards').removeClass('invisible');
             $('#prevCards').html(""); // clear previous results, if any
             for (let x=0; x < res.results.length; x++) {
                 $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div></div>`);
@@ -908,8 +906,8 @@ $('#login').on('click', '#loginClicked', function (event) {
             USERNAME = user;
             $('input[name="signinUserName"]').val("");
             $('input[name="signinPassword"]').val("");
-            $('.intro').addClass('hideMe');
-            $('#login').addClass('hideMe');
+            $('.intro').addClass('invisible');
+            $('#login').addClass('invisible');
             alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
             getCardList();
         })
@@ -931,10 +929,10 @@ $(document).on('click', '.userCards', function(event) {
         let photoWidth = Number(res.results.width);
         let photoHeight = Number(res.results.height);
         if (photoWidth < 1.1*photoHeight) {
-            $("#cardBody").addClass("portraitPic");
+            $(".cardBody").addClass("portraitPic");
         }
         else {
-            $("#cardBody").removeClass("portraitPic");
+            $(".cardBody").removeClass("portraitPic");
         }
         adjustCardHeight(photoWidth, photoHeight);
         createCard.titleText = res.results.title;
@@ -958,9 +956,9 @@ $(document).on('click', '.userCards', function(event) {
         createCard.backgroundNumber = Number(res.results.backgroundColor);
         createCard.imageNumber = 0;
         createCard.photoList = [{photoLink: res.results.photo, photogName: res.results.photographer, photogLink: res.results.photoUrl, width: res.results.width, height: res.results.height}];
-        $('.userCard').addClass('makeVisible');
-        $('.newUser').removeClass('makeVisible');
-        $('.prevCards').removeClass('makeVisible');
+        $('.userCard').removeClass('invisible');
+        $('.newUser').addClass('invisible');
+        $('.prevCards').addClass('invisible');
         console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
         $("#cardHeader").text(createCard.titleText);
@@ -1008,9 +1006,9 @@ function displayCard() {
         createCard.backgroundNumber = Number(res.results.backgroundColor);
         createCard.imageNumber = 0;
         createCard.photoList = [{photoLink: res.results.photo, photogName: res.results.photographer, photogLink: res.results.photoUrl, width: res.results.width, height: res.results.height}];
-        $('.userCard').addClass('makeVisible');
-        $('.newUser').removeClass('makeVisible');
-        $('.prevCards').removeClass('makeVisible');
+        $('.userCard').removeClass('invisible');
+        $('.newUser').addClass('invisible');
+        $('.prevCards').addClass('invisible');
         $("#otherOptions").removeClass("invisible");
         console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
@@ -1027,16 +1025,16 @@ function createNewUser(event) {
     console.log("hi from createNewUser");
     event.preventDefault(); // otherwise page reloads when this function starts
     //    alert("got into createNewUser");
-    $('.login').removeClass('makeVisible');
-    $('.newUser').addClass('makeVisible');
+    $('.login').addClass('invisible');
+    $('.newUser').removeClass('invisible');
 }
 
 $('.newUser').on('click', '#cancelNewUser', function () {
     $('input[name="userName"]').val(""); // clear the input fields
     $('input[name="password"]').val("");
     $('input[name="passwordConfirm"]').val("");
-    $('.newUser').removeClass('makeVisible');
-    $('.jsHide').addClass("makeVisible");
+    $('.newUser').addClass('invisible');
+    $('.jsHide').removeClass("invisible");
 });
 
 
@@ -1118,7 +1116,7 @@ function displaySavedCard(cardId) {
         }
         window.onresize = function() {adjustCardHeight(width, height)};
         adjustCardHeight(width, height);
-        $("#previewParent").addClass("makeVisible");
+        $("#previewParent").removeClass("invisible");
         $("#previewHeader").text(res.results.title);
         $("#previewBody").text(res.results.body);
         $("#previewFooter").text(res.results.footer);
@@ -1137,11 +1135,13 @@ function displaySavedCard(cardId) {
         $("#previewBody").css("background-color", TEXTSTYLES[res.results.bodyStyle][0]);
         $("#previewFooter").css("text-shadow", TEXTSTYLES[res.results.footerStyle][1]);
         $("#previewFooter").css("background-color", TEXTSTYLES[res.results.footerStyle][0]);
-        $("#previewPhoto").css("border-style", BORDERS[res.results.borderStyle]);
-        $("#previewPhoto").css("border-color", COLORS[res.results.borderColor]);
-        $("#previewPhoto").css("border-width", res.results.borderWidth + "px");
+        $("#cardPreview").css("border-style", BORDERS[res.results.borderStyle]);
+        $("#cardPreview").css("border-color", COLORS[res.results.borderColor]);
+        $("#cardPreview").css("border-width", res.results.borderWidth + "px");
         $("#previewParent").css("background-color", COLORS[res.results.backgroundColor]);
         $("#cardPreview").css("background", `url('${res.results.photo}')`);
+        $("#cardPreview").css("background-repeat", "no-repeat");
+        $("#cardPreview").css("background-size", "cover");
         $("#previewCreds").html(`<a href="${res.results.photoUrl}" target="_blank">${res.results.photographer}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);
     });
 }
