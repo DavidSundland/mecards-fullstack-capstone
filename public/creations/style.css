@@ -248,7 +248,6 @@ hr {
     left: 0;
     overflow: auto;
     background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
-    /*    background-color: pink;*/
     background-size: cover;
     z-index: 1001;
 }
@@ -258,9 +257,8 @@ hr {
 .newuserBox, .prevCardsBox {
     /* center box in page */
     position: absolute;
-    background-color: rgba(255,213,118,.7);
-    border: 1px solid #B8B3C5;
-
+    background-color: rgba(255,230,170,.8);
+    border: 5px ridge #B8B3C5;
     top: 0;
     bottom: 0;
     left: 0;

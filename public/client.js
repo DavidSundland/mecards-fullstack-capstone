@@ -722,7 +722,7 @@ function saveCard() {
             });
             $("#cardPickup").removeClass("invisible");
             window.location = "#cardPickup";
-            alert(`Your mE-Card has been saved!`);
+            myAlert(`Your mE-Card has been saved!<br>A link to the card will now be available on the card edit page.`);
         })
             .fail(function (jqXHR, error, errorThrown) {
             console.log(jqXHR);
@@ -792,10 +792,8 @@ function copyTextToClipboard(text) {
 function copyThis(clickId, copyId) {
     console.log("first values:", clickId, copyId);
     $(document).on('click', clickId, function(event) {
-        //        alert(copyId);
         event.preventDefault();
         let copyText = document.getElementById(copyId);
-        //        alert("made it past preventDefault; copyText = ", copyText);
         copyText.select();
         document.execCommand("Copy");
     });
@@ -803,7 +801,6 @@ function copyThis(clickId, copyId) {
 // Code to create new user:
 
 $('#newUser').on('submit', function (event) {
-    //    alert("new user clicked");
     event.preventDefault();
     const uname = $('input[name="userName"]').val();
     const pw = $('input[name="password"]').val();
@@ -831,7 +828,7 @@ $('#newUser').on('submit', function (event) {
             contentType: 'application/json'
         })
             .done(function (result) {
-            myAlert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
+            alert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
             console.log(result);
             $('input[name="userName"]').val(""); // clear the input fields
             $('input[name="password"]').val("");
@@ -862,8 +859,7 @@ function getCardList() {
     $.getJSON('/findcards/' + USERNAME, function (res) {
         if (res.results.length === 0) { // no results - no saved cards
             $('.userCard').removeClass('invisible');
-            $("#otherOptions").removeClass("invisible");
-//            alert("found no cards");
+//            $("#otherOptions").removeClass("invisible");
         } else {
             console.log(res);
             $('.prevCards').removeClass('invisible');
@@ -908,7 +904,7 @@ $('#login').on('click', '#loginClicked', function (event) {
             $('input[name="signinPassword"]').val("");
             $('.intro').addClass('invisible');
             $('#login').addClass('invisible');
-            alert(`Welcome, ${user}!  You're now logged in!`);  // ***** NOTE TO ME - CONSIDER REINSTITUTING MY CUSTOM ALERT
+            alert(`Welcome, ${user}!  You're now logged in!`);
             getCardList();
         })
             .fail(function (jqXHR, error, errorThrown) {
@@ -1024,7 +1020,6 @@ function displayCard() {
 function createNewUser(event) {
     console.log("hi from createNewUser");
     event.preventDefault(); // otherwise page reloads when this function starts
-    //    alert("got into createNewUser");
     $('.login').addClass('invisible');
     $('.newUser').removeClass('invisible');
 }
@@ -1038,32 +1033,52 @@ $('.newUser').on('click', '#cancelNewUser', function () {
 });
 
 
-function myAlert(sayThis, choice) {
-    let okChoices = ["Uhh, sure... OK", "Happy to oblige", "Did I have any other choice?", "It seemed the right thing to do", "I was bored", "My cat's breath smells like cat food", "I didn't realize I had a choice", "Hooray?", "Snazzy.", "Well, I'll be!", "Well, ain't that grand!"];
-    let oopsChoices = ["My mouse finger slipped", "I was young, I needed the money", "I was trying to play a cat video", "I did no such thing!", "My cat ran across my keyboard", "The peer pressure got to me", "Somebody else must have done that", "I must have been drunk", "I hit the wrong key", "Don't blame me for that!", "It was an accident", "Don't hold it against me!"];
-    let reasons;
-    if (choice === "oops") {
-        reasons = oopsChoices;
-    } else {
-        reasons = okChoices;
-    }
-    let thisReason = reasons[Math.floor(Math.random() * reasons.length)];
-    $(".alertBoxContainer").addClass("visibleAlert");
-    $(".alertBox").addClass("visibleAlert");
-    $(".alertBox").html(sayThis + `<br><button id='yes'>${thisReason}</button>`);
-    $(".alertBox").on('click', '#yes', function () {
+//<div class="myAlert invisible">
+//    <div class="myAlertBox">
+//        <h2>Your previous cards:</h2>
+//<div id="prevCards">
+//    </div>
+//</div>
+//<button id="oldUserNewCard">New Card</button>
+//</div>
+
+function myAlert(askThis) {
+    $(".myAlert").removeClass("invisible");
+    $(".putAlertHere").html(`<p>${askThis}</p><button id='yes'>OKAY!</button>`);
+    $(".myAlert").on('click', '#yes', function () {
         event.preventDefault();
-        $(".alertBoxContainer").removeClass("visibleAlert");
-        $(".alertBox").removeClass("visibleAlert");
-        $(".alertBox").html("");
+        $(".myAlert").addClass("invisible");
+        $(".myAlert").html("");
     });
 }
+
+
+//function myAlert(askThis, firstButton, secondButton, thirdButton) {
+//    $(".alertBoxContainer").removeClass("invisible");
+//    let partOne = `<h2>${askThis}</h2>`;
+//    let partTwo = `<button>${firstButton}</button>`;
+//    let partThree;
+//    if (secondButton) {
+//        partThree = `<button>${secondButton}</button>`;
+//    }
+//    else {
+//        partThree = "";
+//    }
+//
+////    $(".alertBox").addClass("visibleAlert");
+//    $(".alertBox").html(askThis + `<br><button id='yes'>${thisReason}</button>`);
+//    $(".alertBox").on('click', '#yes', function () {
+//        event.preventDefault();
+//        $(".alertBoxContainer").removeClass("visibleAlert");
+//        $(".alertBox").removeClass("visibleAlert");
+//        $(".alertBox").html("");
+//    });
+//}
 
 
 $(document).ready(function () {
     let urlcheck = window.location.href;
     if (urlcheck.split('/creations/')[1]) {    // If endpoint includes /creations/ + additional text, then it is a saved card
-        //        alert(urlcheck.split('/creations/')[1]);
         displaySavedCard(urlcheck.split('/creations/')[1]);
     }
     else {
@@ -1101,7 +1116,6 @@ $(document).ready(function () {
 //https://mecards-fullstack-capstone.herokuapp.com/creations/5adcb68ee6d7ec1de48e45c0
 
 function displaySavedCard(cardId) {
-    //    alert("got into dispaySavedCard, cardId:", cardId);
     $.getJSON('/showsave/' + cardId, function (res) {
         console.log("card info:", res);
         console.log(createCard.photoList);

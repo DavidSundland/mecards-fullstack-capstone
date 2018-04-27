@@ -243,7 +243,7 @@ hr {
     text-align: center;
 }
 
-.newUser, .login, .prevCards {
+.newUser, .login, .prevCards, .myAlert {
     width: 100%;
     height: 100%;
     padding: 20px 5%;
@@ -251,17 +251,23 @@ hr {
     top: 0;
     left: 0;
     overflow: auto;
-    background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
-    background-size: cover;
     z-index: 1001;
 }
 
-.newuserBox, .prevCardsBox {
+.newUser, .login, .prevCards {
+    background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
+    background-size: cover;
+}
+
+.myAlert {
+    background-color: rgba(255,230,170,.6);
+}
+
+
+.newuserBox, .prevCardsBox, .myAlertBox {
     /* center box in page */
     position: absolute;
-    background-color: rgba(255,213,118,.7);
-    border: 1px solid #B8B3C5;
-
+    border: 5px ridge #B8B3C5;
     top: 0;
     bottom: 0;
     left: 0;
@@ -273,6 +279,28 @@ hr {
     padding-bottom: 20px;
 }
 
+.newuserBox, .prevCardsBox {
+    background-color: rgba(255,230,170,.8);
+}
+
+.myAlertBox {
+    background-color: rgba(255,230,170,.95);
+}
+
+.putAlertHere {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.putAlertHere p {
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    padding: 20px 50px;
+}
+
 .prevCardsBox {
     bottom: 10%;
     overflow: auto;
@@ -280,7 +308,8 @@ hr {
 
 .newUser,
 .userCard,
-.prevCards {
+.prevCards,
+.myAlert {
     text-align: center;
     color: #715CAF;
     font-weight: 800;
@@ -448,12 +477,26 @@ footer a {
 .cardPickup {
     background-color: #FFE6AD;
     margin: 30px 0;
-    border: 1px solid #ccbff3;
+    border: 2px solid #ccbff3;
     padding: 5px 10px;
     color: #715CAF;
     text-align: center;
     font-size: 1.6em;
+    -webkit-animation: mymove 4s infinite; /* Safari 4.0 - 8.0 */
+    animation: mymove 4s infinite;
 }
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes mymove {
+    50% {border-color: red;}
+    50% {background-color: #fcf2dd;}
+}
+
+@keyframes mymove {
+    50% {border-color: red;}
+    50% {background-color: #fcf2dd;}
+}
+
 
 #copyToClipboard {
     width: 5px;
@@ -607,7 +650,7 @@ a:hover {
 .alertBox {
     display: none;
     position: fixed;
-    /* center box in page */
+    /* center box in page */   /*
     top: 0;
     bottom: 0;
     left: 0;
