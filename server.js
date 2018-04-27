@@ -215,45 +215,82 @@ const openclipartkey = "1edba4dc2b1f025dc9e994a1eb71fe1e";
 //});
 
 
+// check to see if username already exists
+app.get('/checkusername/:username', function (req, res) {
+    let username = req.params.username;
+    console.log("username:", username);
+    User
+        .find({
+        username: username
+    })
+        .then(function (results) {
+        console.log("usernamecheck results:", results);
+        res.json({
+            results
+        });
+    })
+        .catch(function (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Internal server error'
+        });
+    });
+});
+
+
 
 // Create new user
 app.post('/users/create', (req, res) => {
     let username = req.body.username;
     username = username.trim();
-    let password = req.body.password;
-    password = password.trim();
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) {
-            console.log("encryption error1");
+    User
+        .find({
+        username: username
+    })
+        .then(function (results) {
+        if (results.length !== 0) {
+            console.log("duplicate username error");
             return res.status(500).json({
-                message: 'Internal server error'
+                message: 'Username already exists'
             });
         }
-
-        bcrypt.hash(password, salt, (err, hash) => {
-            if (err) {
-                console.log("encryption error2");
-                return res.status(500).json({
-                    message: 'Internal server error'
-                });
-            }
-
-            User.create({
-                username,
-                password: hash,
-            }, (err, item) => {
+        else {
+            let password = req.body.password;
+            password = password.trim();
+            bcrypt.genSalt(10, (err, salt) => {
                 if (err) {
-                    console.log("creation error");
+                    console.log("encryption error1");
                     return res.status(500).json({
-                        message: 'Internal Server Error'
+                        message: 'Internal server error'
                     });
                 }
-                if (item) {
-                    console.log(`User \`${username}\` created.`);
-                    return res.json(item);
-                }
+
+                bcrypt.hash(password, salt, (err, hash) => {
+                    if (err) {
+                        console.log("encryption error2");
+                        return res.status(500).json({
+                            message: 'Internal server error'
+                        });
+                    }
+
+                    User.create({
+                        username,
+                        password: hash,
+                    }, (err, item) => {
+                        if (err) {
+                            console.log("creation error");
+                            return res.status(500).json({
+                                message: 'Internal Server Error'
+                            });
+                        }
+                        if (item) {
+                            console.log(`User \`${username}\` created.`);
+                            return res.json(item);
+                        }
+                    });
+                });
             });
-        });
+        }
     });
 });
 

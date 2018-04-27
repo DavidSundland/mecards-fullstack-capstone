@@ -807,6 +807,10 @@ $('#newUser').on('submit', function (event) {
     const uname = $('input[name="userName"]').val();
     const pw = $('input[name="password"]').val();
     const confirmPw = $('input[name="passwordConfirm"]').val();
+//    $.getJSON('/checkusername/' + uname, function (res) {
+//        alert(res);
+//        console.log("result from username check:", res);
+//    });
     if (pw !== confirmPw) {
         alert('Passwords must match!');
     } else if (uname.length === 0) {
