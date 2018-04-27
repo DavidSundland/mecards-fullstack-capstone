@@ -696,7 +696,7 @@ function saveCard() {
         })
             .done(function (result) {
             console.log("card updated:", result);
-            alert(`Your mE-Card has been updated!`);
+            myAlert(`Your mE-Card has been updated!`);
         })
             .fail(function (jqXHR, error, errorThrown) {
             console.log(jqXHR);
@@ -720,6 +720,8 @@ function saveCard() {
             copyLink.addEventListener('click', function(event) {
                 copyTextToClipboard(cardLink);
             });
+            $("#allCards").removeClass("invisible");
+            $("#newCard").removeClass("invisible");
             $("#cardPickup").removeClass("invisible");
             window.location = "#cardPickup";
             myAlert(`Your mE-Card has been saved!<br>A link to the card will now be available on the card edit page.`);
@@ -852,7 +854,8 @@ $('#newUser').on('submit', function (event) {
 function addCard() {
     $('.prevCards').addClass('invisible');
     $('.userCard').removeClass('invisible');
-    $("#otherOptions").removeClass("invisible");
+//    $("#otherOptions").removeClass("invisible");
+    $("#allCards").removeClass("invisible");
 }
 
 function getCardList() {
@@ -970,7 +973,9 @@ $(document).on('click', '.userCards', function(event) {
             copyTextToClipboard(cardLink);
         });
         $("#cardPickup").removeClass("invisible");
-        $("#otherOptions").removeClass("invisible");
+//        $("#otherOptions").removeClass("invisible");
+        $("#allCards").removeClass("invisible");
+        $("#newCard").removeClass("invisible");
         UPDATE = true;
         setInitial();
     });
@@ -1005,7 +1010,9 @@ function displayCard() {
         $('.userCard').removeClass('invisible');
         $('.newUser').addClass('invisible');
         $('.prevCards').addClass('invisible');
-        $("#otherOptions").removeClass("invisible");
+//        $("#otherOptions").removeClass("invisible");
+        $("#allCards").removeClass("invisible");
+        $("#newCard").removeClass("invisible");
         console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
         $("#cardHeader").text(createCard.titleText);
@@ -1108,7 +1115,6 @@ $(document).ready(function () {
         $(createCard.bodyStyle);
         $(createCard.footerStyle);
     }
-
 });
 
 
