@@ -243,7 +243,7 @@ hr {
     text-align: center;
 }
 
-.newUser, .login, .prevCards, .myAlert {
+.newUser, .login, .prevCards, #myAlert {
     width: 100%;
     height: 100%;
     padding: 20px 5%;
@@ -309,7 +309,7 @@ hr {
 .newUser,
 .userCard,
 .prevCards,
-.myAlert {
+#myAlert {
     text-align: center;
     color: #715CAF;
     font-weight: 800;

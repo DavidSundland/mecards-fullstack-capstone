@@ -1050,12 +1050,12 @@ $('.newUser').on('click', '#cancelNewUser', function () {
 //</div>
 
 function myAlert(askThis) {
-    $(".myAlert").removeClass("invisible");
+    $("#myAlert").removeClass("invisible");
     $(".putAlertHere").html(`<p>${askThis}</p><button id='yes'>OKAY!</button>`);
-    $(".myAlert").on('click', '#yes', function () {
+    $("#myAlert").on('click', '#yes', function () {
         event.preventDefault();
-        $(".myAlert").addClass("invisible");
-        $(".myAlert").html("");
+        $("#myAlert").addClass("invisible");
+        $(".putAlertHere").html("");
     });
 }
 
