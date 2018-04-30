@@ -317,9 +317,9 @@ hr {
 }
 
 /* Tooltip text */
-.tooltip .tooltiptext {
+.tooltip .tooltiptext, .tooltip .inputtooltip {
     visibility: hidden;
-    width: 110px;
+/*    width: 110px;*/
     background-color: rgba(0,0,0,.7);
     font-size: .7em;
     color: #fff;
@@ -328,6 +328,16 @@ hr {
     border-radius: 6px;
     position: absolute;
     z-index: 1;
+}
+
+.tooltip .tooltiptext {
+    width: 110px;
+}
+
+.tooltip .inputtooltip {
+    width: 60%;
+    margin: auto;
+    bottom: 110%;
 }
 
 .toptip {
