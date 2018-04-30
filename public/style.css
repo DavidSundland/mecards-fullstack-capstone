@@ -118,18 +118,13 @@ button {
 }
 
 .leftButton {
-    margin-right: 0;
+    margin-right: 1px;
     border-radius: 10px 0 0 10px;
 }
 
 .rightButton {
-    margin-left: 0;
+    margin-left: 1px;
     border-radius: 0 10px 10px 0;
-}
-
-#borderButtons {
-/*    margin-top: 50px;*/
-/*    bottom: 0;*/
 }
 
 .borderButton {
