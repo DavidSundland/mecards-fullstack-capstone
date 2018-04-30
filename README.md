@@ -28,7 +28,7 @@ As a user, I want an overview about each venue that interests me so that I can d
 * Users can delete or edit reviews after they have been submitted.
 
 ## Working Prototye
-A live example of the project can be found at: https://mecards-fullstack-capstone.herokuapp.com.
+A live example of the project wih Node can be found at: https://mecards-fullstack-capstone.herokuapp.com and with React https://davidsundland.github.io/mecards-fullstack-capstone-react/build
 
 
 Screenshot of landing page:
@@ -64,3 +64,16 @@ This app's functionality includes:
 
 ## Responsive
 App is built to be responsive across mobile, tablet, laptop, and desktop screen resolutions.
+
+
+
+## Node command lines
+* npm install ==> install all node modules
+* nodemon server.js ==> run node server
+* npm test ==> run the tests
+
+## React command lines
+* npm install ==> install all node modules
+* npm run build ==> build the react files in the "build" folder
+* npm start ==> run react server on http://127.0.0.1:8080
+* npm test ==> run the tests

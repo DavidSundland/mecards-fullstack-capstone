@@ -576,7 +576,7 @@ function startAnew(event) {
         createCard.borderSize = 10;
         createCard.backgroundNumber = 1;
         createCard.imageNumber = 0;
-        createCard.photoList = [];
+        createCard.photoList = [{photoLink: "images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}];
         createCard.cardId = "";
         $("#cardHeader").text(DEFAULTHEADER); // clear existing values from preview
         $("#cardBody").text(DEFAULTBODY);
@@ -839,6 +839,8 @@ $('#newUser').on('submit', function (event) {
             $('input[name="userName"]').val(""); // clear the input fields
             $('input[name="password"]').val("");
             $('input[name="passwordConfirm"]').val("");
+            $('input[name="signinUserName"]').val("");
+            $('input[name="signinPassword"]').val("");
             $('.newUser').addClass('invisible');
             $('.login').removeClass('invisible');
         })
@@ -847,6 +849,8 @@ $('#newUser').on('submit', function (event) {
             $('input[name="userName"]').val(""); // clear the input fields
             $('input[name="password"]').val("");
             $('input[name="passwordConfirm"]').val("");
+            $('input[name="signinUserName"]').val("");
+            $('input[name="signinPassword"]').val("");
             console.log(jqXHR);
             console.log(error);
             console.log(errorThrown);
@@ -1039,6 +1043,8 @@ $('.newUser').on('click', '#cancelNewUser', function () {
     $('input[name="userName"]').val(""); // clear the input fields
     $('input[name="password"]').val("");
     $('input[name="passwordConfirm"]').val("");
+    $('input[name="signinUserName"]').val("");
+    $('input[name="signinPassword"]').val("");
     $('.newUser').addClass('invisible');
     $('.jsHide').removeClass("invisible");
 });
@@ -1103,8 +1109,8 @@ $(document).ready(function () {
         $(document).on('click', '#saveChanges', saveCard);
         $(document).on('click', '#newCard', startAnew);
         $(document).on('click', '#oldUserNewCard', addCard);
-        $(document).on('click', '#allCards', getCardList);
-        $(createCard.getImages);
+      //  $(document).on('click', '#allCards', getCardList);
+        $(document).on('click', '#allCards', function() {if (confirm("Did you save any changes that you wanted to keep?")) {getCardList()}});        $(createCard.getImages);
         $(createCard.headerFont);
         $(createCard.bodyFont);
         $(createCard.footerFont);
