@@ -1,5 +1,5 @@
 # mE-Card Capstone
-Thinkful Node Capstone
+Thinkful React Capstone
 
 ## Background
 

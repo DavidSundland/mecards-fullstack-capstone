@@ -76,7 +76,8 @@ let createCard = {
     borderSize: 10,
     backgroundNumber: 1,
     imageNumber: 0,
-    photoList: [{photoLink: "images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}],
+    // full pathname provided so that image displays properly even if saved in React version of app and loaded in non-React version, or vice-versa
+    photoList: [{photoLink: "https://mecards-fullstack-capstone.herokuapp.com/images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}],
     cardId: "",
 
     changeHeader: function() {
@@ -576,7 +577,8 @@ function startAnew(event) {
         createCard.borderSize = 10;
         createCard.backgroundNumber = 1;
         createCard.imageNumber = 0;
-        createCard.photoList = [{photoLink: "images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}];
+        // full path for default black background used so that card loads properly from either React or non-React version.
+        createCard.photoList = [{photoLink: "https://mecards-fullstack-capstone.herokuapp.com/images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}];
         createCard.cardId = "";
         $("#cardHeader").text(DEFAULTHEADER); // clear existing values from preview
         $("#cardBody").text(DEFAULTBODY);
@@ -765,30 +767,6 @@ function copyTextToClipboard(text) {
 
     document.body.removeChild(textArea);
 }
-
-//
-//var copyBobBtn = document.querySelector('.js-copy-bob-btn'),
-//    copyJaneBtn = document.querySelector('.js-copy-jane-btn');
-//
-//copyBobBtn.addEventListener('click', function(event) {
-//    copyTextToClipboard('Bob');
-//});
-//
-//
-//copyJaneBtn.addEventListener('click', function(event) {
-//    copyTextToClipboard('Jane');
-//});
-
-
-
-
-
-
-
-
-
-
-
 
 
 function copyThis(clickId, copyId) {
