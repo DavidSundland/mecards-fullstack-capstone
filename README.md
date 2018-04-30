@@ -4,13 +4,13 @@ Thinkful Node Capstone
 ## Background
 
 I built this app because I often buy gifts on-line, want to be able to send an accompanying e-card, and am unsatisfied with the existing free e-card options.  This app provides a simple interface with which a user can quickly create a custom e-card, and then generate a unique, shareable URL for the final product.
-Live preview available at: ********************
+Live preview available at: https://mecards-fullstack-capstone.herokuapp.com/.
 
 ## User Story
 This app allows users to create e-cards which they can share with others.  The user can create
 
 As a user, I want to quickly find overviews about music venues in Washington, DC, so that I can determine which venues might be of interest:
-![main page wireframe](https://github.com/DavidSundland/venue-evaluator-node-capstone/blob/master/public/wireframe.jpg?raw=true)
+![main page wireframe](/public/images/mecard-wireframe-1.jpg)
 
 The main page:
 * User sees a header, a quick description of the site, a list of the venues, a map of the venues, and a box for selecting venue preferences.  The page initially lists all venues, in alphabetic order.
