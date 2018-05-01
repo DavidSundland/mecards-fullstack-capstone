@@ -23,7 +23,7 @@ function adjustCardHeight(photoWidth, photoHeight) {
         DISPLAYHEIGHT = window.innerWidth*.547;
     }
     // if width not passed, check to ensure that photoList has been created, card is active and has width
-    console.log(photoWidth, createCard.photoList[createCard.imageNumber]);
+//    console.log(photoWidth, createCard.photoList[createCard.imageNumber]);
     if ((!photoWidth) && (createCard.photoList[createCard.imageNumber] !== undefined)) {
         photoWidth = createCard.photoList[createCard.imageNumber].width;
         photoHeight = createCard.photoList[createCard.imageNumber].height;
@@ -434,7 +434,7 @@ let createCard = {
                 if(createCard.backgroundNumber < 0) {
                     createCard.backgroundNumber = COLORS.length-1;
                 }
-                console.log(createCard.backgroundNumber);
+//                console.log(createCard.backgroundNumber);
                 $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
             }
         );
@@ -444,7 +444,7 @@ let createCard = {
                 if (createCard.backgroundNumber >= COLORS.length) {
                     createCard.backgroundNumber = 0;
                 }
-                console.log(createCard.backgroundNumber);
+//                console.log(createCard.backgroundNumber);
                 $("#cardBox").css("background-color", COLORS[createCard.backgroundNumber]);
             }
         );
@@ -480,7 +480,7 @@ let createCard = {
                     $("#photoQuery").val("");  // clear the previous results
                     for (let x=0; x<res.results.length; x++) {
                         let photogLink = "https://unsplash.com/";  // in case no link for photographer, go to unsplash
-                        console.log("first photog:", res.results[x].user.portfolio_url);
+//                        console.log("first photog:", res.results[x].user.portfolio_url);
                         if (res.results[x].user.portfolio_url != null) {
                             photogLink = res.results[x].user.portfolio_url;
                         }
@@ -540,7 +540,7 @@ function setInitial() {
     $("#cardHeader").css("font-size", createCard.titleFontSize + "vw");
     $("#cardBody").css("font-size", createCard.bodyFontSize + "vw");
     $("#cardFooter").css("font-size", createCard.footerFontSize + "vw");
-    console.log(createCard.titleStyleNumber);
+//    console.log(createCard.titleStyleNumber);
     $("#cardHeader").css("text-shadow", TEXTSTYLES[createCard.titleStyleNumber][1]);
     $("#cardHeader").css("background-color", TEXTSTYLES[createCard.titleStyleNumber][0]);
     $("#cardBody").css("text-shadow", TEXTSTYLES[createCard.bodyStyleNumber][1]);
@@ -785,7 +785,7 @@ function copyTextToClipboard(text) {
 
 
 function copyThis(clickId, copyId) {
-    console.log("first values:", clickId, copyId);
+//    console.log("first values:", clickId, copyId);
     $(document).on('click', clickId, function(event) {
         event.preventDefault();
         let copyText = document.getElementById(copyId);
@@ -922,7 +922,7 @@ $(document).on('click', '.userCards', function(event) {
     event.preventDefault();
     createCard.cardId = $(this).parent().parent().find(".userCardsIdValue").val();
     $.getJSON('/onecard/' + createCard.cardId, function (res) {
-        console.log("card info:", res);
+//        console.log("card info:", res);
         let photoWidth = Number(res.results.width);
         let photoHeight = Number(res.results.height);
         if (photoWidth < 1.1*photoHeight) {
@@ -956,7 +956,7 @@ $(document).on('click', '.userCards', function(event) {
         $('.userCard').removeClass('invisible');
         $('.newUser').addClass('invisible');
         $('.prevCards').addClass('invisible');
-        console.log("photoList:", createCard.photoList);
+//        console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
         $("#cardHeader").text(createCard.titleText);
         $("#bodyText").val(createCard.bodyText);
@@ -977,13 +977,13 @@ $(document).on('click', '.userCards', function(event) {
         UPDATE = true;
         setInitial();
     });
-    console.log("clicked button", createCard.cardId); // MAKE GET CALL TO ID
+//    console.log("clicked button", createCard.cardId); // MAKE GET CALL TO ID
 });
 
 // open saved card full-screen
 function displayCard() {
     $.getJSON('/creations/' + createCard.cardId, function (res) {
-        console.log("card info:", res);
+//        console.log("card info:", res);
         createCard.titleText = res.results.title;
         createCard.bodyText = res.results.body;
         createCard.footerText = res.results.footer;
@@ -1011,7 +1011,7 @@ function displayCard() {
 //        $("#otherOptions").removeClass("invisible");
         $("#allCards").removeClass("invisible");
         $("#newCard").removeClass("invisible");
-        console.log("photoList:", createCard.photoList);
+//        console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
         $("#cardHeader").text(createCard.titleText);
         $("#bodyText").val(createCard.bodyText);
@@ -1087,11 +1087,11 @@ $(document).ready(function () {
 
 function displaySavedCard(cardId) {
     $.getJSON('/showsave/' + cardId, function (res) {
-        console.log("card info:", res);
-        console.log(createCard.photoList);
+//        console.log("card info:", res);
+//        console.log(createCard.photoList);
         width = Number(res.results.width);
         height = Number(res.results.height);
-        console.log(createCard);
+//        console.log(createCard);
         // portraitPic class no longer necessary for full screen display since photo became background image
 //        if (width < 1.1*height) {
 //            $("#previewBody").addClass("portraitPic");
