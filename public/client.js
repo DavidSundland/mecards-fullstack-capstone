@@ -612,12 +612,13 @@ function startAnew(event) {
 function viewCard() {
     let previewWidth = Number(createCard.photoList[createCard.imageNumber].width);
     let previewHeight = Number(createCard.photoList[createCard.imageNumber].height);
-    if (previewWidth < 1.1*previewHeight) {
-        $("#previewBody").addClass("portraitPic");
-    }
-    else {
-        $("#previewBody").removeClass("portraitPic");
-    }
+    // portraitPic class no longer necessary for preview since photo is now background image
+//    if (previewWidth < 1.1*previewHeight) {
+//        $("#previewBody").addClass("portraitPic");
+//    }
+//    else {
+//        $("#previewBody").removeClass("portraitPic");
+//    }
     adjustCardHeight(previewWidth, previewHeight);
     $("#previewParent").removeClass("invisible");
     $("#previewHeader").text(createCard.titleText);
@@ -1091,12 +1092,13 @@ function displaySavedCard(cardId) {
         width = Number(res.results.width);
         height = Number(res.results.height);
         console.log(createCard);
-        if (width < 1.1*height) {
-            $("#previewBody").addClass("portraitPic");
-        }
-        else {
-            $("#previewBody").removeClass("portraitPic");
-        }
+        // portraitPic class no longer necessary for full screen display since photo became background image
+//        if (width < 1.1*height) {
+//            $("#previewBody").addClass("portraitPic");
+//        }
+//        else {
+//            $("#previewBody").removeClass("portraitPic");
+//        }
         window.onresize = function() {adjustCardHeight(width, height)};
         adjustCardHeight(width, height);
         $("#previewParent").removeClass("invisible");
