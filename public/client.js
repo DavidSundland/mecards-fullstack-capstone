@@ -77,7 +77,7 @@ let createCard = {
     backgroundNumber: 1,
     imageNumber: 0,
     // full pathname provided so that image displays properly even if saved in React version of app and loaded in non-React version, or vice-versa
-    photoList: [{photoLink: "https://mecards-fullstack-capstone.herokuapp.com/images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}],
+    photoList: [{photoLink: "https://mecards-fullstack-capstone.herokuapp.com/images/blackbackground.jpg", photogName: "", photogLink: "#", width: 885, height: 583}],
     cardId: "",
 
     changeHeader: function() {
@@ -452,9 +452,11 @@ let createCard = {
     getImages: function() {
         $('#querySubmit').click(function (event) {
             event.preventDefault(); // otherwise page reloads when this function starts
+            $("#loader").show();  // in case search is slow, show page loading gif
             let searchTerm = $("#photoQuery").val();
             $.getJSON('/unsplash/:' + searchTerm, function (res) {
                 if (res.total == 0) {
+                    $("#loader").hide();
                     console.log("got bupkis");
                     alert(`We found no results for ${searchTerm}!`);
                 } else {
@@ -469,14 +471,20 @@ let createCard = {
                         $(".cardBody").removeClass("portraitPic");
                     }
                     adjustCardHeight(photoWidth, photoHeight);
-                    $("#photo").removeClass("invisible");
+                    $("#loader").hide();
+//                    $("#photo").removeClass("invisible");
                     $("#photo").attr("src", res.results[0].urls.regular);  // add first photo to page
                     $("#photoCreds").removeClass("invisible");
                     $("#photoCreds").html(`<a href="${res.results[0].user.portfolio_url}" target="_blank">${res.results[0].user.name}</a>, via <a href="https://unsplash.com/" target="_blank">Unsplash</a>`);  // set credit for first photo
                     createCard.photoList = [];  // clear the previous results
                     $("#photoQuery").val("");  // clear the previous results
                     for (let x=0; x<res.results.length; x++) {
-                        createCard.photoList.push({photoLink: res.results[x].urls.regular, photogName: res.results[x].user.name, photogLink: res.results[x].user.portfolio_url, width: res.results[x].width, height: res.results[x].height});
+                        let photogLink = "https://unsplash.com/";  // in case no link for photographer, go to unsplash
+                        console.log("first photog:", res.results[x].user.portfolio_url);
+                        if (res.results[x].user.portfolio_url != null) {
+                            photogLink = res.results[x].user.portfolio_url;
+                        }
+                        createCard.photoList.push({photoLink: res.results[x].urls.regular, photogName: res.results[x].user.name, photogLink: photogLink, width: res.results[x].width, height: res.results[x].height});
                     }
                 }
             });
@@ -578,7 +586,7 @@ function startAnew(event) {
         createCard.backgroundNumber = 1;
         createCard.imageNumber = 0;
         // full path for default black background used so that card loads properly from either React or non-React version.
-        createCard.photoList = [{photoLink: "https://mecards-fullstack-capstone.herokuapp.com/images/blackbackground.jpg", photogName: "", photogLink: "", width: 885, height: 583}];
+        createCard.photoList = [{photoLink: "https://mecards-fullstack-capstone.herokuapp.com/images/blackbackground.jpg", photogName: "", photogLink: "#", width: 885, height: 583}];
         createCard.cardId = "";
         $("#cardHeader").text(DEFAULTHEADER); // clear existing values from preview
         $("#cardBody").text(DEFAULTBODY);
@@ -690,6 +698,7 @@ function saveCard() {
         height: height
     };
     if(UPDATE) {
+        $("#loader").show();  // in case save is slow, show page loading gif
         $.ajax({
             type: 'PUT',
             url: '/update/' + createCard.cardId,
@@ -697,16 +706,19 @@ function saveCard() {
             contentType: 'application/json'
         })
             .done(function (result) {
+            $("#loader").hide();
             console.log("card updated:", result);
             myAlert(`Your mE-Card has been updated!`);
         })
             .fail(function (jqXHR, error, errorThrown) {
+            $("#loader").hide();
             console.log(jqXHR);
             console.log(error);
             console.log(errorThrown);
         });
     }
     else {
+        $("#loader").show();  // in case save is slow, show page loading gif
         $.ajax({
             type: 'POST',
             url: '/create',
@@ -715,6 +727,7 @@ function saveCard() {
             contentType: 'application/json'
         })
             .done(function (result) {
+            $("#loader").hide();
             console.log("new card saved:", result);
             let cardLink = `https://mecards-fullstack-capstone.herokuapp.com/creations/${result._id}`;
             $("#cardPickup").html(`Click <span id="linkToCopy">here</span> for link to saved card`);
@@ -729,6 +742,7 @@ function saveCard() {
             myAlert(`Your mE-Card has been saved!<br>A link to the card will now be available on the card edit page.`);
         })
             .fail(function (jqXHR, error, errorThrown) {
+            $("#loader").hide();
             console.log(jqXHR);
             console.log(error);
             console.log(errorThrown);
@@ -778,6 +792,7 @@ function copyThis(clickId, copyId) {
         document.execCommand("Copy");
     });
 }
+
 // Code to create new user:
 
 $('#newUser').on('submit', function (event) {
@@ -785,10 +800,6 @@ $('#newUser').on('submit', function (event) {
     const uname = $('input[name="userName"]').val();
     const pw = $('input[name="password"]').val();
     const confirmPw = $('input[name="passwordConfirm"]').val();
-//    $.getJSON('/checkusername/' + uname, function (res) {
-//        alert(res);
-//        console.log("result from username check:", res);
-//    });
     if (pw !== confirmPw) {
         alert('Passwords must match!');
     } else if (uname.length === 0) {
@@ -1011,7 +1022,6 @@ function displayCard() {
 }
 
 function createNewUser(event) {
-    console.log("hi from createNewUser");
     event.preventDefault(); // otherwise page reloads when this function starts
     $('.login').addClass('invisible');
     $('.newUser').removeClass('invisible');
@@ -1028,15 +1038,6 @@ $('.newUser').on('click', '#cancelNewUser', function () {
 });
 
 
-//<div class="myAlert invisible">
-//    <div class="myAlertBox">
-//        <h2>Your previous cards:</h2>
-//<div id="prevCards">
-//    </div>
-//</div>
-//<button id="oldUserNewCard">New Card</button>
-//</div>
-
 function myAlert(askThis) {
     $("#myAlert").removeClass("invisible");
     $(".putAlertHere").html(`<p>${askThis}</p><button id='yes'>OKAY!</button>`);
@@ -1048,30 +1049,8 @@ function myAlert(askThis) {
 }
 
 
-//function myAlert(askThis, firstButton, secondButton, thirdButton) {
-//    $(".alertBoxContainer").removeClass("invisible");
-//    let partOne = `<h2>${askThis}</h2>`;
-//    let partTwo = `<button>${firstButton}</button>`;
-//    let partThree;
-//    if (secondButton) {
-//        partThree = `<button>${secondButton}</button>`;
-//    }
-//    else {
-//        partThree = "";
-//    }
-//
-////    $(".alertBox").addClass("visibleAlert");
-//    $(".alertBox").html(askThis + `<br><button id='yes'>${thisReason}</button>`);
-//    $(".alertBox").on('click', '#yes', function () {
-//        event.preventDefault();
-//        $(".alertBoxContainer").removeClass("visibleAlert");
-//        $(".alertBox").removeClass("visibleAlert");
-//        $(".alertBox").html("");
-//    });
-//}
-
-
 $(document).ready(function () {
+    $("#loader").hide();
     let urlcheck = window.location.href;
     if (urlcheck.split('/creations/')[1]) {    // If endpoint includes /creations/ + additional text, then it is a saved card
         displaySavedCard(urlcheck.split('/creations/')[1]);
@@ -1079,16 +1058,13 @@ $(document).ready(function () {
     else {
         $(setInitial);
         window.onresize = function() {adjustCardHeight()};
-
-        //        window.onresize = function() {DISPLAYHEIGHT = window.innerWidth*.369};
         $(document).on('click', '#newUserButton', createNewUser);
         $(document).on('click', '#preview', viewCard);
         $(document).on('click', '#closePreview', closePreview);
         $(document).on('click', '#saveChanges', saveCard);
         $(document).on('click', '#newCard', startAnew);
         $(document).on('click', '#oldUserNewCard', addCard);
-      //  $(document).on('click', '#allCards', getCardList);
-        $(document).on('click', '#allCards', function() {if (confirm("Did you save any changes that you wanted to keep?")) {getCardList()}});        $(createCard.getImages);
+        $(document).on('click', '#allCards', function() {if (confirm("Did you save any changes that you wanted to keep?")) {getCardList()}});       $(createCard.getImages);
         $(createCard.headerFont);
         $(createCard.bodyFont);
         $(createCard.footerFont);
@@ -1106,8 +1082,7 @@ $(document).ready(function () {
 });
 
 
-// CODE FOR SHARED CARD -----------------------------------------------------------------------------------------------
-//https://mecards-fullstack-capstone.herokuapp.com/creations/5adcb68ee6d7ec1de48e45c0
+// CODE TO DISPLAY STATIC, SAVED/SHARED CARD -----------------------------------------------------------------------------------------------
 
 function displaySavedCard(cardId) {
     $.getJSON('/showsave/' + cardId, function (res) {
