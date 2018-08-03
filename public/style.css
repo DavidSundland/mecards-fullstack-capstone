@@ -53,6 +53,7 @@ Is a short set of CSS rules that resets the styling of all HTML elements to a co
 html {
     background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
     background-size: cover;
+    height: 100%;
 }
 
 body {
@@ -460,7 +461,8 @@ hr {
 }
 
 footer {
-    /*    position: fixed;*/
+    position: absolute;
+    bottom: 0;
     background-color: #100200;
     /*    border-top: 10px inset #830e02;*/
     padding: 10px 0;
