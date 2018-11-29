@@ -499,7 +499,7 @@ hr {
 }
 
 footer {
-    /*    position: absolute;*/
+    position: relative;
     bottom: 0;
     background-color: #100200;
     /*    border-top: 10px inset #830e02;*/
