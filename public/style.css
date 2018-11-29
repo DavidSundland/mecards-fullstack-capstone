@@ -60,16 +60,18 @@ body {
     width: 100%;
     height: 100%;
     font-size: 22px;
-/*    font-family: 'Montserrat', sans-serif;*/
+    /*    font-family: 'Montserrat', sans-serif;*/
     font-family: 'Josefin Sans', sans-serif;
     font-weight: 400;
     line-height: 1.5;
     color: #bdbaba;
     height: 100%;
-    background-color: rgba(255,255,255,.7); /* To "soften" the background image in the HTML */
+    background-color: rgba(255, 255, 255, .7);
+    /* To "soften" the background image in the HTML */
 }
 
-#loader {  /* animated gif to display when potentially slow functions are running */
+#loader {
+    /* animated gif to display when potentially slow functions are running */
     width: 100%;
     height: 100%;
     position: absolute;
@@ -88,8 +90,8 @@ h1 {
     color: #715CAF;
     font-size: 2em;
     text-align: center;
-/*    font-family: 'Quicksand', sans-serif;*/
-/*    font-family: 'Exo 2', sans-serif;*/
+    /*    font-family: 'Quicksand', sans-serif;*/
+    /*    font-family: 'Exo 2', sans-serif;*/
     font-family: 'Amatic SC', cursive;
 }
 
@@ -119,12 +121,12 @@ button {
     background-color: #5B6DAD;
     font-size: .9em;
     box-shadow: 2px 2px lightgray;
-/*    font-family: 'Josefin Sans', sans-serif;*/
+    /*    font-family: 'Josefin Sans', sans-serif;*/
     font-family: arial;
 }
 
-.styleButton  {
-/*    padding: 12px 5px;*/
+.styleButton {
+    /*    padding: 12px 5px;*/
     padding: 2px;
     height: 50px;
     width: 40px;
@@ -157,7 +159,8 @@ button:hover {
     box-shadow: 1px 1px lightgray;
 }
 
-input, textarea {
+input,
+textarea {
     box-shadow: 2px 2px 2px #0000008a inset;
     /* ADJUST COLOR ONCE COLOR PALATTE FINALIZED */
     margin: 5px;
@@ -182,46 +185,59 @@ input {
 .oneFont {
     font-family: "Roboto";
 }
+
 .twoFont {
     font-family: "Gugi";
 }
+
 .threeFont {
     font-family: "Indie Flower";
 }
+
 .oneColor {
     color: #6495ED;
 }
+
 .twoColor {
     color: #C9F251;
 }
+
 .threeColor {
     color: #FFFF55;
 }
+
 .smallFont {
     font-size: 0.4em;
 }
+
 .mediumFont {
     font-size: 0.6em;
 }
+
 .oneStyle {
     text-shadow: 1px 1px black;
 }
+
 .twoStyle {
     text-shadow: 1px 1px red;
 }
+
 .oneWeight {
     font-weight: 100;
 }
+
 .twoWeight {
     font-weight: 500;
 }
+
 .threeWeight {
     font-weight: 900;
 }
 
 .middleArea {
     margin-top: 50px;
-    margin-bottom: 50px;;
+    margin-bottom: 50px;
+    ;
 }
 
 hr {
@@ -231,7 +247,8 @@ hr {
     /*    width: 90%;*/
 }
 
-.intro p, #login {
+.intro p,
+#login {
     font-weight: 600;
     font-size: 1.2em;
     padding: 40px;
@@ -252,7 +269,10 @@ hr {
     text-align: center;
 }
 
-.newUser, .login, .prevCards, #myAlert {
+.newUser,
+.login,
+.prevCards,
+#myAlert {
     width: 100%;
     height: 100%;
     padding: 20px 5%;
@@ -263,17 +283,21 @@ hr {
     z-index: 201;
 }
 
-.newUser, .login, .prevCards {
+.newUser,
+.login,
+.prevCards {
     background: rgba(0, 0, 0, 0) url("images/cardstore.jpg") no-repeat top center fixed;
     background-size: cover;
 }
 
 .myAlert {
-    background-color: rgba(255,230,170,.6);
+    background-color: rgba(255, 230, 170, .6);
 }
 
 
-.newuserBox, .prevCardsBox, .myAlertBox {
+.newuserBox,
+.prevCardsBox,
+.myAlertBox {
     /* center box in page */
     position: absolute;
     border: 5px ridge #B8B3C5;
@@ -288,12 +312,13 @@ hr {
     padding-bottom: 20px;
 }
 
-.newuserBox, .prevCardsBox {
-    background-color: rgba(255,230,170,.8);
+.newuserBox,
+.prevCardsBox {
+    background-color: rgba(255, 230, 170, .8);
 }
 
 .myAlertBox {
-    background-color: rgba(255,230,170,.95);
+    background-color: rgba(255, 230, 170, .95);
 }
 
 .putAlertHere {
@@ -325,16 +350,19 @@ hr {
 }
 
 /* Tooltip container */
+
 .tooltip {
     position: relative;
     display: inline-block;
 }
 
 /* Tooltip text */
-.tooltip .tooltiptext, .tooltip .inputtooltip {
+
+.tooltip .tooltiptext,
+.tooltip .inputtooltip {
     visibility: hidden;
-/*    width: 110px;*/
-    background-color: rgba(0,0,0,.7);
+    /*    width: 110px;*/
+    background-color: rgba(0, 0, 0, .7);
     font-size: .7em;
     color: #fff;
     text-align: center;
@@ -358,18 +386,23 @@ hr {
     width: 120px;
     bottom: 110%;
     left: 50%;
-    margin-left: -55px; /* Half of the tooltip width */
+    margin-left: -55px;
+    /* Half of the tooltip width */
 }
 
 .bottomtip {
     width: 120px;
     top: 110%;
     left: 50%;
-    margin-left: -55px; /* Half of the tooltip width */
+    margin-left: -55px;
+    /* Half of the tooltip width */
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext, .tooltip:hover .inputtooltip, .inputtooltip:hover {
+
+.tooltip:hover .tooltiptext,
+.tooltip:hover .inputtooltip,
+.inputtooltip:hover {
     visibility: visible;
 }
 
@@ -383,7 +416,8 @@ hr {
     height: 590px;
 }
 
-#cardBox img, #cardPreview img {
+#cardBox img,
+#cardPreview img {
     max-height: 100%;
     max-width: 100%;
     margin-left: auto;
@@ -398,8 +432,9 @@ hr {
     display: block;
 }
 
-#photoCreds, #previewCreds {
-    color: rgba(255,255,255,.7);
+#photoCreds,
+#previewCreds {
+    color: rgba(255, 255, 255, .7);
     text-align: left;
     bottom: 3px;
     left: 3px;
@@ -408,7 +443,8 @@ hr {
     background-color: black;
 }
 
-.cardHeader, .previewHeader {
+.cardHeader,
+.previewHeader {
     position: absolute;
     text-align: center;
     padding: 10px;
@@ -419,7 +455,8 @@ hr {
     padding-top: 60px;
 }
 
-.cardBody, .previewBody {
+.cardBody,
+.previewBody {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -432,7 +469,8 @@ hr {
     transform: translate(-75%, -50%);
 }
 
-.cardFooter, #previewFooter {
+.cardFooter,
+#previewFooter {
     position: absolute;
     width: 100%;
     text-align: center;
@@ -461,7 +499,7 @@ hr {
 }
 
 footer {
-    position: absolute;
+    /*    position: absolute;*/
     bottom: 0;
     background-color: #100200;
     /*    border-top: 10px inset #830e02;*/
@@ -502,30 +540,42 @@ footer a {
     color: #715CAF;
     text-align: center;
     font-size: 1.6em;
-    -webkit-animation: mymove 4s infinite; /* Safari 4.0 - 8.0 */
+    -webkit-animation: mymove 4s infinite;
+    /* Safari 4.0 - 8.0 */
     animation: mymove 4s infinite;
 }
 
 /* Safari 4.0 - 8.0 */
+
 @-webkit-keyframes mymove {
-    50% {border-color: red;}
-    50% {background-color: #fcf2dd;}
+    50% {
+        border-color: red;
+    }
+    50% {
+        background-color: #fcf2dd;
+    }
 }
 
 @keyframes mymove {
-    50% {border-color: red;}
-    50% {background-color: #fcf2dd;}
+    50% {
+        border-color: red;
+    }
+    50% {
+        background-color: #fcf2dd;
+    }
 }
 
 
 #copyToClipboard {
     width: 5px;
 }
+
 #linkToCopy {
-/*    text-decoration: underline;*/
+    /*    text-decoration: underline;*/
     color: #7AB7D1;
     cursor: copy;
 }
+
 /*
 
 .hideMe {
@@ -534,10 +584,10 @@ footer a {
 }
 */
 
-
 .invisible {
     display: none;
 }
+
 /*
 
 .makeVisible {
@@ -670,7 +720,9 @@ a:hover {
 .alertBox {
     display: none;
     position: fixed;
-    /* center box in page */   /*
+    /* center box in page */
+
+/*
     top: 0;
     bottom: 0;
     left: 0;
@@ -684,7 +736,10 @@ a:hover {
     padding: 50px;
     z-index: 501;
     border: 7px dotted #fed9ba; */
-    /* creates solid lines inside & outside of dotted border */ /*
+
+/* creates solid lines inside & outside of dotted border */
+
+/*
     box-shadow: inset 0 -1px 0 0 #FE6767, inset 0 1px 0 0 #FE6767, 0 1px 0 0 #FE6767, 0 -1px 0 0 #FE6767, inset 1px 0 0 0 #FE6767, inset -1px 0 0 0 #FE6767, 1px 0 0 0 #FE6767, -1px 0 0 0 #FE6767;
 }
 
@@ -709,14 +764,13 @@ form {
 
 
 /* ================================================================== */
-@media only screen and (max-width: 1300px) {
 
-}
+@media only screen and (max-width: 1300px) {}
 
 /* Goes from multi-column to single column at 1150 px */
 
 @media only screen and (max-width: 1150px) {
-    .styleButton  {
+    .styleButton {
         width: 35px;
     }
     .loginLabel {
@@ -729,7 +783,7 @@ form {
 }
 
 @media only screen and (max-width: 900px) {
-    input  {
+    input {
         width: 40%;
     }
 }
