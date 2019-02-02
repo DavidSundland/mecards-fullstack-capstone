@@ -1,3 +1,5 @@
+// npm start for local preview
+
 const User = require('./models/user');
 const Card = require('./models/cards');
 const bodyParser = require('body-parser');
