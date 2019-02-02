@@ -13,6 +13,7 @@ let DISPLAYHEIGHT;
 let LOGGEDIN = false;
 let USERNAME = "";
 let UPDATE = false;
+let PROTECTED = false;
 
 // adjusts card preview height whenever screen is resized or new card is loaded
 function adjustCardHeight(photoWidth, photoHeight) {
@@ -706,7 +707,9 @@ function saveCard() {
         width: width,
         height: height
     };
-    if (UPDATE) {
+    if (createCard.cardId === "5adbe772a800e13b00e1eb5d") {
+        myAlert(`Sorry! This card has been locked by the administrator.`);
+    } else if (UPDATE) {
         $("#loader").show(); // in case save is slow, show page loading gif
         $.ajax({
                 type: 'PUT',
@@ -1086,7 +1089,9 @@ $(document).ready(function () {
         $(document).on('click', '#newCard', startAnew);
         $(document).on('click', '#oldUserNewCard', addCard);
         $(document).on('click', '#allCards', function () {
-            if (confirm("Did you save any changes that you wanted to keep?")) {
+            if (createCard.cardId === "5adbe772a800e13b00e1eb5d") {
+                getCardList();
+            } else if (confirm("Did you save any changes that you wanted to keep?")) {
                 getCardList()
             }
         });
