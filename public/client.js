@@ -567,7 +567,7 @@ function setInitial() {
 
 // start a new card
 function startAnew(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     if (confirm("Are you sure you want to start a new card and lose any unsaved changes?")) {
         createCard.titleText = "";
         createCard.bodyText = "";
@@ -860,6 +860,7 @@ $('#newUser').on('submit', function (event) {
 
 
 function addCard() {
+    startAnew();
     $('.prevCards').addClass('invisible');
     $('.userCard').removeClass('invisible');
     //    $("#otherOptions").removeClass("invisible");
