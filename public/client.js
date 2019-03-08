@@ -568,7 +568,12 @@ function setInitial() {
 // start a new card
 function startAnew(event) {
     if (event) event.preventDefault();
-    if (!event || confirm("Are you sure you want to start a new card and lose any unsaved changes?")) {
+    if (!event) makeNew();
+    else myBoolean("Are you sure you want to start a new card and lose any unsaved changes?", "Go for it!", "Noooo!!!").then(function (res) {
+        if (res === "true") makeNew();
+    });
+
+    function makeNew() {
         createCard.titleText = "";
         createCard.bodyText = "";
         createCard.footerText = "";
@@ -615,6 +620,7 @@ function startAnew(event) {
         setInitial();
     }
 }
+
 
 
 // open the full-screen card preview
@@ -1072,6 +1078,18 @@ function myAlert(askThis) {
     });
 }
 
+function myBoolean(sayThis, buttonOne, buttonTwo) {
+    $("#myAlert").removeClass("invisible");
+    $(".putAlertHere").html(`${sayThis}<br><button title='true'>${buttonOne}</button><button title='false'>${buttonTwo}</button>`);
+    return new Promise((resolve, reject) => {
+        $("#myAlert").on('click', 'button', function () {
+            event.preventDefault();
+            $("#myAlert").addClass("invisible");
+            $(".putAlertHere").html("");
+            resolve($(this).attr("title"));
+        });
+    });
+}
 
 $(document).ready(function () {
     $("#loader").hide();
@@ -1092,9 +1110,9 @@ $(document).ready(function () {
         $(document).on('click', '#allCards', function () {
             if (createCard.cardId === "5adbe772a800e13b00e1eb5d") {
                 getCardList();
-            } else if (confirm("Did you save any changes that you wanted to keep?")) {
-                getCardList()
-            }
+            } else myBoolean("Did you save any changes that you wanted to keep?", "Yes, I did!", "Uh-oh, I didn't!").then(function (res) {
+                if (res === "true") getCardList();
+            });
         });
         $(createCard.getImages);
         $(createCard.headerFont);
@@ -1110,7 +1128,7 @@ $(document).ready(function () {
         $(createCard.headerStyle);
         $(createCard.bodyStyle);
         $(createCard.footerStyle);
-    }
+        }
 });
 
 
