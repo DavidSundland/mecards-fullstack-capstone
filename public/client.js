@@ -670,7 +670,7 @@ function closePreview() {
 }
 
 // Save a card:
-function saveCard() {
+function saveCard(userName = USERNAME) {
     let photo, photographer, photoUrl, width, height;
     if (!createCard.photoList[createCard.imageNumber]) {
         // no photo selected
@@ -687,7 +687,7 @@ function saveCard() {
         height = createCard.photoList[createCard.imageNumber].height;
     }
     let cardArray = {
-        userName: USERNAME,
+        userName: userName,
         title: createCard.titleText,
         body: createCard.bodyText,
         footer: createCard.footerText,
@@ -713,6 +713,7 @@ function saveCard() {
         width: width,
         height: height
     };
+    alert(createCard.cardId);
     if (createCard.cardId === "5adbe772a800e13b00e1eb5d") {
         myAlert(`Sorry! This card has been locked by the administrator.`);
     } else if (UPDATE) {
@@ -726,7 +727,12 @@ function saveCard() {
             .done(function (result) {
                 $("#loader").hide();
                 console.log("card updated:", result);
-                myAlert(`Your mE-Card has been updated!`);
+                if (userName === "HoldBin") {
+                    getCardList();
+                    myAlert("The card has been removed from the list");
+                } else {
+                    myAlert(`Your mE-Card has been updated!`);
+                }
             })
             .fail(function (jqXHR, error, errorThrown) {
                 $("#loader").hide();
@@ -884,7 +890,7 @@ function getCardList() {
             $('footer').addClass('invisible');
             $('#prevCards').html(""); // clear previous results, if any
             for (let x = 0; x < res.results.length; x++) {
-                $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-4 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div><div class="col-2"><button class="cardByeBye">Remove</button></div></div>`);
+                $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-4 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div><div class="col-2"><button class="cardByeBye userCardsIdValue">Remove</button></div></div>`);
             }
             //            for (let x = 0; x < res.results.length; x++) {
             //                $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div></div>`);  // OLD CODE WITHOUT REMOVE //
@@ -1008,8 +1014,18 @@ $(document).on('click', '.userCards', function (event) {
 
 // remove card
 $(document).on('click', '.cardByeBye', function (event) {
+    event.preventDefault();
+    createCard.cardId = $(this).parent().parent().find(".userCardsIdValue").val();
     myTri("Do you wish to remove the card from this list (it can still be retrieved via its URL) or delete it completely (it can no longer be viewed)?", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
-        alert("made it this far");
+        if (res === "remove") {
+            UPDATE = true;
+            saveCard("HoldBin");
+
+            //            ********************   CARD IS UPDATING BUT MERELY DELETING ALL DATA.  NEED TO RETRIEVE ALL OLD CARD INFO BUT UPDATE USERNAME ******************
+
+        } else if (res === "delete") {
+            //                                                ****************            NEED TO ADD DELETE FUNCTIONALITY          ******************
+        }
     })
 });
 
