@@ -1091,6 +1091,19 @@ function myBoolean(sayThis, buttonOne, buttonTwo) {
     });
 }
 
+function myTri(sayThis, button1, button1Title, button2, button2Title, button3, button3Title) {
+    $("#myAlert").removeClass("invisible");
+    $(".putAlertHere").html(`${sayThis}<br><button title='${button1Title}'>${button1}</button><button title='${button2Title}'>${button2}</button><button title='${button3Title}'>${button3}</button>`);
+    return new Promise((resolve, reject) => {
+        $("#myAlert").on('click', 'button', function () {
+            event.preventDefault();
+            $("#myAlert").addClass("invisible");
+            $(".putAlertHere").html("");
+            resolve($(this).attr("title"));
+        });
+    });
+}
+
 $(document).ready(function () {
     $("#loader").hide();
     let urlcheck = window.location.href;
@@ -1128,7 +1141,7 @@ $(document).ready(function () {
         $(createCard.headerStyle);
         $(createCard.bodyStyle);
         $(createCard.footerStyle);
-        }
+    }
 });
 
 
