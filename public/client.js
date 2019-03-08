@@ -459,7 +459,7 @@ let createCard = {
                 if (res.total == 0) {
                     $("#loader").hide();
                     console.log("got bupkis");
-                    alert(`We found no results for ${searchTerm}!`);
+                    myAlert(`We found no results for ${searchTerm}!`);
                 } else {
                     $("#nextPhoto").addClass("makeVisibleInline");
                     $("#prevPhoto").addClass("makeVisibleInline");
@@ -568,7 +568,7 @@ function setInitial() {
 // start a new card
 function startAnew(event) {
     if (event) event.preventDefault();
-    if (confirm("Are you sure you want to start a new card and lose any unsaved changes?")) {
+    if (!event || confirm("Are you sure you want to start a new card and lose any unsaved changes?")) {
         createCard.titleText = "";
         createCard.bodyText = "";
         createCard.footerText = "";
@@ -785,7 +785,7 @@ function copyTextToClipboard(text) {
         var successful = document.execCommand('copy');
         var msg = successful ? 'successful' : 'unsuccessful';
         console.log('Attempt to copy text to clipboard was ' + msg);
-        alert("The link has been copied to your computer's clipboard.");
+        myAlert("The link has been copied to your computer's clipboard.");
     } catch (err) {
         console.log('Oops, unable to copy');
     }
@@ -812,13 +812,13 @@ $('#newUser').on('submit', function (event) {
     const pw = $('input[name="password"]').val();
     const confirmPw = $('input[name="passwordConfirm"]').val();
     if (pw !== confirmPw) {
-        alert('Passwords must match!');
+        myAlert('Passwords must match!');
     } else if (uname.length === 0) {
-        alert('You must enter a username!');
+        myAlert('You must enter a username!');
     } else if (pw.length < 6) {
-        alert('Your password must have at least 6 characters!');
+        myAlert('Your password must have at least 6 characters!');
     } else if (/\s/.test(uname) || /\s/.test(pw)) {
-        alert("Sorry, usernames & passwords cannot contain spaces!");
+        myAlert("Sorry, usernames & passwords cannot contain spaces!");
     } else {
         const newUserObject = {
             username: uname,
@@ -834,7 +834,7 @@ $('#newUser').on('submit', function (event) {
                 contentType: 'application/json'
             })
             .done(function (result) {
-                alert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
+                myAlert(`Thanks for signing up, ${uname}! You may now sign in with your username and password.`, 'ok');
                 console.log(result);
                 $('input[name="userName"]').val(""); // clear the input fields
                 $('input[name="password"]').val("");
@@ -845,7 +845,7 @@ $('#newUser').on('submit', function (event) {
                 $('.login').removeClass('invisible');
             })
             .fail(function (jqXHR, error, errorThrown) {
-                alert("Uh-oh, something went wrong! Try a different username.");
+                myAlert("Uh-oh, something went wrong! Try a different username.");
                 $('input[name="userName"]').val(""); // clear the input fields
                 $('input[name="password"]').val("");
                 $('input[name="passwordConfirm"]').val("");
@@ -894,9 +894,9 @@ $('#login').on('click', '#loginClicked', function (event) {
     const inputPw = $('input[name="signinPassword"]').val();
     // check for spaces, empty, undefined
     if ((!inputUname) || (inputUname.length < 1) || (inputUname.indexOf(' ') > 0)) {
-        alert('You entered an invalid username');
+        myAlert('You entered an invalid username');
     } else if ((!inputPw) || (inputPw.length < 1) || (inputPw.indexOf(' ') > 0)) {
-        alert('You entered an invalid password');
+        myAlert('You entered an invalid password');
     } else {
         const unamePwObject = {
             username: inputUname,
@@ -917,14 +917,14 @@ $('#login').on('click', '#loginClicked', function (event) {
                 $('input[name="signinPassword"]').val("");
                 $('.intro').addClass('invisible');
                 $('#login').addClass('invisible');
-                alert(`Welcome, ${user}!  You're now logged in!`);
+                myAlert(`Welcome, ${user}!  You're now logged in!`);
                 getCardList();
             })
             .fail(function (jqXHR, error, errorThrown) {
                 console.log(jqXHR);
                 console.log(error);
                 console.log(errorThrown);
-                alert('You entered an invalid username and password combination. Please check your username and password and try again.');
+                myAlert('You entered an invalid username and password combination. Please check your username and password and try again.');
             });
     };
 });
