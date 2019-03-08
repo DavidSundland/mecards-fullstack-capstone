@@ -884,8 +884,11 @@ function getCardList() {
             $('footer').addClass('invisible');
             $('#prevCards').html(""); // clear previous results, if any
             for (let x = 0; x < res.results.length; x++) {
-                $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div></div>`);
+                $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-4 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div><div class="col-2"><button class="cardByeBye">Remove</button></div></div>`);
             }
+            //            for (let x = 0; x < res.results.length; x++) {
+            //                $('#prevCards').append(`<div class="row"><div class="col-4"><div class="prevCardsBackground" style="background-color: ${res.results[x].backgroundColor}"><img src="${res.results[x].photo}"></div></div><div class="col-6 prevCardsText">${res.results[x].title}</div><input type="hidden" id="${res.results[x]._id}" class="userCardsIdValue" value="${res.results[x]._id}"><div class="col-2"><button class="userCards">Edit</button></div></div>`);  // OLD CODE WITHOUT REMOVE //
+            //            }
         }
     });
 }
@@ -1001,6 +1004,13 @@ $(document).on('click', '.userCards', function (event) {
         setInitial();
     });
     //    console.log("clicked button", createCard.cardId); // MAKE GET CALL TO ID
+});
+
+// remove card
+$(document).on('click', '.cardByeBye', function (event) {
+    myTri("Do you wish to remove the card from this list (it can still be retrieved via its URL) or delete it completely (it can no longer be viewed)?", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
+        alert("made it this far");
+    })
 });
 
 // open saved card full-screen
