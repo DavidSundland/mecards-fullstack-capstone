@@ -1030,19 +1030,23 @@ $(document).on('click', '.userCards', function (event) {
 $(document).on('click', '.cardByeBye', function (event) {
     event.preventDefault();
     createCard.cardId = $(this).parent().parent().find(".userCardsIdValue").val();
-    retrieveCard().then(function () {
-        myTri("Do you wish to remove the card from this list (it can still be retrieved via its URL) or delete it completely (it can no longer be viewed)?", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
-            if (res === "remove") {
-                UPDATE = true;
-                saveCard("HoldBin");
+    if (createCard.cardId === "5adbe772a800e13b00e1eb5d") {
+        myAlert(`Sorry! This card has been locked by the administrator.`);
+    } else {
+        retrieveCard().then(function () {
+            myTri("Do you wish to remove the card from this list (it can still be retrieved via its URL) or delete it completely (it can no longer be viewed)?", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
+                if (res === "remove") {
+                    UPDATE = true;
+                    saveCard("HoldBin");
 
-                //            ********************   CARD IS DELETING ALL DATA....  NEED TO RETRIEVE ALL OLD CARD INFO BUT UPDATE USERNAME ******************
+                    //            ********************   CARD IS DELETING ALL DATA....  NEED TO RETRIEVE ALL OLD CARD INFO BUT UPDATE USERNAME ******************
 
-            } else if (res === "delete") {
-                //                                                ****************            NEED TO ADD DELETE FUNCTIONALITY          ******************
-            }
+                } else if (res === "delete") {
+                    //                                                ****************            NEED TO ADD DELETE FUNCTIONALITY          ******************
+                }
+            });
         });
-    });
+    }
 });
 
 // open saved card full-screen
