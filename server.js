@@ -15,7 +15,7 @@ const app = express();
 var unirest = require('unirest');
 var events = require('events');
 const Unsplash = require('unsplash-js').default;
-require('es6-promise').polyfill();  // added to get unsplash to work properly - https://github.com/unsplash/unsplash-js/issues/35
+require('es6-promise').polyfill(); // added to get unsplash to work properly - https://github.com/unsplash/unsplash-js/issues/35
 require('isomorphic-fetch'); // added to get unsplash to work properly
 app.use(bodyParser.json());
 app.use(cors());
@@ -79,20 +79,19 @@ const getPhotos = function (searchTerm) {
     unirest.get("https://api.unsplash.com/search/photos?query=" + searchTerm + "&page=1&per_page=10&client_id=e6b8899c96e25cba8ea16bf7f346778125f9537fd83f547591e4ed430a0930d6")
         .header("Accept", "application/json")
         .end(function (result) {
-        if (result.ok) {
-            emitter.emit('end', result.body);
-        }
-        else {
-            emitter.emit('error', result.code);
-        }
-    });
+            if (result.ok) {
+                emitter.emit('end', result.body);
+            } else {
+                emitter.emit('error', result.code);
+            }
+        });
     return emitter;
 };
 
 app.get('/unsplash/:searchTerm', (req, res) => {
     const searchReq = getPhotos(req.params.searchTerm);
     searchReq.on('end', function (item) {
-//        console.log("claimed to be ok; results:", item);
+        //        console.log("claimed to be ok; results:", item);
         res.json(item);
     });
     searchReq.on('error', function (code) {
@@ -170,17 +169,16 @@ app.post('/create', (req, res) => {
 
 
 const getClipart = function (searchTerm) {
-//    console.log("got into getClipart");
+    //    console.log("got into getClipart");
     const emitter = new events.EventEmitter();
     unirest.get("https://openclipart.org/search/json/?query=" + searchTerm + "&amount=20")
         .end(function (result) {
-        if (result.ok) {
-            emitter.emit('end', result.body);
-        }
-        else {
-            emitter.emit('error', result.code);
-        }
-    });
+            if (result.ok) {
+                emitter.emit('end', result.body);
+            } else {
+                emitter.emit('error', result.code);
+            }
+        });
     return emitter;
 };
 
@@ -223,20 +221,20 @@ app.get('/checkusername/:username', function (req, res) {
     console.log("username:", username);
     User
         .find({
-        username: username
-    })
+            username: username
+        })
         .then(function (results) {
-        console.log("usernamecheck results:", results);
-        res.json({
-            results
-        });
-    })
+            console.log("usernamecheck results:", results);
+            res.json({
+                results
+            });
+        })
         .catch(function (err) {
-        console.error(err);
-        res.status(500).json({
-            message: 'Internal server error'
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
         });
-    });
 });
 
 
@@ -247,53 +245,52 @@ app.post('/users/create', (req, res) => {
     username = username.trim();
     User
         .find({
-        username: username
-    })
+            username: username
+        })
         .then(function (results) {
-        if (results.length !== 0) {
-            console.log("duplicate username error");
-            return res.status(500).json({
-                message: 'Username already exists'
-            });
-        }
-        else {
-            let password = req.body.password;
-            password = password.trim();
-            bcrypt.genSalt(10, (err, salt) => {
-                if (err) {
-                    console.log("encryption error1");
-                    return res.status(500).json({
-                        message: 'Internal server error'
-                    });
-                }
-
-                bcrypt.hash(password, salt, (err, hash) => {
+            if (results.length !== 0) {
+                console.log("duplicate username error");
+                return res.status(500).json({
+                    message: 'Username already exists'
+                });
+            } else {
+                let password = req.body.password;
+                password = password.trim();
+                bcrypt.genSalt(10, (err, salt) => {
                     if (err) {
-                        console.log("encryption error2");
+                        console.log("encryption error1");
                         return res.status(500).json({
                             message: 'Internal server error'
                         });
                     }
 
-                    User.create({
-                        username,
-                        password: hash,
-                    }, (err, item) => {
+                    bcrypt.hash(password, salt, (err, hash) => {
                         if (err) {
-                            console.log("creation error");
+                            console.log("encryption error2");
                             return res.status(500).json({
-                                message: 'Internal Server Error'
+                                message: 'Internal server error'
                             });
                         }
-                        if (item) {
-                            console.log(`User \`${username}\` created.`);
-                            return res.json(item);
-                        }
+
+                        User.create({
+                            username,
+                            password: hash,
+                        }, (err, item) => {
+                            if (err) {
+                                console.log("creation error");
+                                return res.status(500).json({
+                                    message: 'Internal Server Error'
+                                });
+                            }
+                            if (item) {
+                                console.log(`User \`${username}\` created.`);
+                                return res.json(item);
+                            }
+                        });
                     });
                 });
-            });
-        }
-    });
+            }
+        });
 });
 
 // Login / sign a user in
@@ -342,7 +339,7 @@ app.get('/findcards/:userName', function (req, res) {
             userName: userName
         })
         .then(function (results) {
-//            console.log("In get one review, results: ", results);
+            //            console.log("In get one review, results: ", results);
             res.json({
                 results
             });
@@ -361,17 +358,17 @@ app.get('/onecard/:cardId', function (req, res) {
     console.log("cardId:", cardId);
     Card.findById(cardId)
         .then(function (results) {
-        //            console.log("In get one review, results: ", results);
-        res.json({
-            results
-        });
-    })
+            //            console.log("In get one review, results: ", results);
+            res.json({
+                results
+            });
+        })
         .catch(function (err) {
-        console.error(err);
-        res.status(500).json({
-            message: 'Internal server error'
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
         });
-    });
 });
 
 
@@ -402,13 +399,14 @@ app.get('/showsave/:cardId', function (req, res) {
                 message: 'Internal server error'
             });
         });
-    });
+});
 
 
 // update a card
 app.put('/update/:id', function (req, res) {
     let toUpdate = {};
-    let updateableFields = ['title','body','footer','titleFont','bodyFont','footerFont','titleColor','bodyColor','footerColor','titleSize','bodySize','footerSize','titleStyle','bodyStyle','footerStyle','borderStyle','borderColor','borderWidth','backgroundColor','photo','photographer','photoUrl','width','height'];
+    // userName is updatable because that allows card to be removed from editing list yet remain viewable via its URL
+    let updateableFields = ['userName', 'title', 'body', 'footer', 'titleFont', 'bodyFont', 'footerFont', 'titleColor', 'bodyColor', 'footerColor', 'titleSize', 'bodySize', 'footerSize', 'titleStyle', 'bodyStyle', 'footerStyle', 'borderStyle', 'borderColor', 'borderWidth', 'backgroundColor', 'photo', 'photographer', 'photoUrl', 'width', 'height'];
     updateableFields.forEach(function (field) {
         if (field in req.body) {
             toUpdate[field] = req.body[field];

@@ -670,7 +670,8 @@ function closePreview() {
 }
 
 // Save a card:
-function saveCard(userName = USERNAME) {
+function saveCard(userName) {
+    if (typeof userName === "object") userName = USERNAME;
     let photo, photographer, photoUrl, width, height;
     if (!createCard.photoList[createCard.imageNumber]) {
         // no photo selected
@@ -686,6 +687,7 @@ function saveCard(userName = USERNAME) {
         width = createCard.photoList[createCard.imageNumber].width;
         height = createCard.photoList[createCard.imageNumber].height;
     }
+    console.log("userName:", userName, "USERNAME:", USERNAME, "typeof userName", typeof userName);
     let cardArray = {
         userName: userName,
         title: createCard.titleText,
@@ -713,10 +715,10 @@ function saveCard(userName = USERNAME) {
         width: width,
         height: height
     };
-    alert(createCard.cardId);
     if (createCard.cardId === "5adbe772a800e13b00e1eb5d") {
         myAlert(`Sorry! This card has been locked by the administrator.`);
     } else if (UPDATE) {
+        console.log("AFTER REMOVE:", cardArray, createCard.cardId);
         $("#loader").show(); // in case save is slow, show page loading gif
         $.ajax({
                 type: 'PUT',
@@ -944,47 +946,59 @@ $('#login').on('click', '#loginClicked', function (event) {
     };
 });
 
+function retrieveCard() {
+    console.log('in retrieveCard - 2');
+    return new Promise((resolve, reject) => {
+        $.getJSON('/onecard/' + createCard.cardId, function (res) {
+            //        console.log("card info:", res);
+            let photoWidth = Number(res.results.width);
+            let photoHeight = Number(res.results.height);
+            if (photoWidth < 1.1 * photoHeight) {
+                $(".cardBody").addClass("portraitPic");
+            } else {
+                $(".cardBody").removeClass("portraitPic");
+            }
+            adjustCardHeight(photoWidth, photoHeight);
+            createCard.titleText = res.results.title;
+            createCard.bodyText = res.results.body;
+            createCard.footerText = res.results.footer;
+            createCard.titleFontNumber = Number(res.results.titleFont);
+            createCard.bodyFontNumber = Number(res.results.bodyFont);
+            createCard.footerFontNumber = Number(res.results.footerFont);
+            createCard.titleColorNumber = Number(res.results.titleColor);
+            createCard.bodyColorNumber = Number(res.results.bodyColor);
+            createCard.footerColorNumber = Number(res.results.footerColor);
+            createCard.titleFontSize = Number(res.results.titleSize);
+            createCard.bodyFontSize = Number(res.results.bodySize);
+            createCard.footerFontSize = Number(res.results.footerSize);
+            createCard.titleStyleNumber = Number(res.results.titleStyle);
+            createCard.bodyStyleNumber = Number(res.results.bodyStyle);
+            createCard.footerStyleNumber = Number(res.results.footerStyle);
+            createCard.borderStyle = Number(res.results.borderStyle);
+            createCard.borderColor = Number(res.results.borderColor);
+            createCard.borderSize = Number(res.results.borderWidth);
+            createCard.backgroundNumber = Number(res.results.backgroundColor);
+            createCard.imageNumber = 0;
+            createCard.photoList = [{
+                photoLink: res.results.photo,
+                photogName: res.results.photographer,
+                photogLink: res.results.photoUrl,
+                width: res.results.width,
+                height: res.results.height
+        }];
+            resolve(true);
+        });
+    });
+}
+
+
 // edit saved card
 $(document).on('click', '.userCards', function (event) {
     event.preventDefault();
     createCard.cardId = $(this).parent().parent().find(".userCardsIdValue").val();
-    $.getJSON('/onecard/' + createCard.cardId, function (res) {
-        //        console.log("card info:", res);
-        let photoWidth = Number(res.results.width);
-        let photoHeight = Number(res.results.height);
-        if (photoWidth < 1.1 * photoHeight) {
-            $(".cardBody").addClass("portraitPic");
-        } else {
-            $(".cardBody").removeClass("portraitPic");
-        }
-        adjustCardHeight(photoWidth, photoHeight);
-        createCard.titleText = res.results.title;
-        createCard.bodyText = res.results.body;
-        createCard.footerText = res.results.footer;
-        createCard.titleFontNumber = Number(res.results.titleFont);
-        createCard.bodyFontNumber = Number(res.results.bodyFont);
-        createCard.footerFontNumber = Number(res.results.footerFont);
-        createCard.titleColorNumber = Number(res.results.titleColor);
-        createCard.bodyColorNumber = Number(res.results.bodyColor);
-        createCard.footerColorNumber = Number(res.results.footerColor);
-        createCard.titleFontSize = Number(res.results.titleSize);
-        createCard.bodyFontSize = Number(res.results.bodySize);
-        createCard.footerFontSize = Number(res.results.footerSize);
-        createCard.titleStyleNumber = Number(res.results.titleStyle);
-        createCard.bodyStyleNumber = Number(res.results.bodyStyle);
-        createCard.footerStyleNumber = Number(res.results.footerStyle);
-        createCard.borderStyle = Number(res.results.borderStyle);
-        createCard.borderColor = Number(res.results.borderColor);
-        createCard.borderSize = Number(res.results.borderWidth);
-        createCard.backgroundNumber = Number(res.results.backgroundColor);
-        createCard.imageNumber = 0;
-        createCard.photoList = [{
-            photoLink: res.results.photo,
-            photogName: res.results.photographer,
-            photogLink: res.results.photoUrl,
-            width: res.results.width,
-            height: res.results.height
-        }];
+    console.log('about to retrieve card - 1');
+    retrieveCard().then(function () {
+        console.log('after retrievecard called - 3');
         $('.userCard').removeClass('invisible');
         $('.newUser').addClass('invisible');
         $('.prevCards').addClass('invisible');
@@ -1016,17 +1030,19 @@ $(document).on('click', '.userCards', function (event) {
 $(document).on('click', '.cardByeBye', function (event) {
     event.preventDefault();
     createCard.cardId = $(this).parent().parent().find(".userCardsIdValue").val();
-    myTri("Do you wish to remove the card from this list (it can still be retrieved via its URL) or delete it completely (it can no longer be viewed)?", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
-        if (res === "remove") {
-            UPDATE = true;
-            saveCard("HoldBin");
+    retrieveCard().then(function () {
+        myTri("Do you wish to remove the card from this list (it can still be retrieved via its URL) or delete it completely (it can no longer be viewed)?", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
+            if (res === "remove") {
+                UPDATE = true;
+                saveCard("HoldBin");
 
-            //            ********************   CARD IS UPDATING BUT MERELY DELETING ALL DATA.  NEED TO RETRIEVE ALL OLD CARD INFO BUT UPDATE USERNAME ******************
+                //            ********************   CARD IS DELETING ALL DATA....  NEED TO RETRIEVE ALL OLD CARD INFO BUT UPDATE USERNAME ******************
 
-        } else if (res === "delete") {
-            //                                                ****************            NEED TO ADD DELETE FUNCTIONALITY          ******************
-        }
-    })
+            } else if (res === "delete") {
+                //                                                ****************            NEED TO ADD DELETE FUNCTIONALITY          ******************
+            }
+        });
+    });
 });
 
 // open saved card full-screen
