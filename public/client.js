@@ -1031,7 +1031,7 @@ $(document).on('click', '.cardByeBye', function (event) {
         myAlert(`Sorry! This card has been locked by the administrator.`);
     } else {
         retrieveCard().then(function () {
-            myTri("Do you wish to remove the card from this list (it can still be retrieved via its URL) or delete it completely (it can no longer be viewed)?", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
+            myTri("Do you wish to remove the card from this list* or delete it completely**?<br><em>*You can no longer edit it, but it can still be viewed via its URL.<br>**It can no longer be edited or viewed; the URL will no longer work.</em>", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
                 if (res === "remove") {
                     UPDATE = true;
                     saveCard("HoldBin");

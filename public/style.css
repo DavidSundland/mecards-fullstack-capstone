@@ -328,13 +328,21 @@ hr {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-}
-
-.putAlertHere p {
     margin-bottom: 20px;
     font-size: 1.4em;
     padding: 20px 50px;
 }
+
+.putAlertHere em {
+    font-size: .8em;
+}
+
+/*
+.putAlertHere p {
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    padding: 20px 50px;
+}*/
 
 .prevCardsBox {
     bottom: 10%;
