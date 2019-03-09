@@ -570,7 +570,10 @@ function startAnew(event) {
     if (event) event.preventDefault();
     if (!event) makeNew();
     else myBoolean("Are you sure you want to start a new card and lose any unsaved changes?", "Go for it!", "Noooo!!!").then(function (res) {
-        if (res === "true") makeNew();
+        if (res === "true") {
+            UPDATE = false;
+            makeNew();
+        }
     });
 
     function makeNew() {
@@ -718,7 +721,6 @@ function saveCard(userName) {
     if (createCard.cardId === "5adbe772a800e13b00e1eb5d") {
         myAlert(`Sorry! This card has been locked by the administrator.`);
     } else if (UPDATE) {
-        console.log("AFTER REMOVE:", cardArray, createCard.cardId);
         $("#loader").show(); // in case save is slow, show page loading gif
         $.ajax({
                 type: 'PUT',
@@ -728,7 +730,6 @@ function saveCard(userName) {
             })
             .done(function (result) {
                 $("#loader").hide();
-                console.log("card updated:", result);
                 if (userName === "HoldBin") {
                     getCardList();
                     myAlert("The card has been removed from the list");
@@ -874,6 +875,7 @@ $('#newUser').on('submit', function (event) {
 
 
 function addCard() {
+    UPDATE = false;
     startAnew();
     $('.prevCards').addClass('invisible');
     $('.userCard').removeClass('invisible');
@@ -947,10 +949,8 @@ $('#login').on('click', '#loginClicked', function (event) {
 });
 
 function retrieveCard() {
-    console.log('in retrieveCard - 2');
     return new Promise((resolve, reject) => {
         $.getJSON('/onecard/' + createCard.cardId, function (res) {
-            //        console.log("card info:", res);
             let photoWidth = Number(res.results.width);
             let photoHeight = Number(res.results.height);
             if (photoWidth < 1.1 * photoHeight) {
@@ -996,13 +996,10 @@ function retrieveCard() {
 $(document).on('click', '.userCards', function (event) {
     event.preventDefault();
     createCard.cardId = $(this).parent().parent().find(".userCardsIdValue").val();
-    console.log('about to retrieve card - 1');
     retrieveCard().then(function () {
-        console.log('after retrievecard called - 3');
         $('.userCard').removeClass('invisible');
         $('.newUser').addClass('invisible');
         $('.prevCards').addClass('invisible');
-        //        console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
         $("#cardHeader").text(createCard.titleText);
         $("#bodyText").val(createCard.bodyText);
@@ -1038,11 +1035,21 @@ $(document).on('click', '.cardByeBye', function (event) {
                 if (res === "remove") {
                     UPDATE = true;
                     saveCard("HoldBin");
-
-                    //            ********************   CARD IS DELETING ALL DATA....  NEED TO RETRIEVE ALL OLD CARD INFO BUT UPDATE USERNAME ******************
-
                 } else if (res === "delete") {
-                    //                                                ****************            NEED TO ADD DELETE FUNCTIONALITY          ******************
+                    myBoolean("Are you sure you want to completely delete this card?", "Delete Card", "Don't Delete!").then(function (res) {
+                        if (res === "true") {
+                            $.ajax({
+                                    method: 'DELETE',
+                                    url: '/delete/' + createCard.cardId
+                                })
+                                .done(function (result) {
+                                    myAlert(`The card has been deleted.  Pity.`, 'Hooray?');
+                                    getCardList();
+                                });
+                        } else {
+                            console.log("delete averted!");
+                        }
+                    });
                 }
             });
         });
@@ -1052,7 +1059,6 @@ $(document).on('click', '.cardByeBye', function (event) {
 // open saved card full-screen
 function displayCard() {
     $.getJSON('/creations/' + createCard.cardId, function (res) {
-        //        console.log("card info:", res);
         createCard.titleText = res.results.title;
         createCard.bodyText = res.results.body;
         createCard.footerText = res.results.footer;
@@ -1086,7 +1092,6 @@ function displayCard() {
         //        $("#otherOptions").removeClass("invisible");
         $("#allCards").removeClass("invisible");
         $("#newCard").removeClass("invisible");
-        //        console.log("photoList:", createCard.photoList);
         $("#titleText").val(createCard.titleText);
         $("#cardHeader").text(createCard.titleText);
         $("#bodyText").val(createCard.bodyText);
@@ -1195,11 +1200,8 @@ $(document).ready(function () {
 
 function displaySavedCard(cardId) {
     $.getJSON('/showsave/' + cardId, function (res) {
-        //        console.log("card info:", res);
-        //        console.log(createCard.photoList);
         width = Number(res.results.width);
         height = Number(res.results.height);
-        //        console.log(createCard);
         // portraitPic class no longer necessary for full screen display since photo became background image
         //        if (width < 1.1*height) {
         //            $("#previewBody").addClass("portraitPic");

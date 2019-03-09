@@ -425,57 +425,18 @@ app.put('/update/:id', function (req, res) {
 });
 
 
-//create new review
-//app.post('/new/create', (req, res) => {
-//    let venueName = req.body.venueName;
-//    let userName = req.body.userName;
-//    let listeningExperience = req.body.listeningExperience;
-//    let venueFeel = req.body.venueFeel;
-//    let musicValue = req.body.musicValue;
-//    let musicQuality = req.body.musicQuality;
-//    let foodQuality = req.body.foodQuality;
-//    let foodValue = req.body.foodValue;
-//    let userReview = req.body.userReview;
-//    Review.create({
-//        venueName,
-//        userName,
-//        listeningExperience,
-//        venueFeel,
-//        musicValue,
-//        musicQuality,
-//        foodQuality,
-//        foodValue,
-//        userReview
-//    }, (err, item) => {
-//        if (err) {
-//            return res.status(500).json({
-//                message: 'Infernal Server Error'
-//            });
-//        }
-//        if (item) {
-//            console.log(`Review for ${venueName} by ${userName} added.`);
-//            return res.json(item);
-//        }
-//    });
-//});
-
-
-
-
 // DELETE ----------------------------------------
-// delete a review by id
-//app.delete('/delete/:id', function (req, res) {
-//    Review.findByIdAndRemove(req.params.id).exec().then(function () {
-//        console.log("Review", req.params.id, "deleted");
-//        return res.status(204).end();
-//    }).catch(function (err) {
-//        return res.status(500).json({
-//            message: 'Internal Server Error - review not deleted'
-//        });
-//    });
-//});
-
-
+// delete a card by id
+app.delete('/delete/:id', function (req, res) {
+    Card.findByIdAndRemove(req.params.id).exec().then(function () {
+        console.log("Card", req.params.id, "deleted");
+        return res.status(204).end();
+    }).catch(function (err) {
+        return res.status(500).json({
+            message: 'Internal Server Error - card not deleted'
+        });
+    });
+});
 
 
 // MISC ------------------------------------------
