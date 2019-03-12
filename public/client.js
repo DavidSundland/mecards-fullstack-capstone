@@ -674,6 +674,7 @@ function closePreview() {
 
 // Save a card:
 function saveCard(userName) {
+    //    When called w/o a userName, will be called with an event object. In that case, need to override value.
     if (typeof userName === "object") userName = USERNAME;
     let photo, photographer, photoUrl, width, height;
     if (!createCard.photoList[createCard.imageNumber]) {
@@ -690,7 +691,6 @@ function saveCard(userName) {
         width = createCard.photoList[createCard.imageNumber].width;
         height = createCard.photoList[createCard.imageNumber].height;
     }
-    console.log("userName:", userName, "USERNAME:", USERNAME, "typeof userName", typeof userName);
     let cardArray = {
         userName: userName,
         title: createCard.titleText,
@@ -764,6 +764,7 @@ function saveCard(userName) {
                 $("#allCards").removeClass("invisible");
                 $("#newCard").removeClass("invisible");
                 $("#cardPickup").removeClass("invisible");
+                $("#saveChanges").text("UPDATE CARD");
                 window.location = "#cardPickup";
                 myAlert(`Your mE-Card has been saved!<br>A link to the card will now be available on the card edit page.`);
             })
