@@ -358,7 +358,6 @@ app.get('/onecard/:cardId', function (req, res) {
     console.log("cardId:", cardId);
     Card.findById(cardId)
         .then(function (results) {
-            //            console.log("In get one review, results: ", results);
             res.json({
                 results
             });

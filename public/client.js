@@ -1034,8 +1034,12 @@ $(document).on('click', '.cardByeBye', function (event) {
         retrieveCard().then(function () {
             myTri("Do you wish to remove the card from this list* or delete it completely**?<br><em>*You can no longer edit it, but it can still be viewed via its URL.<br>**It can no longer be edited or viewed; the URL will no longer work.</em>", "Remove from List", "remove", "Delete completely", "delete", "Cancel", "cancel").then(function (res) {
                 if (res === "remove") {
-                    UPDATE = true;
-                    saveCard("HoldBin");
+                    myBoolean("Are you sure you want to remove this card from your list?  You will no longer be able to edit it, but the link to the card will still work.", "Remove Card", "Don't Remove!").then(function (res) {
+                        if (res === "true") {
+                            UPDATE = true;
+                            saveCard("HoldBin");
+                        }
+                    });
                 } else if (res === "delete") {
                     myBoolean("Are you sure you want to completely delete this card?", "Delete Card", "Don't Delete!").then(function (res) {
                         if (res === "true") {
